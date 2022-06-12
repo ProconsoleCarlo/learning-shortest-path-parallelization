@@ -6,4 +6,4 @@
  */
 
 struct Graph* createGraph(int V, int E);
-void BellmanFordParallelV1(struct Graph* graph, int src);
+int* BellmanFordParallelV1(struct Graph* graph, int src);

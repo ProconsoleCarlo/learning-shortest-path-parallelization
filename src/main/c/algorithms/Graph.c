@@ -6,18 +6,17 @@
  */
 
 #include <stdlib.h>
+
 /*
  * TODO se possibile portarla qui dal main
  */
 // a structure to represent a weighted edge in graph
-struct Edge
-{
+struct Edge {
     int src, dest, weight;
 };
 
 // a structure to represent a connected, directed and weighted graph
-struct Graph
-{
+struct Graph {
     // V-> Number of vertices, E-> Number of edges
     int V, E;
 
@@ -26,8 +25,7 @@ struct Graph
 };
 
 // Creates a graph with V vertices and E edges
-struct Graph* createGraph(int V, int E)
-{
+struct Graph* createGraph(int V, int E) {
     struct Graph* graph = (struct Graph*) malloc( sizeof(struct Graph) );
     graph->V = V;
     graph->E = E;

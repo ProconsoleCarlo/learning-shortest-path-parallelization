@@ -10,8 +10,8 @@
 #include <limits.h>
 #include <omp.h>
 #include <stdio.h>
+#include <stdbool.h>
 
-#include "OutputUtilities.h"
 
 /*
  * Da spostare se possbile (vedi main.c)
@@ -47,8 +47,9 @@ struct Graph* createGraph(int V, int E)
 // The main function that finds shortest distances from src to all other
 // vertices using Bellman-Ford algorithm.  The function also detects negative
 // weight cycle
-void BellmanFord(struct Graph* graph, int src) {
-    int V = graph->V;
+int* BellmanFord(struct Graph* graph, int src) {
+
+	int V = graph->V;
     int E = graph->E;
     int dist[V];
     double end, start = omp_get_wtime();
@@ -76,19 +77,25 @@ void BellmanFord(struct Graph* graph, int src) {
     // Step 3: check for negative-weight cycles.  The above step guarantees
     // shortest distances if graph doesn't contain negative weight cycle.
     // If we get a shorter path, then there is a cycle.
+    bool error = false;
     for (i = 0; i < E; i++) {
-        int u = graph->edge[i].src;
-        int v = graph->edge[i].dest;
-        int weight = graph->edge[i].weight;
-        if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
-            printf("Graph contains negative weight cycle");
-        }
+    	if (!error) {
+    		int u = graph->edge[i].src;
+    		int v = graph->edge[i].dest;
+    		int weight = graph->edge[i].weight;
+    		if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
+    			error = true;
+    		}
+    	}
+    }
+    if (error) {
+    	printf("Graph contains negative weight cycle by thread %d\n", omp_get_thread_num());
     }
     end = omp_get_wtime();
-    printArr(dist, V);
-    printf("Elapsed time %f", end-start);
+//    printArr(dist, V);
+    printf("Elapsed time for serial %f\n", end-start);
 
-    return;
+    return dist;
 }
 
 // Driver program to test above functions

@@ -5,12 +5,14 @@
  *     Author: Carlo Bobba, Eleonora Aiello
  */
 
+#include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
 
+#include "../Algorithms/BellmanFordParallelV1.h"
 #include "../Algorithms/BellmanFordSerial.h"
 #include "../Algorithms/DijkstraSerial.h"
-#include  "../Algorithms/BellmanFordParallelV1.h"
 
 
 /*
@@ -33,28 +35,45 @@ struct Graph {
 
 int main() {
 	void doSerialDijkstra();
-	void doSerialBellmanFord();
-	void doBellmanFordParallel();
+	int* doSerialBellmanFord();
+	int* doBellmanFordParallel();
+	void checkCorrectness(int*, int*);
+	void buildGraph(int, int, struct Graph*, bool );
 
-	int V = 5;  // Number of vertices in graph
-	int E = 8;  // Number of edges in graph
+	int V = 5000;  // Number of vertices in graph
+	int E = 80000;  // Number of edges in graph
 	struct Graph* graph = createGraph(V, E);
-	buildGraph(E, V, graph);
-
+	buildGraph(E, V, graph, true);
 	//doSerialDijkstra();
-	/*
-	 * TODO: per verificare il corretto funzionamento della parallelizzazione:
-	 * dobbiamo mettere i risultati dell'algoritmo seriale e di quello parallelo in due vettori di int
-	 * e poi fare il controllo di uguaglianza dei due vettori
-	 */
-	printf("Serial\n");
-	doSerialBellmanFord(E, V, graph);
-	printf("\nParallel\n");
-	doBellmanFordParallel(E, V, graph);
+	//doSerialBellmanFord(E, V, graph);
+	//doBellmanFordParallel(E, V, graph);
 
-
+	checkCorrectness(doSerialBellmanFord(E, V, graph), doBellmanFordParallel(E, V, graph));
 
     return 0;
+}
+
+void checkCorrectness(int* dist1, int* dist2){
+	if (sizeof(dist1)/sizeof(int) != sizeof(dist2)/sizeof(int)) {
+		printf("\nError: the two arrays have different lenght!\n");
+	} else {
+		int lenght = sizeof(dist1)/sizeof(int);
+		int i;
+		int error = 0;
+		while(i < lenght) {
+			if (dist1[i] != dist2[i]) {
+				error = 1;
+				break;
+			}else {
+				i++;
+			}
+		}
+		if (error != 0) {
+			printf("\nError: the two arrays differs for some values!\n");
+		}else {
+			printf("\nPerfect: the arrays are equals! :D");
+		}
+	}
 }
 void doSerialDijkstra() {
 	/*
@@ -83,28 +102,37 @@ void doSerialDijkstra() {
  * V Il numero di nodi
  * Grap* Il grafo in cui mettere nodi e collegamenti
  */
-void buildGraph(int E, int V, struct Graph* graph) {
+void buildGraph(int edges, int vertices, struct Graph* graph, bool negativeAllowed) {
 	int i;
 	time_t t;
 	srand((unsigned) time(&t));
-	for (i = 0; i < E; i++) {
-		graph->edge[i].src = rand() % V;
-		graph->edge[i].dest = rand() % V;
+	for (i = 0; i < edges; i++) {
+		graph->edge[i].src = rand() % vertices;
+		graph->edge[i].dest = rand() % vertices;
 		int weight = rand() % 10;
 		if (weight == 0) {
-			weight++;
+			if (negativeAllowed) {
+				int temp = rand() % 2;
+				weight = - temp;
+
+			}else {
+				weight = 1;
+			}
 		}
+		/*if (i ==2) {
+			weight = -;
+		}*/
 		graph->edge[i].weight = weight;
 	}
 }
 
-void doBellmanFordParallel(int E, int V, struct Graph* graph) {
+int* doBellmanFordParallel(int E, int V, struct Graph* graph) {
 
 //	buildGraph(E, V, graph);
-	BellmanFordParallelV1(graph, 0);
+	return BellmanFordParallelV1(graph, 0);
 }
 
-void doSerialBellmanFord(int E, int V, struct Graph* graph) {
+int* doSerialBellmanFord(int E, int V, struct Graph* graph) {
 	// Let us create the graph given in above example
 
 
@@ -149,5 +177,5 @@ void doSerialBellmanFord(int E, int V, struct Graph* graph) {
 	graph->edge[7].dest = 3;
 	graph->edge[7].weight = -3;
 */
-	BellmanFord(graph, 0);
+	return BellmanFord(graph, 0);
 }

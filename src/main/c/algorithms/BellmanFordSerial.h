@@ -6,4 +6,4 @@
  */
 
 struct Graph* createGraph(int V, int E);
-void BellmanFord(struct Graph* graph, int src);
+int* BellmanFord(struct Graph* graph, int src);
