@@ -1,5 +1,9 @@
 /*
- * Fonte codice: http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
+ * DijkstraSerial.c
+ *
+ *  Created on: 22/dic/2014
+ *      Author: Carlo Bobba, Eleonora Aiello
+ *      Credits: http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
  */
 // A C / C++ program for Dijkstra's single source shortest path algorithm.
 // The program is for adjacency matrix representation of the graph
