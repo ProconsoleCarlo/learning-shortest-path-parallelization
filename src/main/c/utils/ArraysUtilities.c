@@ -29,13 +29,13 @@ bool areArraysEquals(int* array1, int lenght1, int* array2, int lenght2) {
 			if (array1[i] != array2[i]) {
 				error = 1;
 				break;
-			}else {
+			} else {
 				i++;
 			}
 		}
 		if (error != 0) {
 			return false;
-		}else {
+		} else {
 			return true;
 		}
 	}
@@ -56,7 +56,7 @@ void printArray(int* array, int lenght, char* indexDescription, char* valueDescr
 		for (i = 0; i < lenght; ++i) {
 			printf("%d\n", array[i]);
 		}
-	}else {
+	} else {
 		printf("%s \t|\t %s\n", indexDescription, valueDescription);
 		int i;
 		for (i = 0; i < lenght; ++i) {

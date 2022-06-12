@@ -18,9 +18,7 @@
 #include "../Utils/ArraysUtilities.h"
 #include "../Utils/GraphGenerator.h"
 
-
 int main() {
-
 	//Parameters
 	//Number of vertices contained in the graph
 	//WARNING: For Bellman-Ford it is recommended to use less than 5000 vertices due to its long elaboration!
@@ -67,7 +65,7 @@ int main() {
 	bool checkDijkstra = areArraysEquals(distances1, vertices, distances2, vertices);
 	if (checkDijkstra) {
 		printf("correct\n");
-	}else {
+	} else {
 		printf("erroneous\n");
 	}
 	printf("The Bellman-Ford results are ");
@@ -75,10 +73,10 @@ int main() {
 	if (!negativeEdgesAllowed) {
 		if (checkBellmanFord) {
 			printf("correct\n");
-		}else {
+		} else {
 			printf("erroneous\n");
 		}
-	}else {
+	} else {
 		printf("not automatically checkable./nIf there were negative cycles there isn't a solution, otherwise they are correct.\n");
 	}
 
@@ -104,4 +102,3 @@ int main() {
 
     return 0;
 }
-

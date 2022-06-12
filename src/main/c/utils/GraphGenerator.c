@@ -9,8 +9,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <sys/types.h>
-
-
+#include <time.h>
 
 int MAX_WEIGHT = 5;
 int MAX_NEGATIVE_WEIGHT = 2;
@@ -88,7 +87,7 @@ int** makeGraphSymmetric(int** graph, int width) {
 		for (j = i+1; j < width; ++j) {
 			if (graph[i][j] > 0) {
 				graph[j][i] = graph[i][j];
-			}else if (graph[i][j] < 0) {
+			} else if (graph[i][j] < 0) {
 				graph[j][i] = - graph[i][j];
 			}
 		}
@@ -115,7 +114,7 @@ int** generateGraphAsAdjacencyMatrix (int vertices, int edges, bool negativeEdge
 	int maxEdges = (vertices*vertices-vertices)/2;
 	if (edges > maxEdges*0.475) {
 		removalAlgorithm(edges, maxEdges, vertices, negativeEdgesAllowed, upperSideGraph);
-	}else {
+	} else {
 		addictiveAlgorithm(edges, vertices, negativeEdgesAllowed, upperSideGraph);
 	}
 	return makeGraphSymmetric(upperSideGraph, vertices);
