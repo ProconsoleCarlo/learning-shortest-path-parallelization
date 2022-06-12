@@ -101,7 +101,7 @@ int* BellmanFord(struct Graph* graph, int src) {
 
     char indexDescription[20] = "Nodo";
     char valueDescription[20] = "Costo";
-    printArray(dist, V, indexDescription, valueDescription);
+   // printArray(dist, V, indexDescription, valueDescription);
     printf("Elapsed time for serial %f\n", end-start);
 
     return dist;

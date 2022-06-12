@@ -11,8 +11,8 @@
 #include <omp.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "../Utils/ArraysUtilities.h"
 
 
 /*
@@ -53,7 +53,8 @@ int* BellmanFordParallelV1(struct Graph* graph, int src) {
 
 	int V = graph->V;
 	int E = graph->E;
-	int dist[V];
+	int* dist = (int*) calloc(V, sizeof(int));
+	//int dist[V];
 	double end, start = omp_get_wtime();
 	#pragma omp parallel
 	{
@@ -100,7 +101,7 @@ int* BellmanFordParallelV1(struct Graph* graph, int src) {
 	}
 
 	end = omp_get_wtime();
-	printArray(dist, V, "Nodo", "Distance");
+	//printArray(dist, V, "Nodo", "Distance");
 
     printf("Elapsed time for parallel %f\n", end-start);
     return dist;

@@ -11,10 +11,6 @@
 
 #include "../Utils/GraphGenerator.h"
 
-
-/*
- * TODO: Capire come trovare la width e height di una matrice !!!!!!!!!
- */
 /*
  * A test to check the correct working of GraphGenerator
  * int vertices The number of vertices of the graph
@@ -23,8 +19,9 @@
  */
 void testGraphGenerator (int vertices, int edges, bool negativeValueAllowed) {
 	int** graphTest = generateGraphAsAdjacencyMatrix(vertices, edges, negativeValueAllowed);
-	int i, j;
 
+	printf("Graph generated\n");
+	int i, j;
 	for (i = 0; i < vertices; ++i) {
 		for (j = 0; j < vertices; ++j) {
 			printf("%d ", graphTest[i][j]);

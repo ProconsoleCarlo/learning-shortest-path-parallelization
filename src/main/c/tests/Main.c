@@ -6,16 +6,13 @@
  */
 
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
 
 #include "../Algorithms/BellmanFordParallelV1.h"
 #include "../Algorithms/BellmanFordSerial.h"
-#include "../Algorithms/DijkstraSerial.h"
 #include "../Utils/GraphGenerator.h"
-#include "TestGraphGenerator.h"
-#include "../Utils/ArraysUtilities.h"
+#include "TestDijkstraSerial.h"
 
 
 /*
@@ -43,49 +40,23 @@ int main() {
 	void checkCorrectness(int*, int*);
 	void buildGraph(int, int, struct Graph*, bool );
 
-	int V = 5;  // Number of vertices in graph
-	int E = 8;  // Number of edges in graph
-	struct Graph* graph = createGraph(V, E);
-	buildGraph(E, V, graph, false);
-	//doSerialDijkstra();
+	int vertices = 5;  // Number of vertices in graph
+	int edges = 6;  // Number of edges in graph
+	struct Graph* graphOld = createGraph(vertices, edges);
+	buildGraph(edges, vertices, graphOld, false);
 
-
-	int* uno = doSerialBellmanFord(E, V, graph);
-	//doBellmanFordParallel(E, V, graph);
-	printArray(&uno, V, "", "uno");
-
-
-
-
-	/*bool check = areArraysEquals(doSerialBellmanFord(E, V, graph), V, doBellmanFordParallel(E, V, graph), V);
-	if (check) {
+	//bool check = areArraysEquals(doSerialBellmanFord(edges, vertices, graphOld), vertices, doBellmanFordParallel(edges, vertices, graphOld), vertices);
+	/*if (check) {
 		printf("perfect!");
 	}else {
 		printf("error");
-	}
-*/
-
-	//testGraphGenerator(10, 30, false);
+	}*/
+	int** graph = generateGraphAsAdjacencyMatrix(vertices, edges, false);
+	testDijkstraSerial(graph, 5, 0);
+	//testGraphGenerator(23000, 60000, false);
     return 0;
 }
 
-/*
- * @Deprecated
- */
-void doSerialDijkstra() {
-	// Let us create the example graph discussed above
-	int graph[9][9] = {{0, 4, 0, 0, 0, 0, 0, 8, 0},
-	                   {4, 0, 8, 0, 0, 0, 0, 11, 0},
-	                   {0, 8, 0, 7, 0, 4, 0, 0, 2},
-	                   {0, 0, 7, 0, 9, 14, 0, 0, 0},
-	                   {0, 0, 0, 9, 0, 10, 0, 0, 0},
-	                   {0, 0, 4, 0, 10, 0, 2, 0, 0},
-	                   {0, 0, 0, 14, 0, 2, 0, 1, 6},
-	                   {8, 11, 0, 0, 0, 0, 1, 0, 7},
-					   {0, 0, 2, 0, 0, 0, 6, 7, 0}
-	                   };
-	dijkstra(graph, 0);
-}
 /*
  * @Deprecated
  * Metodo per creare un grafo grande a sufficienza per misurare le prestazioni.

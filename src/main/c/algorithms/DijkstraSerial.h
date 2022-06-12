@@ -7,8 +7,5 @@
 #include <stdbool.h>
 
 int minDistance(int dist[], bool sptSet[]);
-int printSolution(int dist[], int n);
-/*
- * Per fare l'header ho messo int** graph invece di int graph[][]
- */
-void dijkstra(int** graph, int src);
+
+int* dijkstra(int** graph, int graphWidth, int sourceNode);
