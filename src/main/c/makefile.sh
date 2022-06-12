@@ -1,0 +1,5 @@
+mkdir "../../../target/compiledC/Tests"
+mkdir "../../../target/compiledC/Algorithms"
+gcc -fopenmp -O3 -Wall -c -fmessage-length=0 -o "../../../target/compiledC/Tests/Main.o" "./Tests/Main.c"
+gcc -fopenmp -O3 -Wall -c -fmessage-length=0 -o "../../../target/compiledC/Algorithms/DijkstraSerial.o" "./Algorithms/DijkstraSerial.c"
+gcc -fopenmp -o "Shortest Path" "../../../target/compiledC/Tests/Main.o" "../../../target/compiledC/Algorithms/DijkstraSerial.o"
