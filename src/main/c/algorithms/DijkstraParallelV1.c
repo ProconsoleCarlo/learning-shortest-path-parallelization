@@ -19,11 +19,12 @@ int minDistance, minVertex;
 void getMinDistancePV1(int* distances, int vertices, bool* shortestPathFinalized) {
 	minDistance = INT_MAX;
 	int vertex;
-	for (vertex = 0; vertex < vertices; vertex++)
+	for (vertex = 0; vertex < vertices; vertex++) {
 		if (!shortestPathFinalized[vertex] && distances[vertex] <= minDistance) {
 			minDistance = distances[vertex];
 			minVertex = vertex;
 		}
+	}
 }
 
 void updateDistancesPV1(int vertices, bool* shortestPathFinalized, int** graph, int* distances) {
@@ -60,6 +61,7 @@ int* dijkstraPV1(int** graph, int vertices, int sourceNode) {
     	{
     		distances[sourceNode] = 0;
     	}
+
     	int count;
     	for (count = 0; count < vertices; count++) {
 			#pragma omp single
@@ -72,6 +74,6 @@ int* dijkstraPV1(int** graph, int vertices, int sourceNode) {
     	}
     }
     endTime = omp_get_wtime();
-    printf("Elapsed time for parallel %f\n", endTime-startTime);
+    printf("Elapsed time for parallel Dijkstra %f\n", endTime-startTime);
     return distances;
 }

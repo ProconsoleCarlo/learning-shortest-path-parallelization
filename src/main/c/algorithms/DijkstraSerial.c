@@ -19,11 +19,12 @@ int minDistance, minVertex;
 void getMinDistanceSerial(int* distances, int vertices, bool* shortestPathFinalized) {
 	minDistance = INT_MAX;
 	int vertex;
-	for (vertex = 0; vertex < vertices; vertex++)
+	for (vertex = 0; vertex < vertices; vertex++) {
 		if (!shortestPathFinalized[vertex] && distances[vertex] <= minDistance) {
 			minDistance = distances[vertex];
 			minVertex = vertex;
 		}
+	}
 }
 
 void updateDistancesSerial(int vertices, bool* shortestPathFinalized, int** graph, int* distances) {
@@ -44,23 +45,35 @@ void updateDistancesSerial(int vertices, bool* shortestPathFinalized, int** grap
  */
 int* dijkstraSerial(int** graph, int vertices, int sourceNode) {
 	double endTime, startTime = omp_get_wtime();
+	double endInitTime, startInitTime = omp_get_wtime();
 	int* distances = (int*) malloc(vertices*sizeof(int));
 	bool* shortestPathFinalized = (bool*) malloc(vertices*sizeof(bool));
-
 	int i;
     for (i = 0; i < vertices; i++) {
         distances[i] = INT_MAX;
         shortestPathFinalized[i] = false;
     }
     distances[sourceNode] = 0;
+    endInitTime = omp_get_wtime();
+    printf("Elapsed time to initialize distances: %f\n", endInitTime-startInitTime);
 
+	double getMinDistanceTime = 0, updateDistancesTime = 0;
+	double time1, time2;
     int count;
     for (count = 0; count < vertices; count++) {
+    	time1 = omp_get_wtime();
     	getMinDistanceSerial(distances, vertices, shortestPathFinalized);
     	shortestPathFinalized[minVertex] = true;
+    	time2 = omp_get_wtime();
+    	getMinDistanceTime = getMinDistanceTime + time2 - time1;
+    	time1 = omp_get_wtime();
     	updateDistancesSerial(vertices, shortestPathFinalized, graph, distances);
+    	time2 = omp_get_wtime();
+    	updateDistancesTime = updateDistancesTime + time2 - time1;
     }
+    printf("Elapsed time for getMinDistance: %f\n", getMinDistanceTime);
+    printf("Elapsed time for updateDistance: %f\n", updateDistancesTime);
     endTime = omp_get_wtime();
-    printf("Elapsed time for serial %f\n", endTime-startTime);
+    printf("Elapsed time for serial  Dijkstra %f\n", endTime-startTime);
     return distances;
 }

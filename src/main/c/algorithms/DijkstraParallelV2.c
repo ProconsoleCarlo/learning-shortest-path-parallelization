@@ -91,6 +91,6 @@ int* dijkstraPV2(int** graph, int vertices, int sourceNode) {
     	}
     }
     endTime = omp_get_wtime();
-    printf("Elapsed time for parallel %f\n", endTime-startTime);
+    printf("Elapsed time for parallel Dijkstra %f\n", endTime-startTime);
     return distances;
 }

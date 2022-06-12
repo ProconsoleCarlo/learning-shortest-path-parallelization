@@ -57,10 +57,10 @@ void printArray(int* array, int lenght, char* indexDescription, char* valueDescr
 			printf("%d\n", array[i]);
 		}
 	}else {
-		printf("%s \t %s\n", indexDescription, valueDescription);
+		printf("%s \t|\t %s\n", indexDescription, valueDescription);
 		int i;
 		for (i = 0; i < lenght; ++i) {
-			printf("%d \t %d\n", i, array[i]);
+			printf("%d \t\t|\t %d\n", i, array[i]);
 		}
 	}
 }

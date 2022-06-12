@@ -5,6 +5,7 @@
  * Author: Carlo Bobba, Eleonora Aiello
  * Credits: http://www.sanfoundry.com/java-program-implement-bellmanford-algorithm/
  * Description: A C / C++ program for Bellman-Ford's single source shortest path algorithm.
+ * 				The program is for adjacency matrix representation of the graph.
  */
 
 #include <limits.h>
@@ -65,12 +66,16 @@ void checkCyclesPresenceSerial(int** graph, int vertices, int* distances) {
  */
 int* bellmanFordSerial(int** graph, bool negativeEdgesAllowed, int vertices, int sourceNode) {
 	double end, start = omp_get_wtime();
-
+	double endInitTime, startInitTime = omp_get_wtime();
 	int* distances = (int*) malloc(vertices*sizeof(int));
-
 	initializeDistancesSerial(vertices, sourceNode, distances);
+	endInitTime = omp_get_wtime();
+	printf("Elapsed time to initialize distances: %f\n", endInitTime-startInitTime);
 
+	double endRelaxTime, startRelaxTime = omp_get_wtime();
 	relaxEdgesSerial(graph, vertices, distances);
+	endRelaxTime = omp_get_wtime();
+	printf("Elapsed time for relaxation of nodes: %f\n", endRelaxTime-startRelaxTime);
 
 	if (negativeEdgesAllowed) {
 		checkCyclesPresenceSerial(graph, vertices, distances);
