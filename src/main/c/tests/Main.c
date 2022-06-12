@@ -5,9 +5,13 @@
  *     Author: Carlo Bobba, Eleonora Aiello
  */
 
-#include "../Algorithms/DijkstraSerial.h"
+#include <stdlib.h>
+#include <sys/types.h>
+
 #include "../Algorithms/BellmanFordSerial.h"
-#include "../Algorithms/Graph.h"
+#include "../Algorithms/DijkstraSerial.h"
+#include  "../Algorithms/BellmanFordParallelV1.h"
+
 
 /*
  * TODO se possibile spostare la struttura dati in graph.c
@@ -30,8 +34,24 @@ struct Graph {
 int main() {
 	void doSerialDijkstra();
 	void doSerialBellmanFord();
+	void doBellmanFordParallel();
+
+	int V = 5;  // Number of vertices in graph
+	int E = 8;  // Number of edges in graph
+	struct Graph* graph = createGraph(V, E);
+	buildGraph(E, V, graph);
+
 	//doSerialDijkstra();
-	doSerialBellmanFord();
+	/*
+	 * TODO: per verificare il corretto funzionamento della parallelizzazione:
+	 * dobbiamo mettere i risultati dell'algoritmo seriale e di quello parallelo in due vettori di int
+	 * e poi fare il controllo di uguaglianza dei due vettori
+	 */
+	printf("Serial\n");
+	doSerialBellmanFord(E, V, graph);
+	printf("\nParallel\n");
+	doBellmanFordParallel(E, V, graph);
+
 
 
     return 0;
@@ -39,7 +59,7 @@ int main() {
 void doSerialDijkstra() {
 	/*
 	* Dijkstra algorithm
-	* TODO: In Dijkstra.c togliere la definizione di V che verr� preso dalla size di graph se � possibile farlo
+	* TODO: In Dijkstra.c togliere la definizione di V (che è il 9) che verrà preso dalla size di graph se è possibile farlo
 	* 		altrimenti lo passiamo come parametro alla funzione qui
 	*/
 	// Let us create the example graph discussed above
@@ -55,12 +75,40 @@ void doSerialDijkstra() {
 	                   };
 	dijkstra(graph, 0);
 }
-void doSerialBellmanFord() {
-	// Let us create the graph given in above example
-	int V = 5;  // Number of vertices in graph
-	int E = 8;  // Number of edges in graph
-	struct Graph* graph = createGraph(V, E);
+/*
+ * Metodo per creare un grafo grande a sufficienza per misurare le prestazioni.
+ * L'algoritmo è da migliorare perchè genera un po di nodi isolati (viene distanza l'intero piu grande rappresentabile)
+ * (problema minore se il numero di connessioni è sufficientemente elevato(10 volte il numero di nodi))
+ * E Il numero di collegamenti
+ * V Il numero di nodi
+ * Grap* Il grafo in cui mettere nodi e collegamenti
+ */
+void buildGraph(int E, int V, struct Graph* graph) {
+	int i;
+	time_t t;
+	srand((unsigned) time(&t));
+	for (i = 0; i < E; i++) {
+		graph->edge[i].src = rand() % V;
+		graph->edge[i].dest = rand() % V;
+		int weight = rand() % 10;
+		if (weight == 0) {
+			weight++;
+		}
+		graph->edge[i].weight = weight;
+	}
+}
 
+void doBellmanFordParallel(int E, int V, struct Graph* graph) {
+
+//	buildGraph(E, V, graph);
+	BellmanFordParallelV1(graph, 0);
+}
+
+void doSerialBellmanFord(int E, int V, struct Graph* graph) {
+	// Let us create the graph given in above example
+
+
+	/*
 	// add edge 0-1 (or A-B in above figure)
 	graph->edge[0].src = 0;
 	graph->edge[0].dest = 1;
@@ -100,6 +148,6 @@ void doSerialBellmanFord() {
 	graph->edge[7].src = 4;
 	graph->edge[7].dest = 3;
 	graph->edge[7].weight = -3;
-
+*/
 	BellmanFord(graph, 0);
 }
