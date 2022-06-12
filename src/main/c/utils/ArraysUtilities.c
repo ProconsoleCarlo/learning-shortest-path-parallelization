@@ -36,12 +36,6 @@ int** makeMatrixSymmetric(int** matrix, int width) {
  * return true il the two arrays contains the same value, false otherwise
  */
 bool areArraysEquals(int* array1, int lenght1, int* array2, int lenght2) {
-	/*printf("Nel confronto...\n");
-	int i;
-	for (i = 0; i < lenght2; ++i) {
-		printf("uno[%d] = %d\n", i, array1[i]);
-		printf("due[%d] = %d\n", i, array2[i]);
-	}*/
 	if (lenght1 != lenght2) {
 		return false;
 	} else {
@@ -49,10 +43,8 @@ bool areArraysEquals(int* array1, int lenght1, int* array2, int lenght2) {
 		int i = 0;
 		int error = 0;
 		while(i < lenght) {
-			printf("uno = %d, due = %d\n", array1[i], array2[i]);
 			if (array1[i] != array2[i]) {
 				error = 1;
-				printf("break");
 				break;
 			}else {
 				i++;

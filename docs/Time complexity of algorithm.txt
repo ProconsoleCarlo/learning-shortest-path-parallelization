@@ -1,0 +1,10 @@
+Maximum time complexity:
+Density = 100%
+E = edges = 241989000
+V = vertices = 22000
+Dijkstra = O(E+V*logV) = O(2'028'808'319)
+Bellman Ford = O(V*E) = O(5'323'758'000'000)
+
+Bellman Ford is complex 2600 times more with 100% density !!!!
+DON'T go over 5000 vertices with 25% density for Bellman Ford, so that in parallel, to me, it takes 190.339000s against Dijkstra 0.160000s
+In serial execution it should take about 571s!!

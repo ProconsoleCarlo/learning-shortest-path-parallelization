@@ -5,4 +5,4 @@
  *      Author: Carlo Bobba, Eleonora Aiello
  */
 
-int* dijkstraPV1(int** graph, int graphWidth, int sourceNode);
+int* dijkstraSerial(int** graph, int graphWidth, int sourceNode);

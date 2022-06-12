@@ -6,6 +6,8 @@
  * Description: Some utilities to manage arrays
  */
 
+#include <stdbool.h>
+
 /*
  * Function that make the symmetric of an upper sided triangle matrix
  * int** matrix The upper sided triangle matrix

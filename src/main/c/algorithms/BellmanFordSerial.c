@@ -1,108 +1,58 @@
 /*
  * BellmanFordSerial.c
  *
- *  Created on: 23/dic/2014
- *      Author: Carlo Bobba, Eleonora Aiello
- *      Credits: http://www.geeksforgeeks.org/dynamic-programming-set-23-bellman-ford-algorithm/
+ * Created on: 31/dic/2014
+ * Author: Carlo Bobba, Eleonora Aiello
+ * Credits: http://www.sanfoundry.com/java-program-implement-bellmanford-algorithm/
+ * Description: A C / C++ program for Bellman-Ford's single source shortest path algorithm.
  */
-// A C / C++ program for Bellman-Ford's single source shortest path algorithm.
 
 #include <limits.h>
 #include <omp.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-#include "../Utils/ArraysUtilities.h"
+int* bellmanFordSerial(int** graph, bool containsNegativeLinks, int graphWidth, int sourceNode) {
+	double end, start = omp_get_wtime();
 
-
-
-/*
- * Da spostare se possbile (vedi main.c)
- */
-// a structure to represent a weighted edge in graph
-struct Edge {
-    int src, dest, weight;
-};
-
-// a structure to represent a connected, directed and weighted graph
-struct Graph {
-    // V-> Number of vertices, E-> Number of edges
-    int V, E;
-
-    // graph is represented as an array of edges.
-    struct Edge* edge;
-};
-
-/*
-// Creates a graph with V vertices and E edges
-struct Graph* createGraph(int V, int E)
-{
-    struct Graph* graph = (struct Graph*) malloc( sizeof(struct Graph) );
-    graph->V = V;
-    graph->E = E;
-
-    graph->edge = (struct Edge*) malloc( graph->E * sizeof( struct Edge ) );
-
-    return graph;
-}
-*/
-
-// The main function that finds shortest distances from src to all other
-// vertices using Bellman-Ford algorithm.  The function also detects negative
-// weight cycle
-int* BellmanFord(struct Graph* graph, int src) {
-
-	int V = graph->V;
-    int E = graph->E;
-    int* dist = (int*) calloc(V, sizeof(int));
-    //int dist[V];
-    double end, start = omp_get_wtime();
-
-    // Step 1: Initialize distances from src to all other vertices as INFINITE
-    int i;
-    for (i = 0; i < V; i++) {
-        dist[i]   = INT_MAX;
-    }
-    dist[src] = 0;
-
-    // Step 2: Relax all edges |V| - 1 times. A simple shortest path from src
-    // to any other vertex can have at-most |V| - 1 edges
-    for (i = 1; i <= V-1; i++) {
-    	int j;
-        for (j = 0; j < E; j++) {
-            int u = graph->edge[j].src;
-            int v = graph->edge[j].dest;
-            int weight = graph->edge[j].weight;
-            if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
-                dist[v] = dist[u] + weight;
-        }
-    }
-
-    // Step 3: check for negative-weight cycles.  The above step guarantees
-    // shortest distances if graph doesn't contain negative weight cycle.
-    // If we get a shorter path, then there is a cycle.
-    bool error = false;
-    for (i = 0; i < E; i++) {
-    	if (!error) {
-    		int u = graph->edge[i].src;
-    		int v = graph->edge[i].dest;
-    		int weight = graph->edge[i].weight;
-    		if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
-    			error = true;
-    		}
-    	}
-    }
-    if (error) {
-    	printf("Graph contains negative weight cycle by thread %d\n", omp_get_thread_num());
-    }
-
+	int* distances = (int*) malloc(graphWidth*sizeof(int));
+	int i;
+	for (i = 0; i < graphWidth; i++) {
+		distances[i] = INT_MAX;
+	}
+	distances[sourceNode] = 0;
+	int node, src, dest;
+	for (node = 0; node < graphWidth; node++) {
+		for (src = 0; src < graphWidth; src++) {
+			for (dest = 0; dest < graphWidth; dest++) {
+				if (graph[src][dest] != 0) {
+					if (distances[dest] > distances[src] + graph[src][dest] && distances[src] != INT_MAX) {
+						distances[dest] = distances[src] + graph[src][dest];
+					}
+				}
+			}
+		}
+	}
+	/*
+	 * Mettendo così, se si sa che il grafo non ha weight negativi si velocizza notevolmente il processo
+	 * Ci sarebbe da fare che invece di fare una printf si incrementi un indice per ogni negative edge cycle
+	 * e solo alla fine stampa se ci sono negative cycle e quanti.
+	 *
+	 * Usare OpenMP
+	 */
+	if (containsNegativeLinks) {
+		for (src = 0; src < graphWidth; ++src) {
+			for (dest = 0; dest < graphWidth; ++dest) {
+				if (graph[src][dest] != 0) {
+					if (distances[dest] > distances[src] + graph[src][dest]) {
+						printf("The graph contains negative edge cycle!");
+					}
+				}
+			}
+		}
+	}
     end = omp_get_wtime();
-
-    char indexDescription[20] = "Nodo";
-    char valueDescription[20] = "Costo";
-   // printArray(dist, V, indexDescription, valueDescription);
-    printf("Elapsed time for serial %f\n", end-start);
-
-    return dist;
+    printf("Elapsed time for serial BellmanFord%f\n", end-start);
+	return distances;
 }
