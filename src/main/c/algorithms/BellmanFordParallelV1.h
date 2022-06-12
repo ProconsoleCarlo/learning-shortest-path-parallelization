@@ -3,8 +3,9 @@
  *
  * Created on: 31/dic/2014
  * Author: Carlo Bobba, Eleonora Aiello
- * Credits: http://www.geeksforgeeks.org/dynamic-programming-set-23-bellman-ford-algorithm/
+ * Credits: http://www.sanfoundry.com/java-program-implement-bellmanford-algorithm/
  * Description: A C / C++ program for Bellman-Ford's single source shortest path algorithm.
+ * 				The program is for adjacency matrix representation of the graph.
  */
 
 #include <stdbool.h>

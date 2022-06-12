@@ -1,0 +1,2 @@
+gcc -c -g -Wa,-a,-ad -fopenmp -O3 -Wall -c -fmessage-length=0 "./algorithms/DijkstraParallelV1.c" > DijkstraParallelV1.lst
+gcc -c -g -Wa,-a,-ad -fopenmp -O3 -Wall -c -fmessage-length=0 "./algorithms/BellmanFordParallelV1.c" > BellmanFordParallelV1.lst

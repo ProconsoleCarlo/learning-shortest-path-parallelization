@@ -2,4 +2,5 @@ target/
 .idea
 *.iml
 **/*.o
+**/*.lst
 /src/main/c/Shortest Path

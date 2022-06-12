@@ -28,9 +28,7 @@ void relaxEdgesSerial(int** graph, int vertices, int* distances) {
 		for (src = 0; src < vertices; src++) {
 			for (dest = 0; dest < vertices; dest++) {
 				if (graph[src][dest] != 0) {
-					if (distances[dest]
-							> distances[src]
-									+ graph[src][dest]&& distances[src] != INT_MAX) {
+					if (distances[dest]	> distances[src] + graph[src][dest]&& distances[src] != INT_MAX) {
 						distances[dest] = distances[src] + graph[src][dest];
 					}
 				}
@@ -66,16 +64,17 @@ void checkCyclesPresenceSerial(int** graph, int vertices, int* distances) {
  */
 int* bellmanFordSerial(int** graph, bool negativeEdgesAllowed, int vertices, int sourceNode) {
 	double end, start = omp_get_wtime();
-	double endInitTime, startInitTime = omp_get_wtime();
+
+//	double endInitTime, startInitTime = omp_get_wtime();
 	int* distances = (int*) malloc(vertices*sizeof(int));
 	initializeDistancesSerial(vertices, sourceNode, distances);
-	endInitTime = omp_get_wtime();
-	printf("Elapsed time to initialize distances: %f\n", endInitTime-startInitTime);
+//	endInitTime = omp_get_wtime();
+//	printf("Elapsed time to initialize distances: %f\n", endInitTime-startInitTime);
 
-	double endRelaxTime, startRelaxTime = omp_get_wtime();
+//	double endRelaxTime, startRelaxTime = omp_get_wtime();
 	relaxEdgesSerial(graph, vertices, distances);
-	endRelaxTime = omp_get_wtime();
-	printf("Elapsed time for relaxation of nodes: %f\n", endRelaxTime-startRelaxTime);
+//	endRelaxTime = omp_get_wtime();
+//	printf("Elapsed time for relaxation of nodes: %f\n", endRelaxTime-startRelaxTime);
 
 	if (negativeEdgesAllowed) {
 		checkCyclesPresenceSerial(graph, vertices, distances);

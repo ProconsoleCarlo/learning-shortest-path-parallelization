@@ -1,8 +1,9 @@
 /*
  * Main.c
  *
- *  Created on: 22/dic/2014
- *     Author: Carlo Bobba, Eleonora Aiello
+ * Created on: 22/dic/2014
+ * Author: Carlo Bobba, Eleonora Aiello
+ * Description: The main to run the program
  */
 
 #include <omp.h>
@@ -23,7 +24,7 @@ int main() {
 	//Parameters
 	//Number of vertices contained in the graph
 	//WARNING: For Bellman-Ford it is recommended to use less than 5000 vertices due to its long elaboration!
-	int vertices = 256;
+	int vertices = 1024;
 
 	//Density of the graph: how many edges there will be proportionally to the maximum possible number
 	double density = 0.75;
@@ -81,7 +82,7 @@ int main() {
 		printf("not automatically checkable./nIf there were negative cycles there isn't a solution, otherwise they are correct.\n");
 	}
 
-	//Print on the standard output the graph and the
+	//Print on the standard output the graph and the minimum distances
 	if (printOutput) {
 		printf("\n-----Adjacency matrix of the graph-------\n");
 		printMatrix(graph, vertices, vertices);
@@ -95,6 +96,10 @@ int main() {
 		printArray(distances4, vertices, "Source to", "Cost");
 	}
 
+	free(distances1);
+	free(distances2);
+	free(distances3);
+	free(distances4);
 	free(graph);
 
     return 0;

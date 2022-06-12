@@ -16,4 +16,4 @@
  * int sourceNode The node from which compute the distances
  * return The minimum distances from sourceNode
  */
-int* dijkstraSerial(int** graph, int vertices, int sourceNode);
+int* dijkstraPV1(int** graph, int vertices, int sourceNode);

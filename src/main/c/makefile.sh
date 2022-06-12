@@ -1,6 +1,4 @@
-mkdir -p "../../../target/compiledC/algorithms"
-mkdir -p "../../../target/compiledC/tests"
-mkdir -p "../../../target/compiledC/utils"
+mkdir -p "../../../target/compiledC/algorithms" "../../../target/compiledC/tests" "../../../target/compiledC/utils"
 gcc -fopenmp -O3 -Wall -c -fmessage-length=0 -o "../../../target/compiledC/algorithms/BellmanFordParallelV1.o" "./algorithms/BellmanFordParallelV1.c"
 gcc -fopenmp -O3 -Wall -c -fmessage-length=0 -o "../../../target/compiledC/algorithms/BellmanFordSerial.o" "./algorithms/BellmanFordSerial.c"
 gcc -fopenmp -O3 -Wall -c -fmessage-length=0 -o "../../../target/compiledC/algorithms/DijkstraParallelV1.o" "./algorithms/DijkstraParallelV1.c"

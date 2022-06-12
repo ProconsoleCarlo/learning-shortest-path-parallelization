@@ -33,7 +33,7 @@ void getMinDistancePV2(int* distances, int graphWidth, bool* shortestPathFinaliz
 	{
 		minDistance = minDistances[omp_get_thread_num()];
 		minVertex = minVertices[omp_get_thread_num()];
-		for (vertex = 0; vertex < 4; ++vertex) {
+		for (vertex = 0; vertex < omp_get_num_procs(); ++vertex) {
 			if (minDistance > minDistances[vertex]) {
 				minDistance = minDistances[vertex];
 				minVertex = minVertices[vertex];
@@ -65,8 +65,8 @@ int* dijkstraPV2(int** graph, int vertices, int sourceNode) {
 
 	int* distances = (int*) malloc(vertices*sizeof(int));
 	bool* shortestPathFinalized = (bool*) malloc(vertices*sizeof(bool));
-	minDistances = (int*) malloc(4*sizeof(int));
-	minVertices = (int*) malloc(4*sizeof(int));
+	minDistances = (int*) malloc(omp_get_num_procs()*sizeof(int));
+	minVertices = (int*) malloc(omp_get_num_procs()*sizeof(int));
 
     #pragma omp parallel
     {

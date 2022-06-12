@@ -3,8 +3,9 @@
  *
  * Created on: 31/dic/2014
  * Author: Carlo Bobba, Eleonora Aiello
- * Credits: http://www.geeksforgeeks.org/dynamic-programming-set-23-bellman-ford-algorithm/
+ * Credits: http://www.sanfoundry.com/java-program-implement-bellmanford-algorithm/
  * Description: A C / C++ program for Bellman-Ford's single source shortest path algorithm.
+ * 				The program is for adjacency matrix representation of the graph.
  */
 
 #include <limits.h>
@@ -26,14 +27,12 @@ void initializeDistancesPV1(int vertices, int sourceNode, int* distances) {
 
 void relaxEdgesPV1(int** graph, int vertices, int* distances) {
 	int node, src, dest;
-	#pragma omp for private(node, src, dest) ordered schedule(dynamic)
+	#pragma omp for private(node, src, dest) schedule(dynamic)
 	for (node = 0; node < vertices - 1; node++) {
 		for (src = 0; src < vertices; src++) {
 			for (dest = 0; dest < vertices; dest++) {
 				if (graph[src][dest] != 0) {
-					if (distances[dest]
-							> distances[src]
-									+ graph[src][dest]&& distances[src] != INT_MAX) {
+					if (distances[dest]	> distances[src] + graph[src][dest]&& distances[src] != INT_MAX) {
 						distances[dest] = distances[src] + graph[src][dest];
 					}
 				}
@@ -75,23 +74,12 @@ int* bellmanFordParallelV1(int** graph, bool negativeEdgesAllowed, int vertices,
 	double endTime, startTime = omp_get_wtime();
 
 	int* distances = (int*) malloc(vertices*sizeof(int));
-	/*
-	 * se negativeEdgesAllowed i risultati ottenuti dal parallelo sono erronei (ti spiegherò...)
-	 * quindi il parallel è da fare solo se non ci sono val negativi
-	 */
+
 	#pragma omp parallel
 	{
-		double endInitTime, startInitTime = omp_get_wtime();
 		initializeDistancesPV1(vertices, sourceNode, distances);
-		endInitTime = omp_get_wtime();
-		#pragma omp master
-		printf("Elapsed time to initialize distances: %f\n", endInitTime-startInitTime);
 
-		double endRelaxTime, startRelaxTime = omp_get_wtime();
 		relaxEdgesPV1(graph, vertices, distances);
-		endRelaxTime = omp_get_wtime();
-		#pragma omp master
-		printf("Elapsed time for relaxation of nodes: %f\n", endRelaxTime-startRelaxTime);
 
 		if (negativeEdgesAllowed) {
 			checkCyclesPresencePV1(graph, vertices, distances);

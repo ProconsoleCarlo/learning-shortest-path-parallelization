@@ -18,7 +18,7 @@
  * int sourceNode The node from which find the shortest path
  */
 void testDijkstraSerial(int** graph, int graphWidth, int sourceNode) {
-	int* distance = dijkstraPV1(graph, graphWidth, 0);
+	int* distance = dijkstraSerial(graph, graphWidth, 0);
 
 	printf("Graph adiacency matrix\n");
 	int i, j;

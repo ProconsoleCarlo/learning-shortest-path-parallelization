@@ -46,6 +46,7 @@ void updateDistancesPV1(int vertices, bool* shortestPathFinalized, int** graph, 
  */
 int* dijkstraPV1(int** graph, int vertices, int sourceNode) {
 	double endTime, startTime = omp_get_wtime();
+
 	int* distances = (int*) malloc(vertices*sizeof(int));
 	bool* shortestPathFinalized = (bool*) malloc(vertices*sizeof(bool));
 
