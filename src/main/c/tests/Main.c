@@ -13,6 +13,9 @@
 #include "../Algorithms/BellmanFordParallelV1.h"
 #include "../Algorithms/BellmanFordSerial.h"
 #include "../Algorithms/DijkstraSerial.h"
+#include "../Utils/GraphGenerator.h"
+#include "TestGraphGenerator.h"
+#include "../Utils/ArraysUtilities.h"
 
 
 /*
@@ -40,47 +43,36 @@ int main() {
 	void checkCorrectness(int*, int*);
 	void buildGraph(int, int, struct Graph*, bool );
 
-	int V = 5000;  // Number of vertices in graph
-	int E = 80000;  // Number of edges in graph
+	int V = 5;  // Number of vertices in graph
+	int E = 8;  // Number of edges in graph
 	struct Graph* graph = createGraph(V, E);
-	buildGraph(E, V, graph, true);
+	buildGraph(E, V, graph, false);
 	//doSerialDijkstra();
-	//doSerialBellmanFord(E, V, graph);
+
+
+	int* uno = doSerialBellmanFord(E, V, graph);
 	//doBellmanFordParallel(E, V, graph);
+	printArray(&uno, V, "", "uno");
 
-	checkCorrectness(doSerialBellmanFord(E, V, graph), doBellmanFordParallel(E, V, graph));
 
+
+
+	/*bool check = areArraysEquals(doSerialBellmanFord(E, V, graph), V, doBellmanFordParallel(E, V, graph), V);
+	if (check) {
+		printf("perfect!");
+	}else {
+		printf("error");
+	}
+*/
+
+	//testGraphGenerator(10, 30, false);
     return 0;
 }
 
-void checkCorrectness(int* dist1, int* dist2){
-	if (sizeof(dist1)/sizeof(int) != sizeof(dist2)/sizeof(int)) {
-		printf("\nError: the two arrays have different lenght!\n");
-	} else {
-		int lenght = sizeof(dist1)/sizeof(int);
-		int i;
-		int error = 0;
-		while(i < lenght) {
-			if (dist1[i] != dist2[i]) {
-				error = 1;
-				break;
-			}else {
-				i++;
-			}
-		}
-		if (error != 0) {
-			printf("\nError: the two arrays differs for some values!\n");
-		}else {
-			printf("\nPerfect: the arrays are equals! :D");
-		}
-	}
-}
+/*
+ * @Deprecated
+ */
 void doSerialDijkstra() {
-	/*
-	* Dijkstra algorithm
-	* TODO: In Dijkstra.c togliere la definizione di V (che è il 9) che verrà preso dalla size di graph se è possibile farlo
-	* 		altrimenti lo passiamo come parametro alla funzione qui
-	*/
 	// Let us create the example graph discussed above
 	int graph[9][9] = {{0, 4, 0, 0, 0, 0, 0, 8, 0},
 	                   {4, 0, 8, 0, 0, 0, 0, 11, 0},
@@ -95,6 +87,7 @@ void doSerialDijkstra() {
 	dijkstra(graph, 0);
 }
 /*
+ * @Deprecated
  * Metodo per creare un grafo grande a sufficienza per misurare le prestazioni.
  * L'algoritmo è da migliorare perchè genera un po di nodi isolati (viene distanza l'intero piu grande rappresentabile)
  * (problema minore se il numero di connessioni è sufficientemente elevato(10 volte il numero di nodi))
@@ -119,23 +112,21 @@ void buildGraph(int edges, int vertices, struct Graph* graph, bool negativeAllow
 				weight = 1;
 			}
 		}
-		/*if (i ==2) {
-			weight = -;
-		}*/
 		graph->edge[i].weight = weight;
 	}
 }
-
+/*
+ * @Deprecated
+ */
 int* doBellmanFordParallel(int E, int V, struct Graph* graph) {
-
-//	buildGraph(E, V, graph);
 	return BellmanFordParallelV1(graph, 0);
 }
 
+/*
+ * @Deprecated
+ */
 int* doSerialBellmanFord(int E, int V, struct Graph* graph) {
 	// Let us create the graph given in above example
-
-
 	/*
 	// add edge 0-1 (or A-B in above figure)
 	graph->edge[0].src = 0;

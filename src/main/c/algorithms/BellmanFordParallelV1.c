@@ -9,8 +9,10 @@
 
 #include <limits.h>
 #include <omp.h>
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
+
+#include "../Utils/ArraysUtilities.h"
 
 
 /*
@@ -94,9 +96,11 @@ int* BellmanFordParallelV1(struct Graph* graph, int src) {
 		if (error) {
 			printf("Graph contains negative weight cycle by thread %d\n", omp_get_thread_num());
 		}
+	#pragma omp barrier
 	}
+
 	end = omp_get_wtime();
-//    printArr(dist, V);
+	printArray(dist, V, "Nodo", "Distance");
 
     printf("Elapsed time for parallel %f\n", end-start);
     return dist;
