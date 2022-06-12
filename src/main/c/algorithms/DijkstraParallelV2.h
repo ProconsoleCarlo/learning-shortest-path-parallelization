@@ -1,7 +1,8 @@
 /*
- * DijkstraSerial.h
+ * DijkstraParallelV2.h
+ * Doesn't obtain a speed up, it cause *5 time
  *
- * Created on: 22/dic/2014
+ * Created on: 30/dic/2014
  * Author: Carlo Bobba, Eleonora Aiello
  * Credits: http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
  * Descrition: A C / C++ program for Dijkstra's single source shortest path algorithm.
@@ -16,4 +17,4 @@
  * int sourceNode The node from which compute the distances
  * return The minimum distances from sourceNode
  */
-int* dijkstraPV1(int** graph, int vertices, int sourceNode);
+int* dijkstraPV2(int** graph, int vertices, int sourceNode);

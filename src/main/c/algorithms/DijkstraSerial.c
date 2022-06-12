@@ -16,44 +16,51 @@
 
 int minDistance, minVertex;
 
-void getMinDistanceSerial(int dist[], int graphWidth, bool sptSet[]) {
+void getMinDistanceSerial(int* distances, int vertices, bool* shortestPathFinalized) {
 	minDistance = INT_MAX;
-	int v;
-	for (v = 0; v < graphWidth; v++)
-		if (sptSet[v] == false && dist[v] <= minDistance) {
-			minDistance = dist[v];
-			minVertex = v;
+	int vertex;
+	for (vertex = 0; vertex < vertices; vertex++)
+		if (!shortestPathFinalized[vertex] && distances[vertex] <= minDistance) {
+			minDistance = distances[vertex];
+			minVertex = vertex;
 		}
 }
 
-void updateDistancesSerial(int graphWidth, bool* shortestPathFinalized, int** graph, int* distance) {
-	int v;
-	for (v = 0; v < graphWidth; v++) {
-		if (!shortestPathFinalized[v] && graph[minVertex][v] && distance[minVertex] != INT_MAX && distance[minVertex] + graph[minVertex][v] < distance[v]) {
-			distance[v] = distance[minVertex] + graph[minVertex][v];
+void updateDistancesSerial(int vertices, bool* shortestPathFinalized, int** graph, int* distances) {
+	int vertex;
+	for (vertex = 0; vertex < vertices; vertex++) {
+		if (!shortestPathFinalized[vertex] && graph[minVertex][vertex] && distances[minVertex] != INT_MAX && distances[minVertex] + graph[minVertex][vertex] < distances[vertex]) {
+			distances[vertex] = distances[minVertex] + graph[minVertex][vertex];
 		}
 	}
 }
-
-int* dijkstraSerial(int** graph, int graphWidth, int sourceNode) {
-	double end, start = omp_get_wtime();
-	int* distance = (int*) malloc(graphWidth*sizeof(int));
-	bool* shortestPathFinalized = (bool*) malloc(graphWidth*sizeof(bool));
+/*
+ * Compute the minimum path in a graph represented with adiacency matrix
+ * using Dijkstra algorithm
+ * int** graph The graph in the adiacency matrix form
+ * int vertices The number of vertices in the graph
+ * int sourceNode The node from which compute the distances
+ * return The minimum distances from sourceNode
+ */
+int* dijkstraSerial(int** graph, int vertices, int sourceNode) {
+	double endTime, startTime = omp_get_wtime();
+	int* distances = (int*) malloc(vertices*sizeof(int));
+	bool* shortestPathFinalized = (bool*) malloc(vertices*sizeof(bool));
 
 	int i;
-    for (i = 0; i < graphWidth; i++) {
-        distance[i] = INT_MAX;
+    for (i = 0; i < vertices; i++) {
+        distances[i] = INT_MAX;
         shortestPathFinalized[i] = false;
     }
-    distance[sourceNode] = 0;
+    distances[sourceNode] = 0;
 
     int count;
-    for (count = 0; count < graphWidth; count++) {
-    	getMinDistanceSerial(distance, graphWidth, shortestPathFinalized);
+    for (count = 0; count < vertices; count++) {
+    	getMinDistanceSerial(distances, vertices, shortestPathFinalized);
     	shortestPathFinalized[minVertex] = true;
-    	updateDistancesSerial(graphWidth, shortestPathFinalized, graph, distance);
+    	updateDistancesSerial(vertices, shortestPathFinalized, graph, distances);
     }
-    end = omp_get_wtime();
-    printf("Elapsed time for serial %f\n", end-start);
-    return distance;
+    endTime = omp_get_wtime();
+    printf("Elapsed time for serial %f\n", endTime-startTime);
+    return distances;
 }

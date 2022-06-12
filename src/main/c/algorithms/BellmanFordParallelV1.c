@@ -13,51 +13,84 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int* bellmanFordParallel(int** graph, bool containsNegativeLinks, int graphWidth, int sourceNode) {
-	double end, start = omp_get_wtime();
-	/*
-	 * Usare OpenMP
-	 */
-	int* distances = (int*) malloc(graphWidth*sizeof(int));
+int cycles = 0;
+
+void initializeDistancesPV1(int vertices, int sourceNode, int* distances) {
 	int i;
-	for (i = 0; i < graphWidth; i++) {
+	#pragma omp for private(i)
+	for (i = 0; i < vertices; i++) {
 		distances[i] = INT_MAX;
 	}
 	distances[sourceNode] = 0;
+}
 
+void relaxEdgesPV1(int** graph, int vertices, int* distances) {
 	int node, src, dest;
-	#pragma omp parallel for private(node, src, dest)
-	for (node = 0; node < graphWidth; node++) {
-		for (src = 0; src < graphWidth; src++) {
-			for (dest = 0; dest < graphWidth; dest++) {
+	#pragma omp for private(node, src, dest) ordered
+	for (node = 0; node < vertices - 1; node++) {
+		for (src = 0; src < vertices; src++) {
+			for (dest = 0; dest < vertices; dest++) {
 				if (graph[src][dest] != 0) {
-					if (distances[dest] > distances[src] + graph[src][dest] && distances[src] != INT_MAX) {
+					if (distances[dest]
+							> distances[src]
+									+ graph[src][dest]&& distances[src] != INT_MAX) {
 						distances[dest] = distances[src] + graph[src][dest];
 					}
 				}
 			}
 		}
 	}
-	/*
-	 * Mettendo così, se si sa che il grafo non ha weight negativi si velocizza notevolmente il processo
-	 * Ci sarebbe da fare che invece di fare una printf si incrementi un indice per ogni negative edge cycle
-	 * e solo alla fine stampa se ci sono negative cycle e quanti.
-	 *
-	 * Usare OpenMP
-	 */
-	if (containsNegativeLinks) {
-		for (src = 0; src < graphWidth; ++src) {
-			for (dest = 0; dest < graphWidth; ++dest) {
-				if (graph[src][dest] != 0) {
-					if (distances[dest] > distances[src] + graph[src][dest]) {
-						printf("The graph contains negative edge cycle!");
-					}
+}
+
+void checkCyclesPresencePV1(int** graph, int vertices, int* distances) {
+	int src, dest;
+	#pragma omp for private(src, dest) reduction(+: cycles)
+	for (src = 0; src < vertices; ++src) {
+		for (dest = 0; dest < vertices; ++dest) {
+			if (graph[src][dest] != 0) {
+				if (distances[dest] > distances[src] + graph[src][dest]) {
+					cycles++;
 				}
 			}
 		}
 	}
-    end = omp_get_wtime();
-    printf("Elapsed time for parallel BellmanFord%f\n", end-start);
+	#pragma omp single
+	{
+		if (cycles != 0) {
+			printf("The graph contains negative edge cycle %d times followed!\n", cycles);
+		}
+	}
+}
+
+/*
+ * Compute the minimum path in a graph represented with adiacency matrix
+ * using Bellman-Ford algorithm
+ * int** graph The graph in the adiacency matrix form
+ * bool negativeEdgesAllowed If edges can have a negative weight it's necessary to check the presence of cycles
+ * int vertices The number of vertices in the graph
+ * int sourceNode The node from which compute the distances
+ * return The minimum distances from sourceNode
+ */
+int* bellmanFordParallelV1(int** graph, bool negativeEdgesAllowed, int vertices, int sourceNode) {
+	double endTime, startTime = omp_get_wtime();
+
+	int* distances = (int*) malloc(vertices*sizeof(int));
+	/*
+	 * se negativeEdgesAllowed i risultati ottenuti dal parallelo sono erronei (ti spiegherï¿½...)
+	 * quindi il parallel ï¿½ da fare solo se non ci sono val negativi
+	 */
+	#pragma omp parallel if(!negativeEdgesAllowed)
+	{
+		initializeDistancesPV1(vertices, sourceNode, distances);
+
+		relaxEdgesPV1(graph, vertices, distances);
+
+		if (negativeEdgesAllowed) {
+			checkCyclesPresencePV1(graph, vertices, distances);
+		}
+	}
+    endTime = omp_get_wtime();
+    printf("Elapsed time for parallel BellmanFord: %f\n", endTime-startTime);
 	return distances;
 }
 

@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
-#include "ArraysUtilities.h"
 
 
 int MAX_WEIGHT = 5;
@@ -19,12 +18,12 @@ time_t t;
 
 /*
  * This function catch the case in which the weight randomly generated is zero:
- * if negative values are allowed, than the weight will be a random negative value
+ * if negative edges are allowed, than the weight will be a random negative value
  * else the weight will be the max possible weight
  */
-int catchZerosWeightCase(int weight, bool negativeValueAllowed) {
+int catchZerosWeightCase(int weight, bool negativeEdgesAllowed) {
 	if (weight == 0) {
-		if (negativeValueAllowed) {
+		if (negativeEdgesAllowed) {
 			weight = - (rand() % (MAX_NEGATIVE_WEIGHT)) - 1 ;
 		} else {
 			weight = MAX_WEIGHT;
@@ -35,9 +34,9 @@ int catchZerosWeightCase(int weight, bool negativeValueAllowed) {
 /*
  * This algorithm first add random values to all the possible edges,
  * than remove the correct number of edges
- *  to obtain a graph with the requested number of edges.
+ * to obtain a graph with the requested number of edges.
  */
-void removalAlgorithm(int edges, int maxEdges, int vertices, bool negativeValueAllowed, int** matrixGraph) {
+void removalAlgorithm(int edges, int maxEdges, int vertices, bool negativeEdgesAllowed, int** matrixGraph) {
 	if (edges > maxEdges) {
 		edges = maxEdges;
 	}
@@ -45,7 +44,7 @@ void removalAlgorithm(int edges, int maxEdges, int vertices, bool negativeValueA
 	for (i = 0; i < vertices; ++i) {
 		for (j = i + 1; j < vertices; ++j) {
 			int weight = rand() % (MAX_WEIGHT + 1);
-			weight = catchZerosWeightCase(weight, negativeValueAllowed);
+			weight = catchZerosWeightCase(weight, negativeEdgesAllowed);
 			matrixGraph[i][j] = weight;
 		}
 	}
@@ -64,7 +63,7 @@ void removalAlgorithm(int edges, int maxEdges, int vertices, bool negativeValueA
 /*
  * This algorithm add random values to the requested number of edges
  */
-void addictiveAlgorithm(int edges, int vertices, bool negativeValueAllowed, int** matrixGraph) {
+void addictiveAlgorithm(int edges, int vertices, bool negativeEdgesAllowed, int** matrixGraph) {
 	int nodes = 0;
 	while (nodes < edges) {
 		int src = rand() % vertices;
@@ -72,36 +71,52 @@ void addictiveAlgorithm(int edges, int vertices, bool negativeValueAllowed, int*
 		int weight = rand() % (MAX_WEIGHT + 1);
 		if (dest != src) {
 			if (matrixGraph[src][dest] == 0) {
-				weight = catchZerosWeightCase(weight, negativeValueAllowed);
+				weight = catchZerosWeightCase(weight, negativeEdgesAllowed);
 				matrixGraph[src][dest] = weight;
 				nodes++;
 			}
 		}
 	}
 }
+/*
+ * Function that make the symmetric on the main diagonal of the graph,
+ * that has been populated in the upper side
+ */
+int** makeGraphSymmetric(int** graph, int width) {
+	int i, j;
+	for (i = 0; i < width; ++i) {
+		for (j = i+1; j < width; ++j) {
+			if (graph[i][j] > 0) {
+				graph[j][i] = graph[i][j];
+			}else if (graph[i][j] < 0) {
+				graph[j][i] = - graph[i][j];
+			}
+		}
+	}
+	return graph;
+}
 
 /*
  * Function that generate a random graph represented with an adjacency matrix.
  * The way the algorithm works depends on the density of links in the graph. (See "Statistiche GraphGenerator.xlsx" for more info.
  * int vertices The number of vertices of the graph
- * int edges The number of edges of the graph (If it's more than the maximum, the number of edges is the maximum)
- * bool negativeValueAllowed If are allowed negative weight in the graph or not
+ * int edges The number of edges of the graph (If it's more than the maximum, the number of edges will be the maximum)
+ * bool negativeEdgesAllowed If are allowed negative weight for the edges in the graph or not
  */
-int** generateGraphAsAdjacencyMatrix (int vertices, int edges, bool negativeValueAllowed) {
+int** generateGraphAsAdjacencyMatrix (int vertices, int edges, bool negativeEdgesAllowed) {
 	srand((unsigned) time(&t));
 
-	int** matrixGraph = (int**) calloc(vertices, sizeof(int*));
+	int** upperSideGraph = (int**) calloc(vertices, sizeof(int*));
 	int i;
 	for (i = 0; i < vertices; i++) {
-		matrixGraph[i] = calloc(vertices, sizeof(int));
+		upperSideGraph[i] = calloc(vertices, sizeof(int));
 	}
 
 	int maxEdges = (vertices*vertices-vertices)/2;
-
 	if (edges > maxEdges*0.475) {
-		removalAlgorithm(edges, maxEdges, vertices, negativeValueAllowed, matrixGraph);
+		removalAlgorithm(edges, maxEdges, vertices, negativeEdgesAllowed, upperSideGraph);
 	}else {
-		addictiveAlgorithm(edges, vertices, negativeValueAllowed, matrixGraph);
+		addictiveAlgorithm(edges, vertices, negativeEdgesAllowed, upperSideGraph);
 	}
-	return makeMatrixSymmetric(matrixGraph, vertices);
+	return makeGraphSymmetric(upperSideGraph, vertices);
 }

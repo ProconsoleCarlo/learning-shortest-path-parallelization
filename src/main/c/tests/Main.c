@@ -11,16 +11,16 @@
 #include <stdlib.h>
 
 #include "../Algorithms/BellmanFordParallelV1.h"
-#include "../Algorithms/DijkstraSerial.h"
+#include "../Algorithms/BellmanFordSerial.h"
 #include "../Utils/ArraysUtilities.h"
 #include "../Utils/GraphGenerator.h"
 
 
 int main() {
 
-	int vertices = 5000;
+	int vertices = 10;
 	int maxEdges = (vertices*vertices-vertices)/2;
-	double density = 0.25;
+	double density = 0.75;
 	int edges = maxEdges*density;
 	bool negativeEdgesAllowed = false;
 	printf("Generating a random graph with %d vertices and %d edges\n", vertices, edges);
@@ -28,9 +28,9 @@ int main() {
 	int** graph = generateGraphAsAdjacencyMatrix(vertices, edges, negativeEdgesAllowed);
 	end = omp_get_wtime();
 	printf("Time to generate the random graph: %f s\n", end-start);
-	int* distances1 = dijkstraPV1(graph, vertices, 0);
-	//int* distances1 = bellmanFordSerial(graph, vertices, 0);
-	int* distances2 = bellmanFordParallel(graph, negativeEdgesAllowed, vertices, 0);
+	//int* distances1 = dijkstraPV1(graph, vertices, 0);
+	int* distances1 = bellmanFordSerial(graph, negativeEdgesAllowed, vertices, 0);
+	int* distances2 = bellmanFordParallelV1(graph, negativeEdgesAllowed, vertices, 0);
 	//int* distances2 = dijkstraSerial(graph, vertices, 0);
 	printf("The result is ");
 	bool check = areArraysEquals(distances1, vertices, distances2, vertices);
@@ -39,6 +39,10 @@ int main() {
 	}else {
 		printf("erroneous\n");
 	}
+
+	//printMatrix(graph, vertices, vertices);
+	//printArray(distances1, vertices, "From ", "cost is");
+	//printArray(distances2, vertices, "From ", "cost is");
 	free(graph);
 
     return 0;

@@ -9,12 +9,6 @@
 #include <stdbool.h>
 
 /*
- * Function that make the symmetric of an upper sided triangle matrix
- * int** matrix The upper sided triangle matrix
- * int width
- */
-int** makeMatrixSymmetric(int** matrix, int width);
-/*
  * Function that check if two arrays contains the same values
  * int* array1 The first array
  * int lenght1 The lenght of the first array
@@ -32,3 +26,10 @@ bool areArraysEquals(int* array1, int lenght1, int* array2, int lenght2);
  * char* valueDescription The label of the values
  */
 void printArray(int* array, int lenght, char* indexDescription, char* valueDescription);
+/*
+ * A function that print in a good way the values of a matrix
+ * int** matrix The matrix to print
+ * int width The width of the matrix
+ * int height The height of the matrix
+ */
+void printMatrix(int** matrix, int width, int height);

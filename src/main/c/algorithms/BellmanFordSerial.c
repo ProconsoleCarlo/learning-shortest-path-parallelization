@@ -13,46 +13,69 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-int* bellmanFordSerial(int** graph, bool containsNegativeLinks, int graphWidth, int sourceNode) {
-	double end, start = omp_get_wtime();
-
-	int* distances = (int*) malloc(graphWidth*sizeof(int));
+void initializeDistancesSerial(int vertices, int sourceNode, int* distances) {
 	int i;
-	for (i = 0; i < graphWidth; i++) {
+	for (i = 0; i < vertices; i++) {
 		distances[i] = INT_MAX;
 	}
 	distances[sourceNode] = 0;
+}
+
+void relaxEdgesSerial(int** graph, int vertices, int* distances) {
 	int node, src, dest;
-	for (node = 0; node < graphWidth; node++) {
-		for (src = 0; src < graphWidth; src++) {
-			for (dest = 0; dest < graphWidth; dest++) {
+	for (node = 0; node < vertices - 1; node++) {
+		for (src = 0; src < vertices; src++) {
+			for (dest = 0; dest < vertices; dest++) {
 				if (graph[src][dest] != 0) {
-					if (distances[dest] > distances[src] + graph[src][dest] && distances[src] != INT_MAX) {
+					if (distances[dest]
+							> distances[src]
+									+ graph[src][dest]&& distances[src] != INT_MAX) {
 						distances[dest] = distances[src] + graph[src][dest];
 					}
 				}
 			}
 		}
 	}
-	/*
-	 * Mettendo così, se si sa che il grafo non ha weight negativi si velocizza notevolmente il processo
-	 * Ci sarebbe da fare che invece di fare una printf si incrementi un indice per ogni negative edge cycle
-	 * e solo alla fine stampa se ci sono negative cycle e quanti.
-	 *
-	 * Usare OpenMP
-	 */
-	if (containsNegativeLinks) {
-		for (src = 0; src < graphWidth; ++src) {
-			for (dest = 0; dest < graphWidth; ++dest) {
-				if (graph[src][dest] != 0) {
-					if (distances[dest] > distances[src] + graph[src][dest]) {
-						printf("The graph contains negative edge cycle!");
-					}
+}
+
+void checkCyclesPresenceSerial(int** graph, int vertices, int* distances) {
+	int src, dest, cycles = 0;
+	for (src = 0; src < vertices; ++src) {
+		for (dest = 0; dest < vertices; ++dest) {
+			if (graph[src][dest] != 0) {
+				if (distances[dest] > distances[src] + graph[src][dest]) {
+					cycles++;
 				}
 			}
 		}
 	}
+	if (cycles != 0) {
+		printf("The graph contains negative edge cycle %d times followed!\n", cycles);
+	}
+}
+
+/*
+ * Compute the minimum path in a graph represented with adiacency matrix
+ * using Bellman-Ford algorithm
+ * int** graph The graph in the adiacency matrix form
+ * bool negativeEdgesAllowed If edges can have a negative weight it's necessary to check the presence of cycles
+ * int vertices The number of vertices in the graph
+ * int sourceNode The node from which compute the distances
+ * return The minimum distances from sourceNode
+ */
+int* bellmanFordSerial(int** graph, bool negativeEdgesAllowed, int vertices, int sourceNode) {
+	double end, start = omp_get_wtime();
+
+	int* distances = (int*) malloc(vertices*sizeof(int));
+
+	initializeDistancesSerial(vertices, sourceNode, distances);
+
+	relaxEdgesSerial(graph, vertices, distances);
+
+	if (negativeEdgesAllowed) {
+		checkCyclesPresenceSerial(graph, vertices, distances);
+	}
     end = omp_get_wtime();
-    printf("Elapsed time for serial BellmanFord%f\n", end-start);
+    printf("Elapsed time for serial BellmanFord: %f\n", end-start);
 	return distances;
 }

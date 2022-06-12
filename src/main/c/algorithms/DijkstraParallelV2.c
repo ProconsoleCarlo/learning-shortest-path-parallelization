@@ -2,7 +2,7 @@
  * DijkstraParallelV2.c
  * Doesn't obtain a speed up, it cause *5 time
  *
- * Created on: 31/dic/2014
+ * Created on: 30/dic/2014
  * Author: Carlo Bobba, Eleonora Aiello
  * Credits: http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
  * Descrition: A C / C++ program for Dijkstra's single source shortest path algorithm.
@@ -19,43 +19,52 @@ int minDistance, minVertex;
 int* minDistances;
 int* minVertices;
 
-void getMinDistancePV1(int dist[], int graphWidth, bool sptSet[]) {
+void getMinDistancePV2(int* distances, int graphWidth, bool* shortestPathFinalized) {
 	minDistances[omp_get_thread_num()] = INT_MAX;
-	int v = 0;
-	#pragma omp for private(v)
-	for (v = 0; v < graphWidth; v++) {
-		if (!sptSet[v] && dist[v] <= minDistances[omp_get_thread_num()]) {
-			minDistances[omp_get_thread_num()] = dist[v];
-			minVertices[omp_get_thread_num()] = v;
+	int vertex = 0;
+	#pragma omp for private(vertex)
+	for (vertex = 0; vertex < graphWidth; vertex++) {
+		if (!shortestPathFinalized[vertex] && distances[vertex] <= minDistances[omp_get_thread_num()]) {
+			minDistances[omp_get_thread_num()] = distances[vertex];
+			minVertices[omp_get_thread_num()] = vertex;
 		}
 	}
 	#pragma omp single
 	{
 		minDistance = minDistances[omp_get_thread_num()];
 		minVertex = minVertices[omp_get_thread_num()];
-		for (v = 0; v < 4; ++v) {
-			if (minDistance > minDistances[v]) {
-				minDistance = minDistances[v];
-				minVertex = minVertices[v];
+		for (vertex = 0; vertex < 4; ++vertex) {
+			if (minDistance > minDistances[vertex]) {
+				minDistance = minDistances[vertex];
+				minVertex = minVertices[vertex];
 			}
 		}
 	}
 }
 
-void updateDistancesPV1(int graphWidth, bool* shortestPathFinalized, int** graph, int* distance) {
-	int v;
-	#pragma omp for private(v)
-	for (v = 0; v < graphWidth; v++) {
-		if (!shortestPathFinalized[v] && graph[minVertex][v] && distance[minVertex] != INT_MAX && distance[minVertex] + graph[minVertex][v] < distance[v]) {
-			distance[v] = distance[minVertex] + graph[minVertex][v];
+void updateDistancesPV2(int vertices, bool* shortestPathFinalized, int** graph, int* distances) {
+	int vertex;
+	#pragma omp for private(vertex)
+	for (vertex = 0; vertex < vertices; vertex++) {
+		if (!shortestPathFinalized[vertex] && graph[minVertex][vertex] && distances[minVertex] != INT_MAX && distances[minVertex] + graph[minVertex][vertex] < distances[vertex]) {
+			distances[vertex] = distances[minVertex] + graph[minVertex][vertex];
 		}
 	}
 }
 
-int* dijkstraPV1(int** graph, int graphWidth, int sourceNode) {
-	double end, start = omp_get_wtime();
-	int* distance = (int*) malloc(graphWidth*sizeof(int));
-	bool* shortestPathFinalized = (bool*) malloc(graphWidth*sizeof(bool));
+/*
+ * Compute the minimum path in a graph represented with adiacency matrix
+ * using Dijkstra algorithm
+ * int** graph The graph in the adiacency matrix form
+ * int vertices The number of vertices in the graph
+ * int sourceNode The node from which compute the distances
+ * return The minimum distances from sourceNode
+ */
+int* dijkstraPV2(int** graph, int vertices, int sourceNode) {
+	double endTime, startTime = omp_get_wtime();
+
+	int* distances = (int*) malloc(vertices*sizeof(int));
+	bool* shortestPathFinalized = (bool*) malloc(vertices*sizeof(bool));
 	minDistances = (int*) malloc(4*sizeof(int));
 	minVertices = (int*) malloc(4*sizeof(int));
 
@@ -63,25 +72,25 @@ int* dijkstraPV1(int** graph, int graphWidth, int sourceNode) {
     {
 		int i;
 		#pragma omp for private(i)
-		for (i = 0; i < graphWidth; i++) {
-			distance[i] = INT_MAX;
+		for (i = 0; i < vertices; i++) {
+			distances[i] = INT_MAX;
 			shortestPathFinalized[i] = false;
 		}
 		#pragma omp single
     	{
-    		distance[sourceNode] = 0;
+    		distances[sourceNode] = 0;
     	}
     	int count;
-    	for (count = 0; count < graphWidth; count++) {
-    		getMinDistancePV1(distance, graphWidth, shortestPathFinalized);
+    	for (count = 0; count < vertices; count++) {
+    		getMinDistancePV2(distances, vertices, shortestPathFinalized);
 			#pragma omp single
     		{
     			shortestPathFinalized[minVertex] = true;
     		}
-    		updateDistancesPV1(graphWidth, shortestPathFinalized, graph, distance);
+    		updateDistancesPV2(vertices, shortestPathFinalized, graph, distances);
     	}
     }
-    end = omp_get_wtime();
-    printf("Elapsed time for parallel %f\n", end-start);
-    return distance;
+    endTime = omp_get_wtime();
+    printf("Elapsed time for parallel %f\n", endTime-startTime);
+    return distances;
 }

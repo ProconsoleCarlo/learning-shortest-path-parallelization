@@ -9,4 +9,13 @@
 
 #include <stdbool.h>
 
-int* bellmanFordParallel(int** graph, bool containsNegativeLinks, int graphWidth, int sourceNode);
+/*
+ * Compute the minimum path in a graph represented with adiacency matrix
+ * using Bellman-Ford algorithm
+ * int** graph The graph in the adiacency matrix form
+ * bool negativeEdgesAllowed If edges can have a negative weight it's necessary to check the presence of cycles
+ * int vertices The number of vertices in the graph
+ * int sourceNode The node from which compute the distances
+ * return The minimum distances from sourceNode
+ */
+int* bellmanFordParallelV1(int** graph, bool negativeEdgesAllowed, int vertices, int sourceNode);

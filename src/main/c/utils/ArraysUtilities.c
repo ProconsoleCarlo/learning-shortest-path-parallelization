@@ -11,23 +11,6 @@
 #include <string.h>
 
 /*
- * Function that make the symmetric of an upper sided triangle matrix
- * int** matrix The upper sided triangle matrix
- * int width
- */
-int** makeMatrixSymmetric(int** matrix, int width) {
-	int i, j;
-	for (i = 0; i < width; ++i) {
-		for (j = i+1; j < width; ++j) {
-			if (matrix[i][j] != 0) {
-				matrix[j][i] = matrix[i][j];
-			}
-		}
-	}
-	return matrix;
-}
-
-/*
  * Function that check if two arrays contains the same values
  * int* array1 The first array
  * int lenght1 The lenght of the first array
@@ -79,5 +62,21 @@ void printArray(int* array, int lenght, char* indexDescription, char* valueDescr
 		for (i = 0; i < lenght; ++i) {
 			printf("%d \t %d\n", i, array[i]);
 		}
+	}
+}
+
+/*
+ * A function that print in a good way the values of a matrix
+ * int** matrix The matrix to print
+ * int width The width of the matrix
+ * int height The height of the matrix
+ */
+void printMatrix(int** matrix, int width, int height) {
+	int i, j;
+	for (i = 0; i < height; ++i) {
+		for (j = 0; j < width; ++j) {
+			printf("%d\t", matrix[i][j]);
+		}
+		printf("\n");
 	}
 }
