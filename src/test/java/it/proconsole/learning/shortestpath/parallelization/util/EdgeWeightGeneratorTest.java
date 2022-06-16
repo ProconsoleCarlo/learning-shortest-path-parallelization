@@ -9,6 +9,7 @@ import java.util.random.RandomGenerator;
 
 import static it.proconsole.learning.shortestpath.parallelization.util.EdgeWeightGenerator.Builder.aEdgeWeightGenerator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -57,5 +58,12 @@ class EdgeWeightGeneratorTest {
 
     assertEquals(A_NEGATIVE_WEIGHT, actual);
     verifyNoMoreInteractions(randomGenerator);
+  }
+
+  @Test
+  void throwIfInvalidWeights() {
+    var generator = aEdgeWeightGenerator(randomGenerator);
+    assertThrows(IllegalArgumentException.class, () -> generator.withMaxWeight(A_NEGATIVE_WEIGHT));
+    assertThrows(IllegalArgumentException.class, () -> generator.withMaxNegativeWeight(A_POSITIVE_WEIGHT));
   }
 }
