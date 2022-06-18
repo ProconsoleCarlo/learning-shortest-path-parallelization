@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.random.RandomGenerator;
 
 public class EdgeWeightGenerator {
-  private static final int ZERO_WEIGHT = 0;
+  static final int ZERO_WEIGHT = 0;
 
   private final RandomGenerator randomGenerator;
   private final int maxWeight;
