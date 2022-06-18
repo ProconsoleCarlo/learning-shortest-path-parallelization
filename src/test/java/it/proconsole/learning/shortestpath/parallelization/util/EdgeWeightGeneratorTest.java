@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.random.RandomGenerator;
 
+import static it.proconsole.learning.shortestpath.parallelization.model.Graph.ZERO_WEIGHT;
 import static it.proconsole.learning.shortestpath.parallelization.util.EdgeWeightGenerator.Builder.aEdgeWeightGenerator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,7 +19,6 @@ import static org.mockito.Mockito.when;
 class EdgeWeightGeneratorTest {
   private static final int MAX_WEIGHT = 5;
   private static final int MAX_NEGATIVE_WEIGHT = -3;
-  private static final int ZERO_WEIGHT = 0;
   private static final int A_POSITIVE_WEIGHT = 4;
   private static final int A_NEGATIVE_WEIGHT = -1;
 

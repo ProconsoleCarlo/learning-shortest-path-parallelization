@@ -1,8 +1,11 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public final class Graph {
+  public static final int ZERO_WEIGHT = 0;
+
   private final int[][] values;
 
   public Graph(int vertices) {
@@ -20,6 +23,16 @@ public final class Graph {
 
   public int getNode(int x, int y) {
     return values[x][y];
+  }
+
+  public boolean hasNegativeEdges() {
+    return IntStream.range(0, values.length)
+            .parallel()
+            .anyMatch(x -> IntStream.range(0, x).parallel().anyMatch(y -> values[x][y] < 0));
+  }
+
+  public boolean isNodeZero(int x, int y) {
+    return values[x][y] == ZERO_WEIGHT;
   }
 
   public int length() {

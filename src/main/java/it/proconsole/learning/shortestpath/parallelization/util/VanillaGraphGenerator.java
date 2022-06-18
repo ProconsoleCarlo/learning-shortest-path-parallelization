@@ -5,7 +5,7 @@ import it.proconsole.learning.shortestpath.parallelization.model.Graph;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
-import static it.proconsole.learning.shortestpath.parallelization.util.EdgeWeightGenerator.ZERO_WEIGHT;
+import static it.proconsole.learning.shortestpath.parallelization.model.Graph.ZERO_WEIGHT;
 
 public class VanillaGraphGenerator implements GraphGenerator {
   private final RandomGenerator random = new Random();

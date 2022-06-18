@@ -5,9 +5,9 @@ import org.springframework.lang.Nullable;
 import java.util.Optional;
 import java.util.random.RandomGenerator;
 
-public class EdgeWeightGenerator {
-  static final int ZERO_WEIGHT = 0;
+import static it.proconsole.learning.shortestpath.parallelization.model.Graph.ZERO_WEIGHT;
 
+public class EdgeWeightGenerator {
   private final RandomGenerator randomGenerator;
   private final int maxWeight;
   @Nullable
