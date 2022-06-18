@@ -53,17 +53,16 @@ class VanillaGraphGeneratorTest {
   }
 
   private void assertMainDiagonalHasZeros(Graph graph, int expectedEdges) {
-    var matrix = graph.values();
     var actualEdges = 0;
-    for (var i = 0; i < matrix.length; i++) {
-      if (matrix[i][i] != 0) {
+    for (var i = 0; i < graph.length(); i++) {
+      if (graph.getNode(i, i) != 0) {
         fail("Main diagonal has some non zero values");
       }
       for (var j = 0; j < i; j++) {
-        if (matrix[i][j] != matrix[j][i]) {
+        if (graph.getNode(i, j) != graph.getNode(j, i)) {
           fail("Matrix is not symmetric");
         }
-        if (matrix[i][j] != 0) {
+        if (graph.getNode(i, j) != 0) {
           actualEdges++;
         }
       }
