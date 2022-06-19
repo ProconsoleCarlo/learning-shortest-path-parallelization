@@ -3,4 +3,5 @@ target/
 *.iml
 **/*.o
 **/*.lst
-/src/main/c/Shortest Path
+**/*.exe
+/c/src/main/c/ShortestPath
