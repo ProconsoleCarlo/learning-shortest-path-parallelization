@@ -20,7 +20,7 @@ public class Distances {
   }
 
   public boolean isInfinite(int node) {
-    return this.values[node] != Integer.MAX_VALUE;
+    return this.values[node] == Integer.MAX_VALUE;
   }
 
   @Override
