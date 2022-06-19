@@ -1,60 +1,17 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
-import java.util.Arrays;
-import java.util.stream.IntStream;
+public interface Graph {
+  int ZERO_WEIGHT = 0;
 
-public final class Graph {
-  public static final int ZERO_WEIGHT = 0;
+  void setNode(int x, int y, int value);
 
-  private final int[][] values;
+  void setSymmetricNode(int x, int y, int value);
 
-  public Graph(int vertices) {
-    this.values = new int[vertices][vertices];
-  }
+  int getNode(int x, int y);
 
-  public void setNode(int x, int y, int value) {
-    this.values[x][y] = value;
-  }
+  boolean hasNegativeEdges();
 
-  public void setSymmetricNode(int x, int y, int value) {
-    this.values[x][y] = value;
-    this.values[y][x] = value;
-  }
+  boolean isNodeZero(int x, int y);
 
-  public int getNode(int x, int y) {
-    return values[x][y];
-  }
-
-  public boolean hasNegativeEdges() {
-    return IntStream.range(0, values.length)
-            .parallel()
-            .anyMatch(x -> IntStream.range(0, x).parallel().anyMatch(y -> values[x][y] < 0));
-  }
-
-  public boolean isNodeZero(int x, int y) {
-    return values[x][y] == ZERO_WEIGHT;
-  }
-
-  public int length() {
-    return values.length;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Graph graph)) return false;
-    return Arrays.deepEquals(values, graph.values);
-  }
-
-  @Override
-  public int hashCode() {
-    return Arrays.deepHashCode(values);
-  }
-
-  @Override
-  public String toString() {
-    return "Graph{" +
-            "values=" + Arrays.toString(values) +
-            '}';
-  }
+  int length();
 }

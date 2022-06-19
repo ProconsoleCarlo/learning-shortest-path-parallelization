@@ -1,18 +1,19 @@
 package it.proconsole.learning.shortestpath.parallelization.util;
 
 import it.proconsole.learning.shortestpath.parallelization.model.Graph;
+import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraph;
 
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
 import static it.proconsole.learning.shortestpath.parallelization.model.Graph.ZERO_WEIGHT;
 
-public class VanillaGraphGenerator implements GraphGenerator {
+public class MatrixGraphGenerator implements GraphGenerator {
   private final RandomGenerator random = new Random();
 
   private final EdgeWeightGenerator edgeWeightGenerator;
 
-  public VanillaGraphGenerator(EdgeWeightGenerator edgeWeightGenerator) {
+  public MatrixGraphGenerator(EdgeWeightGenerator edgeWeightGenerator) {
     this.edgeWeightGenerator = edgeWeightGenerator;
   }
 
@@ -37,7 +38,7 @@ public class VanillaGraphGenerator implements GraphGenerator {
   }
 
   private Graph addictiveAlgorithm(int vertices, int edges) {
-    var graph = new Graph(vertices);
+    var graph = new MatrixGraph(vertices);
     var nodes = 0;
     while (nodes < edges) {
       var x = random.nextInt(vertices);
@@ -52,7 +53,7 @@ public class VanillaGraphGenerator implements GraphGenerator {
   }
 
   private Graph removalAlgorithm(int vertices, int edges) {
-    var graph = new Graph(vertices);
+    var graph = new MatrixGraph(vertices);
     for (int i = 0; i < vertices; i++) {
       for (int j = 0; j < i; j++) {
         var value = edgeWeightGenerator.getValue();

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class VanillaGraphGeneratorTest {
+class MatrixGraphGeneratorTest {
   private static final int VERTICES = 100;
 
   private final Random random = new Random();
@@ -28,7 +28,7 @@ class VanillaGraphGeneratorTest {
 
   @BeforeEach
   void setUp() {
-    generator = new VanillaGraphGenerator(edgeWeightGenerator);
+    generator = new MatrixGraphGenerator(edgeWeightGenerator);
   }
 
   @Test
