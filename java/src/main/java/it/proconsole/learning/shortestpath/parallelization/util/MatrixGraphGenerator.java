@@ -5,6 +5,7 @@ import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraph;
 
 import java.util.Random;
 import java.util.random.RandomGenerator;
+import java.util.stream.IntStream;
 
 import static it.proconsole.learning.shortestpath.parallelization.model.Graph.ZERO_WEIGHT;
 
@@ -54,12 +55,10 @@ public class MatrixGraphGenerator implements GraphGenerator {
 
   private Graph removalAlgorithm(int vertices, int edges) {
     var graph = new MatrixGraph(vertices);
-    for (int i = 0; i < vertices; i++) {
-      for (int j = 0; j < i; j++) {
-        var value = edgeWeightGenerator.getValue();
-        graph.setSymmetricNode(i, j, value);
-      }
-    }
+    IntStream.range(0, vertices).parallel()
+            .forEach(i -> IntStream.range(0, i)
+                    .forEach(j -> graph.setSymmetricNode(i, j, edgeWeightGenerator.getValue()))
+            );
 
     var edgesToRemove = getMaxEdges(vertices) - edges;
     while (edgesToRemove > 0) {
