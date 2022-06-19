@@ -8,7 +8,7 @@ public class Distances {
 
   public Distances(int vertices, int sourceNode) {
     this.values = IntStream.range(0, vertices).parallel().map(i -> Integer.MAX_VALUE).toArray();
-    this.values[sourceNode] = 0;
+    this.values[sourceNode] = Graph.ZERO_WEIGHT;
   }
 
   public void setDistance(int node, int value) {

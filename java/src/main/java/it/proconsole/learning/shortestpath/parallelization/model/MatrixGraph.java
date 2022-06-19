@@ -1,7 +1,6 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 public final class MatrixGraph implements Graph {
   private final int[][] values;
@@ -28,11 +27,9 @@ public final class MatrixGraph implements Graph {
 
   @Override
   public boolean hasNegativeEdges() {
-    return IntStream.range(0, values.length)
-            .parallel()
-            .anyMatch(x -> IntStream.range(0, values.length)
-                    .anyMatch(y -> values[x][y] < 0)
-            );
+    return Arrays.stream(values).parallel()
+            .flatMapToInt(Arrays::stream)
+            .anyMatch(node -> node < Graph.ZERO_WEIGHT);
   }
 
   @Override
