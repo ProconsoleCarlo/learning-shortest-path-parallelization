@@ -42,7 +42,7 @@ class MatrixGraphGeneratorTest {
   }
 
   @ParameterizedTest
-  @ValueSource(floats = {0.1f, 0.6f})
+  @ValueSource(floats = {0.1f, 0.9f})
   void generateAGraphWithEdgeDensity(float density) {
     when(edgeWeightGenerator.getValue()).thenReturn(random.nextInt());
 

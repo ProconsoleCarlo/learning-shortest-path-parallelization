@@ -8,19 +8,19 @@ import java.util.stream.IntStream;
 public class BellmanFordSerialShortestPath implements ShortestPath {
   @Override
   public Distances compute(Graph graph, int sourceNode) {
-    var vertices = graph.length();
-    var distances = new Distances(vertices, sourceNode);
+    var distances = new Distances(graph.length(), sourceNode);
 
-    relaxEdges(graph, vertices, distances);
+    relaxEdges(graph, distances);
 
     if (graph.hasNegativeEdges()) {
-      checkCyclesPresence(graph, vertices, distances);
+      checkCyclesPresence(graph, distances);
     }
 
     return distances;
   }
 
-  private void relaxEdges(Graph graph, int vertices, Distances distances) {
+  private void relaxEdges(Graph graph, Distances distances) {
+    var vertices = graph.length();
     IntStream.range(0, vertices - 1)
             .forEach(node -> IntStream.range(0, vertices)
                     .forEach(src -> IntStream.range(0, vertices)
@@ -31,7 +31,8 @@ public class BellmanFordSerialShortestPath implements ShortestPath {
             );
   }
 
-  private void checkCyclesPresence(Graph graph, int vertices, Distances distances) {
+  private void checkCyclesPresence(Graph graph, Distances distances) {
+    var vertices = graph.length();
     var cycles = IntStream.range(0, vertices)
             .mapToLong(src -> IntStream.range(0, vertices)
                     .filter(dest -> isDistanceNotFinalized(graph, distances, src, dest))

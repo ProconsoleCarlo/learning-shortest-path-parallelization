@@ -3,9 +3,11 @@ package it.proconsole.learning.shortestpath.parallelization.model;
 import java.util.Arrays;
 
 public final class MatrixGraph implements Graph {
+  private final int vertices;
   private final int[][] values;
 
   public MatrixGraph(int vertices) {
+    this.vertices = vertices;
     this.values = new int[vertices][vertices];
   }
 
@@ -39,7 +41,7 @@ public final class MatrixGraph implements Graph {
 
   @Override
   public int length() {
-    return values.length;
+    return vertices;
   }
 
   @Override
