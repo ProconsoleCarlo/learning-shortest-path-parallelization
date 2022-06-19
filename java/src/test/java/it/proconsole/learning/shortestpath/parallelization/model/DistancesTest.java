@@ -9,10 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DistancesTest {
-  private static final int VERTICES = 5;
   private static final int SOURCE_NODE = 0;
+  private static final int A_NODE = 1;
+  private static final int A_DISTANCE = 9;
 
-  private final Distances distances = new Distances(VERTICES, SOURCE_NODE);
+  private final Distances distances = new Distances(5, SOURCE_NODE);
 
   @Test
   void atBeginningAllNodesHaveInfiniteDistanceExceptSourceNode() {
@@ -30,26 +31,19 @@ class DistancesTest {
 
   @Test
   void setAndGetDistance() {
-    var node = 1;
-    var distance = 9;
+    distances.setDistance(A_NODE, A_DISTANCE);
 
-    distances.setDistance(node, distance);
-
-    assertEquals(distance, distances.getDistance(node));
+    assertEquals(A_DISTANCE, distances.getDistance(A_NODE));
   }
 
   @Test
   void isInfinite() {
-    var node = 1;
-    var distance = 9;
-    var infiniteDistance = Integer.MAX_VALUE;
+    distances.setDistance(A_NODE, A_DISTANCE);
 
-    distances.setDistance(node, distance);
+    assertFalse(distances.isInfinite(A_NODE));
 
-    assertFalse(distances.isInfinite(node));
+    distances.setDistance(A_NODE, Integer.MAX_VALUE);
 
-    distances.setDistance(node, infiniteDistance);
-
-    assertTrue(distances.isInfinite(node));
+    assertTrue(distances.isInfinite(A_NODE));
   }
 }

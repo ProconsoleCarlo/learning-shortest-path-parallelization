@@ -30,7 +30,9 @@ public final class MatrixGraph implements Graph {
   public boolean hasNegativeEdges() {
     return IntStream.range(0, values.length)
             .parallel()
-            .anyMatch(x -> IntStream.range(0, x).parallel().anyMatch(y -> values[x][y] < 0));
+            .anyMatch(x -> IntStream.range(0, values.length)
+                    .anyMatch(y -> values[x][y] < 0)
+            );
   }
 
   @Override
