@@ -2,10 +2,14 @@ package it.proconsole.learning.shortestpath.parallelization.algorithm;
 
 import it.proconsole.learning.shortestpath.parallelization.model.Distances;
 import it.proconsole.learning.shortestpath.parallelization.model.Graph;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.stream.IntStream;
 
 public class BellmanFordSerialShortestPath implements ShortestPath {
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
   @Override
   public Distances compute(Graph graph, int sourceNode) {
     var distances = new Distances(graph.length(), sourceNode);
@@ -39,7 +43,7 @@ public class BellmanFordSerialShortestPath implements ShortestPath {
                     .count()
             ).sum();
     if (cycles != 0) {
-      System.err.println("The graph contains negative edge cycle " + cycles + " times followed!");
+      logger.warn("The graph contains negative edge cycle {} times followed!", cycles);
     }
   }
 
