@@ -25,6 +25,16 @@ public class BellmanFordSerialShortestPath implements ShortestPath {
 
   private void relaxEdges(Graph graph, Distances distances) {
     var vertices = graph.length();
+    for (int node = 0; node < vertices - 1; node++) {
+      for (int src = 0; src < vertices; src++) {
+        for (int dest = 0; dest < vertices; dest++) {
+          if (!distances.isInfinite(src) && isDistanceNotFinalized(graph, distances, src, dest)) {
+            distances.setDistance(dest, distances.getDistance(src) + graph.getNode(src, dest));
+          }
+        }
+      }
+    }
+    /*
     IntStream.range(0, vertices - 1)
             .forEach(node -> IntStream.range(0, vertices)
                     .forEach(src -> IntStream.range(0, vertices)
@@ -33,6 +43,7 @@ public class BellmanFordSerialShortestPath implements ShortestPath {
                             ).forEach(dest -> distances.setDistance(dest, distances.getDistance(src) + graph.getNode(src, dest)))
                     )
             );
+     */
   }
 
   private void checkCyclesPresence(Graph graph, Distances distances) {
