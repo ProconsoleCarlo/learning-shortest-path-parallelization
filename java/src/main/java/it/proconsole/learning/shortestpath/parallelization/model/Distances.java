@@ -11,12 +11,16 @@ public class Distances {
     this.values[sourceNode] = Graph.ZERO_WEIGHT;
   }
 
-  public void setDistance(int node, int value) {
-    this.values[node] = value;
+  int[] getValues() {
+    return values;
   }
 
   public int getDistance(int node) {
     return this.values[node];
+  }
+
+  public void setDistance(int node, int value) {
+    this.values[node] = value;
   }
 
   public boolean isInfinite(int node) {
