@@ -13,10 +13,7 @@ public abstract class ShortestPathTest {
 
   @Test
   void compute() {
-    var graph = new MatrixGraph(4);
-    graph.setSymmetricNode(0, 1, 2);
-    graph.setSymmetricNode(1, 2, 3);
-    graph.setSymmetricNode(2, 3, 5);
+    var graph = givenAGraph();
 
     var actual = shortestPath().compute(graph, sourceNode());
 
@@ -25,5 +22,13 @@ public abstract class ShortestPathTest {
     expected.setDistance(2, 5);
     expected.setDistance(3, 10);
     assertEquals(expected, actual);
+  }
+
+  MatrixGraph givenAGraph() {
+    var graph = new MatrixGraph(4);
+    graph.setSymmetricNode(0, 1, 2);
+    graph.setSymmetricNode(1, 2, 3);
+    graph.setSymmetricNode(2, 3, 5);
+    return graph;
   }
 }
