@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 abstract class ShortestPathTest {
-  public abstract ShortestPath shortestPath();
-
   public abstract int sourceNode();
+
+  public abstract ShortestPath shortestPath();
 
   @Test
   void compute() {
