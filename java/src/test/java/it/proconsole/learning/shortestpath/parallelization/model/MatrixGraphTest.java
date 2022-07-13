@@ -54,6 +54,6 @@ class MatrixGraphTest {
 
   @Test
   void length() {
-    assertEquals(VERTICES, graph.length());
+    assertEquals(VERTICES, graph.vertices());
   }
 }

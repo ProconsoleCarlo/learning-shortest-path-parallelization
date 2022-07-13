@@ -40,7 +40,7 @@ public final class MatrixGraph implements Graph {
   }
 
   @Override
-  public int length() {
+  public int vertices() {
     return vertices;
   }
 

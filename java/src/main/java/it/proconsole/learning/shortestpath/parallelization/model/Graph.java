@@ -13,5 +13,5 @@ public interface Graph {
 
   boolean isNodeZero(int x, int y);
 
-  int length();
+  int vertices();
 }

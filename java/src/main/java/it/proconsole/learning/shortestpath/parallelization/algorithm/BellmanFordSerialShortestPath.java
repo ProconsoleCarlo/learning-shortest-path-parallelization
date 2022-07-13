@@ -12,7 +12,7 @@ public class BellmanFordSerialShortestPath implements ShortestPath {
 
   @Override
   public Distances compute(Graph graph, int sourceNode) {
-    var distances = new Distances(graph.length(), sourceNode);
+    var distances = new Distances(graph.vertices(), sourceNode);
 
     relaxEdges(graph, distances);
 
@@ -24,7 +24,7 @@ public class BellmanFordSerialShortestPath implements ShortestPath {
   }
 
   private void relaxEdges(Graph graph, Distances distances) {
-    var vertices = graph.length();
+    var vertices = graph.vertices();
     for (int node = 0; node < vertices - 1; node++) {
       for (int src = 0; src < vertices; src++) {
         for (int dest = 0; dest < vertices; dest++) {
@@ -47,7 +47,7 @@ public class BellmanFordSerialShortestPath implements ShortestPath {
   }
 
   private void checkCyclesPresence(Graph graph, Distances distances) {
-    var vertices = graph.length();
+    var vertices = graph.vertices();
     var cycles = IntStream.range(0, vertices)
             .mapToLong(src -> IntStream.range(0, vertices)
                     .filter(dest -> isDistanceNotFinalized(graph, distances, src, dest))

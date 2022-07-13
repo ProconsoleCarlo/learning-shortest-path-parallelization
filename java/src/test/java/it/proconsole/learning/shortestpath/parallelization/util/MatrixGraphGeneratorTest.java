@@ -54,7 +54,7 @@ class MatrixGraphGeneratorTest {
 
   private void assertMainDiagonalHasZeros(Graph graph, int expectedEdges) {
     var actualEdges = 0;
-    for (var i = 0; i < graph.length(); i++) {
+    for (var i = 0; i < graph.vertices(); i++) {
       if (graph.getNode(i, i) != Graph.ZERO_WEIGHT) {
         fail("Main diagonal has some non zero values");
       }

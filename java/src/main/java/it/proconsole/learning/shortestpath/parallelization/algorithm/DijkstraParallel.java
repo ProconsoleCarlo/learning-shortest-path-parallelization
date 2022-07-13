@@ -6,35 +6,23 @@ import it.proconsole.learning.shortestpath.parallelization.model.Graph;
 
 import java.util.stream.IntStream;
 
-public class DijkstraParallel implements ShortestPath {
+public class DijkstraParallel implements DijkstraShortestPath {
   @Override
   public Distances compute(Graph graph, int sourceNode) {
-    var distances = new DistancesWithFinalization(graph.length(), sourceNode);
-
-    var vertices = graph.length();
-    IntStream.range(0, vertices)
-            .map(count -> getMinDistanceSerial(distances, vertices))
+    throwsIfNegativeEdges(graph);
+    var distances = new DistancesWithFinalization(graph.vertices(), sourceNode);
+    IntStream.range(0, graph.vertices())
+            .map(count -> getMinDistance(distances, graph.vertices()))
             .forEach(minVertex -> {
               distances.setFinalized(minVertex);
-              updateDistancesSerial(vertices, distances, graph, minVertex);
+              updateDistances(distances, graph, minVertex);
             });
     return distances;
   }
 
-  private int getMinDistanceSerial(DistancesWithFinalization distances, int vertices) {
-    var minVertex = -1;
-    var minDistance = Integer.MAX_VALUE;
-    for (var vertex = 0; vertex < vertices; vertex++) {
-      if (!distances.isFinalized(vertex) && distances.getDistance(vertex) <= minDistance) {
-        minDistance = distances.getDistance(vertex);
-        minVertex = vertex;
-      }
-    }
-    return minVertex;
-  }
-
-  private void updateDistancesSerial(int vertices, DistancesWithFinalization distances, Graph graph, int minVertex) {
-    IntStream.range(0, vertices)
+  @Override
+  public void updateDistances(DistancesWithFinalization distances, Graph graph, int minVertex) {
+    IntStream.range(0, graph.vertices())
             .parallel()
             .filter(vertex -> !distances.isFinalized(vertex)
                     && graph.getNode(minVertex, vertex) != 0
