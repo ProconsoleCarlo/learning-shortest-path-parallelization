@@ -55,11 +55,4 @@ public final class MatrixGraph implements Graph {
   public int hashCode() {
     return Arrays.deepHashCode(values);
   }
-
-  @Override
-  public String toString() {
-    return "Graph{" +
-            "values=" + Arrays.toString(values) +
-            '}';
-  }
 }

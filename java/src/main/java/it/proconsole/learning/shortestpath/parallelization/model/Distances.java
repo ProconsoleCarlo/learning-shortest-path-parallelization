@@ -11,10 +11,6 @@ public class Distances {
     setDistance(sourceNode, Graph.ZERO_WEIGHT);
   }
 
-  int[] getValues() {
-    return values;
-  }
-
   public int getDistance(int node) {
     return this.values[node];
   }
@@ -37,12 +33,5 @@ public class Distances {
   @Override
   public int hashCode() {
     return Arrays.hashCode(values);
-  }
-
-  @Override
-  public String toString() {
-    return "Distances{" +
-            "values=" + Arrays.toString(values) +
-            '}';
   }
 }

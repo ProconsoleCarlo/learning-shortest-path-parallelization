@@ -32,12 +32,4 @@ public class DistancesWithFinalization extends Distances {
     result = 31 * result + Arrays.hashCode(finalized);
     return result;
   }
-
-  @Override
-  public String toString() {
-    return "DistancesWithFinalization{" +
-            "values=" + Arrays.toString(getValues()) +
-            "finalized=" + Arrays.toString(finalized) +
-            "} ";
-  }
 }

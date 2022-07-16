@@ -13,10 +13,6 @@ public class BellmanFordParallelShortestPath implements BellmanFordShortestPath 
 
     relaxEdges(graph, distances);
 
-    if (graph.hasNegativeEdges()) {
-      checkCyclesPresence(graph, distances);
-    }
-
     return distances;
   }
 
