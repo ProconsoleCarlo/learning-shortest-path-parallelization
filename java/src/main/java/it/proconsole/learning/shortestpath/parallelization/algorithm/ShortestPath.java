@@ -7,6 +7,8 @@ import it.proconsole.learning.shortestpath.parallelization.model.Graph;
 public interface ShortestPath {
   Distances compute(Graph graph, int sourceNode);
 
+  String name();
+
   default void throwsIfNegativeEdges(Graph graph) {
     if (graph.hasNegativeEdges()) {
       throw new NegativeEdgesException();

@@ -15,22 +15,22 @@ public class EdgeWeightGenerator {
 
   private EdgeWeightGenerator(RandomGenerator randomGenerator, Integer maxWeight, @Nullable Integer maxNegativeWeight) {
     this.randomGenerator = randomGenerator;
-    this.maxNegativeWeight = maxNegativeWeight;
     this.maxWeight = maxWeight;
+    this.maxNegativeWeight = maxNegativeWeight;
   }
 
   public int getValue() {
-    var weight = random(ZERO_WEIGHT, maxWeight);
+    var weight = randomBetween(ZERO_WEIGHT, maxWeight);
     if (weight == ZERO_WEIGHT) {
       return Optional.ofNullable(maxNegativeWeight)
-              .map(it -> random(maxNegativeWeight, ZERO_WEIGHT))
+              .map(it -> randomBetween(maxNegativeWeight, ZERO_WEIGHT))
               .orElse(maxWeight);
     } else {
       return weight;
     }
   }
 
-  private int random(int from, int to) {
+  private int randomBetween(int from, int to) {
     return randomGenerator.nextInt(from, to);
   }
 

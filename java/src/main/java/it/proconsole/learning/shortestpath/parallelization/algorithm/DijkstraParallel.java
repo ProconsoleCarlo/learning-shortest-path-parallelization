@@ -21,6 +21,11 @@ public class DijkstraParallel implements DijkstraShortestPath {
   }
 
   @Override
+  public String name() {
+    return "Dijkstra parallel";
+  }
+
+  @Override
   public void updateDistances(DistancesWithFinalization distances, Graph graph, int minVertex) {
     IntStream.range(0, graph.vertices())
             .parallel()

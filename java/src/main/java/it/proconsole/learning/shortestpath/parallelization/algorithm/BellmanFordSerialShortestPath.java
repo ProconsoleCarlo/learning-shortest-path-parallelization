@@ -17,6 +17,11 @@ public class BellmanFordSerialShortestPath implements BellmanFordShortestPath {
     return distances;
   }
 
+  @Override
+  public String name() {
+    return "Bellman-Ford serial";
+  }
+
   private void relaxEdges(Graph graph, Distances distances) {
     var vertices = graph.vertices();
     for (int node = 0; node < vertices - 1; node++) {

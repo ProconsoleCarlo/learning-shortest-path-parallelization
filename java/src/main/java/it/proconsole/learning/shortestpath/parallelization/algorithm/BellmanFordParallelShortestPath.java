@@ -16,6 +16,11 @@ public class BellmanFordParallelShortestPath implements BellmanFordShortestPath 
     return distances;
   }
 
+  @Override
+  public String name() {
+    return "Bellman-Ford parallel";
+  }
+
   private void relaxEdges(Graph graph, Distances distances) {
     var vertices = graph.vertices();
     IntStream.range(0, vertices - 1)
