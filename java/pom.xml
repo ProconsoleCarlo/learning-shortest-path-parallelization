@@ -47,4 +47,22 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <mainClass>it.proconsole.learning.shortestpath.parallelization.Main</mainClass>
+          <arguments>
+            <argument>vertices=1200</argument>
+            <argument>density=0.4</argument>
+            <argument>sourceNode=0</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
