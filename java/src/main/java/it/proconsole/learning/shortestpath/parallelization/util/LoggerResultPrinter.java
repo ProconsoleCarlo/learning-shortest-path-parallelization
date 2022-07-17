@@ -8,12 +8,18 @@ import org.slf4j.LoggerFactory;
 public class LoggerResultPrinter {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  public void print(SerialParallelResult result) {
+  public String print(SerialParallelResult result) {
     var serialOutput = printTiming(result.serial());
     var parallelOutput = printTiming(result.parallel());
     var correctness = printCorrectness(result);
     var speedUp = printSpeedUp(result);
-    logger.info("\n{}\n{}\n{}\n{}", serialOutput, parallelOutput, correctness, speedUp);
+    var message = """
+            %s
+            %s
+            %s
+            %s""".formatted(serialOutput, parallelOutput, correctness, speedUp);
+    logger.info(message);
+    return message;
   }
 
   private String printTiming(Algorithm algorithm) {
@@ -29,7 +35,7 @@ public class LoggerResultPrinter {
   private String printSpeedUp(SerialParallelResult result) {
     if (result.speedUp() < 1) {
       return "Parallel execution is %s times SLOWER that serial".formatted(result.speedUp());
-    } else if (result.speedUp() == 0) {
+    } else if (result.speedUp() == 1) {
       return "Parallel execution has the SAME speed of serial";
     } else {
       return "Parallel execution is %s FASTER that serial".formatted(result.speedUp());
