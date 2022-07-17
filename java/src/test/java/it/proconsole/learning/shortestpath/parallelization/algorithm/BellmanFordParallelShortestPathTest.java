@@ -4,6 +4,7 @@ import it.proconsole.learning.shortestpath.parallelization.exception.NegativeEdg
 import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraph;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BellmanFordParallelShortestPathTest extends ShortestPathTest {
@@ -25,8 +26,12 @@ class BellmanFordParallelShortestPathTest extends ShortestPathTest {
   void computeWithCycles() {
     var graph = new MatrixGraph(2);
     graph.setSymmetricNode(0, 1, -1);
-    var shortestPath = shortestPath();
 
     assertThrows(NegativeEdgesException.class, () -> shortestPath.compute(graph, SOURCE_NODE));
+  }
+
+  @Test
+  void name() {
+    assertEquals("Bellman-Ford parallel", shortestPath.name());
   }
 }

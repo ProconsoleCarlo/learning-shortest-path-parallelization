@@ -36,4 +36,9 @@ class BellmanFordSerialShortestPathTest extends ShortestPathTest {
     expected.setDistance(3, 2);
     assertEquals(expected, actual);
   }
+
+  @Test
+  void name() {
+    assertEquals("Bellman-Ford serial", shortestPath.name());
+  }
 }
