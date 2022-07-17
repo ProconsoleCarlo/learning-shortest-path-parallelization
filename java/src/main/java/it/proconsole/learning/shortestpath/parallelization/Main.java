@@ -6,6 +6,7 @@ import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraPar
 import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraSerial;
 import it.proconsole.learning.shortestpath.parallelization.util.LoggerResultPrinter;
 import it.proconsole.learning.shortestpath.parallelization.util.MatrixGraphGenerator;
+import it.proconsole.learning.shortestpath.parallelization.util.NamedArgsExtractor;
 import it.proconsole.learning.shortestpath.parallelization.util.SerialParallelComparator;
 
 import java.util.Random;
@@ -18,15 +19,20 @@ public class Main {
   private static final int SOURCE_NODE = 0;
 
   public static void main(String[] args) {
+    var namedArgs = new NamedArgsExtractor(args);
+    var vertices = namedArgs.getInteger("vertices").orElse(VERTICES);
+    var density = namedArgs.getFloat("density").orElse(DENSITY);
+    int sourceNode = namedArgs.getInteger("sourceNode").orElse(SOURCE_NODE);
+
     var graphGenerator = new MatrixGraphGenerator(aEdgeWeightGenerator(new Random()).build());
     var resultPrinter = new LoggerResultPrinter();
 
-    var graph = graphGenerator.generate(VERTICES, DENSITY);
+    var graph = graphGenerator.generate(vertices, density);
     var dijkstra = new SerialParallelComparator(new DijkstraSerial(), new DijkstraParallel());
     var bellmanFord = new SerialParallelComparator(new BellmanFordSerialShortestPath(), new BellmanFordParallelShortestPath());
 
-    var dijkstraResult = dijkstra.compareWith(graph, SOURCE_NODE);
-    var bellmanFordResult = bellmanFord.compareWith(graph, SOURCE_NODE);
+    var dijkstraResult = dijkstra.compareWith(graph, sourceNode);
+    var bellmanFordResult = bellmanFord.compareWith(graph, sourceNode);
 
     resultPrinter.print(dijkstraResult);
     resultPrinter.print(bellmanFordResult);
