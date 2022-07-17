@@ -1,7 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization;
 
-import it.proconsole.learning.shortestpath.parallelization.algorithm.BellmanFordParallelShortestPath;
-import it.proconsole.learning.shortestpath.parallelization.algorithm.BellmanFordSerialShortestPath;
+import it.proconsole.learning.shortestpath.parallelization.algorithm.BellmanFordParallel;
+import it.proconsole.learning.shortestpath.parallelization.algorithm.BellmanFordSerial;
 import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraParallel;
 import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraSerial;
 import it.proconsole.learning.shortestpath.parallelization.util.LoggerResultPrinter;
@@ -29,7 +29,7 @@ public class Main {
 
     var graph = graphGenerator.generate(vertices, density);
     var dijkstra = new SerialParallelComparator(new DijkstraSerial(), new DijkstraParallel());
-    var bellmanFord = new SerialParallelComparator(new BellmanFordSerialShortestPath(), new BellmanFordParallelShortestPath());
+    var bellmanFord = new SerialParallelComparator(new BellmanFordSerial(), new BellmanFordParallel());
 
     var dijkstraResult = dijkstra.compareWith(graph, sourceNode);
     var bellmanFordResult = bellmanFord.compareWith(graph, sourceNode);

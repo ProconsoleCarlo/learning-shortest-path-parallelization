@@ -5,7 +5,7 @@ import it.proconsole.learning.shortestpath.parallelization.model.Graph;
 
 import java.util.stream.IntStream;
 
-public class BellmanFordParallelShortestPath implements BellmanFordShortestPath {
+public class BellmanFordParallel implements BellmanFordShortestPath {
   @Override
   public Distances compute(Graph graph, int sourceNode) {
     throwsIfNegativeEdges(graph);

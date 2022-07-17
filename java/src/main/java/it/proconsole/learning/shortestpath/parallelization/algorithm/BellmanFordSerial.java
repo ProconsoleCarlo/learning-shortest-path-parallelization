@@ -3,7 +3,7 @@ package it.proconsole.learning.shortestpath.parallelization.algorithm;
 import it.proconsole.learning.shortestpath.parallelization.model.Distances;
 import it.proconsole.learning.shortestpath.parallelization.model.Graph;
 
-public class BellmanFordSerialShortestPath implements BellmanFordShortestPath {
+public class BellmanFordSerial implements BellmanFordShortestPath {
   @Override
   public Distances compute(Graph graph, int sourceNode) {
     var distances = new Distances(graph.vertices(), sourceNode);

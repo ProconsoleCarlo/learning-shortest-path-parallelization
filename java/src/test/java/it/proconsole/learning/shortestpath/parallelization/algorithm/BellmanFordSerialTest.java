@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BellmanFordSerialShortestPathTest extends ShortestPathTest {
+class BellmanFordSerialTest extends ShortestPathTest {
   private static final int SOURCE_NODE = 0;
 
-  private final ShortestPath shortestPath = new BellmanFordSerialShortestPath();
+  private final ShortestPath shortestPath = new BellmanFordSerial();
 
   @Override
   public ShortestPath shortestPath() {

@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class BellmanFordParallelShortestPathTest extends ShortestPathTest {
+class BellmanFordParallelTest extends ShortestPathTest {
   private static final int SOURCE_NODE = 0;
 
-  private final ShortestPath shortestPath = new BellmanFordParallelShortestPath();
+  private final ShortestPath shortestPath = new BellmanFordParallel();
 
   @Override
   public ShortestPath shortestPath() {
