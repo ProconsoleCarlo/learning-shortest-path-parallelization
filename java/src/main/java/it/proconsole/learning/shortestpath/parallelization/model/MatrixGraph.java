@@ -36,7 +36,7 @@ public final class MatrixGraph implements Graph {
 
   @Override
   public boolean isNodeZero(int x, int y) {
-    return values[x][y] == ZERO_WEIGHT;
+    return values[x][y] == Graph.ZERO_WEIGHT;
   }
 
   @Override
