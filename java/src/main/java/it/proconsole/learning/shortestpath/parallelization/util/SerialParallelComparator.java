@@ -4,22 +4,31 @@ import it.proconsole.learning.shortestpath.parallelization.algorithm.ShortestPat
 import it.proconsole.learning.shortestpath.parallelization.model.Distances;
 import it.proconsole.learning.shortestpath.parallelization.model.Graph;
 import it.proconsole.learning.shortestpath.parallelization.model.SerialParallelResult;
+import it.proconsole.learning.shortestpath.parallelization.model.SerialParallelResult.Algorithm;
 
+import java.time.Clock;
 import java.time.Duration;
-import java.time.Instant;
 
 public class SerialParallelComparator {
   private final ShortestPath serial;
   private final ShortestPath parallel;
+  private final InstantProvider instantProvider;
+
+  public SerialParallelComparator(ShortestPath serial, ShortestPath parallel, InstantProvider instantProvider) {
+    this.serial = serial;
+    this.parallel = parallel;
+    this.instantProvider = instantProvider;
+  }
 
   public SerialParallelComparator(ShortestPath serial, ShortestPath parallel) {
     this.serial = serial;
     this.parallel = parallel;
+    this.instantProvider = new InstantProvider(Clock.systemUTC());
   }
 
   public SerialParallelResult compareWith(Graph graph, int sourceNode) {
-    var serialResult = countMillisFor(serial, graph, sourceNode);
-    var parallelResult = countMillisFor(parallel, graph, sourceNode);
+    var serialResult = computeWithDuration(serial, graph, sourceNode);
+    var parallelResult = computeWithDuration(parallel, graph, sourceNode);
 
     return new SerialParallelResult(
             serialResult.toAlgorithm(),
@@ -29,10 +38,10 @@ public class SerialParallelComparator {
     );
   }
 
-  private AlgorithmResult countMillisFor(ShortestPath algorithm, Graph graph, int sourceNode) {
-    var start = Instant.now();
+  private AlgorithmResult computeWithDuration(ShortestPath algorithm, Graph graph, int sourceNode) {
+    var start = instantProvider.now();
     var distances = algorithm.compute(graph, sourceNode);
-    var end = Instant.now();
+    var end = instantProvider.now();
     return new AlgorithmResult(algorithm.name(), Duration.between(start, end).toMillis(), distances);
   }
 
@@ -49,8 +58,8 @@ public class SerialParallelComparator {
           long millis,
           Distances distances
   ) {
-    public SerialParallelResult.Algorithm toAlgorithm() {
-      return new SerialParallelResult.Algorithm(name, millis);
+    public Algorithm toAlgorithm() {
+      return new Algorithm(name, millis);
     }
   }
 }
