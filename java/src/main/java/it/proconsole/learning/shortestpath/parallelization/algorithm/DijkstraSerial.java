@@ -29,7 +29,8 @@ public class DijkstraSerial implements DijkstraShortestPath {
       if (!distances.isFinalized(vertex)
               && !graph.isNodeZero(minVertex, vertex)
               && !distances.isInfinite(minVertex)
-              && distances.getDistance(minVertex) + graph.getNode(minVertex, vertex) < distances.getDistance(vertex)) {
+              && distances.getDistance(minVertex) + graph.getNode(minVertex, vertex) < distances.getDistance(vertex)
+      ) {
         distances.setDistance(vertex, distances.getDistance(minVertex) + graph.getNode(minVertex, vertex));
       }
     }
