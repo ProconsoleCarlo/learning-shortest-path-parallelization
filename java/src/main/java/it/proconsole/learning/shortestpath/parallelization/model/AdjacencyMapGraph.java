@@ -2,6 +2,7 @@ package it.proconsole.learning.shortestpath.parallelization.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public final class AdjacencyMapGraph implements Graph {
   private final int vertices;
@@ -25,7 +26,9 @@ public final class AdjacencyMapGraph implements Graph {
 
   @Override
   public int getNode(int x, int y) {
-    return values.get(x).getEdge(y);
+    return Optional.ofNullable(values.get(x))
+            .map(it -> it.getEdge(y))
+            .orElse(Graph.ZERO_WEIGHT);
   }
 
   @Override

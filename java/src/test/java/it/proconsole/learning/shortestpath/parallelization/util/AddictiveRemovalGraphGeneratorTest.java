@@ -1,6 +1,8 @@
 package it.proconsole.learning.shortestpath.parallelization.util;
 
+import it.proconsole.learning.shortestpath.parallelization.model.AdjacencyMapGraph;
 import it.proconsole.learning.shortestpath.parallelization.model.Graph;
+import it.proconsole.learning.shortestpath.parallelization.model.GraphFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,11 +18,13 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class MatrixGraphGeneratorTest {
+class AddictiveRemovalGraphGeneratorTest {
   private static final int VERTICES = 100;
 
   private final Random random = new Random();
 
+  @Mock
+  private GraphFactory graphFactory;
   @Mock
   private EdgeWeightGenerator edgeWeightGenerator;
 
@@ -28,7 +32,9 @@ class MatrixGraphGeneratorTest {
 
   @BeforeEach
   void setUp() {
-    generator = new MatrixGraphGenerator(edgeWeightGenerator);
+    generator = new AddictiveRemovalGraphGenerator(graphFactory, edgeWeightGenerator);
+
+    when(graphFactory.create(VERTICES)).thenReturn(new AdjacencyMapGraph(VERTICES));
   }
 
   @Test

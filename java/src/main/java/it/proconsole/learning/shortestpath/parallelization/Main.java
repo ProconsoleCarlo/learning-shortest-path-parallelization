@@ -4,8 +4,9 @@ import it.proconsole.learning.shortestpath.parallelization.algorithm.BellmanFord
 import it.proconsole.learning.shortestpath.parallelization.algorithm.BellmanFordSerial;
 import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraParallel;
 import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraSerial;
+import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraphFactory;
+import it.proconsole.learning.shortestpath.parallelization.util.AddictiveRemovalGraphGenerator;
 import it.proconsole.learning.shortestpath.parallelization.util.LoggerResultPrinter;
-import it.proconsole.learning.shortestpath.parallelization.util.MatrixGraphGenerator;
 import it.proconsole.learning.shortestpath.parallelization.util.NamedArgsExtractor;
 import it.proconsole.learning.shortestpath.parallelization.util.SerialParallelComparator;
 
@@ -24,7 +25,7 @@ public class Main {
     var density = namedArgs.getFloat("density").orElse(DENSITY);
     int sourceNode = namedArgs.getInteger("sourceNode").orElse(SOURCE_NODE);
 
-    var graphGenerator = new MatrixGraphGenerator(aEdgeWeightGenerator(new Random()).build());
+    var graphGenerator = new AddictiveRemovalGraphGenerator(new MatrixGraphFactory(), aEdgeWeightGenerator(new Random()).build());
     var resultPrinter = new LoggerResultPrinter();
 
     var graph = graphGenerator.generate(vertices, density);

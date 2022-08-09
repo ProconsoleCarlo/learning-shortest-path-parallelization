@@ -1,7 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.util;
 
 import it.proconsole.learning.shortestpath.parallelization.model.Graph;
-import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraph;
+import it.proconsole.learning.shortestpath.parallelization.model.GraphFactory;
 
 import java.util.Random;
 import java.util.random.RandomGenerator;
@@ -9,12 +9,14 @@ import java.util.stream.IntStream;
 
 import static it.proconsole.learning.shortestpath.parallelization.model.Graph.ZERO_WEIGHT;
 
-public class MatrixGraphGenerator implements GraphGenerator {
+public class AddictiveRemovalGraphGenerator implements GraphGenerator {
   private final RandomGenerator random = new Random();
 
+  private final GraphFactory graphFactory;
   private final EdgeWeightGenerator edgeWeightGenerator;
 
-  public MatrixGraphGenerator(EdgeWeightGenerator edgeWeightGenerator) {
+  public AddictiveRemovalGraphGenerator(GraphFactory graphFactory, EdgeWeightGenerator edgeWeightGenerator) {
+    this.graphFactory = graphFactory;
     this.edgeWeightGenerator = edgeWeightGenerator;
   }
 
@@ -39,7 +41,7 @@ public class MatrixGraphGenerator implements GraphGenerator {
   }
 
   private Graph addictiveAlgorithm(int vertices, int edges) {
-    var graph = new MatrixGraph(vertices);
+    var graph = graphFactory.create(vertices);
     var nodes = 0;
     while (nodes < edges) {
       var x = random.nextInt(vertices);
@@ -54,7 +56,7 @@ public class MatrixGraphGenerator implements GraphGenerator {
   }
 
   private Graph removalAlgorithm(int vertices, int edges) {
-    var graph = new MatrixGraph(vertices);
+    var graph = graphFactory.create(vertices);
     IntStream.range(0, vertices).parallel()
             .forEach(i -> IntStream.range(0, i)
                     .forEach(j -> graph.setSymmetricNode(i, j, edgeWeightGenerator.getValue()))
