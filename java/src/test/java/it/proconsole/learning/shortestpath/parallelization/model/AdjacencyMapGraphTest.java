@@ -1,7 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
-class MatrixGraphTest extends GraphTest {
-  private final Graph graph = new MatrixGraph(VERTICES);
+class AdjacencyMapGraphTest extends GraphTest {
+  private final Graph graph = new AdjacencyMapGraph(VERTICES);
 
   @Override
   Graph graph() {
