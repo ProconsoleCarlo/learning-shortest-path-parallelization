@@ -57,7 +57,7 @@ public class AddictiveRemovalGraphGenerator implements GraphGenerator {
 
   private Graph removalAlgorithm(int vertices, int edges) {
     var graph = graphFactory.create(vertices);
-    IntStream.range(0, vertices).parallel()
+    IntStream.range(0, vertices)
             .forEach(i -> IntStream.range(0, i)
                     .forEach(j -> graph.setSymmetricNode(i, j, edgeWeightGenerator.getValue()))
             );

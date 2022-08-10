@@ -2,6 +2,7 @@ package it.proconsole.learning.shortestpath.parallelization.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class AdjacencyMapGraph implements Graph {
@@ -44,6 +45,18 @@ public final class AdjacencyMapGraph implements Graph {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof AdjacencyMapGraph that)) return false;
+    return vertices == that.vertices && values.equals(that.values);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(vertices, values);
+  }
+
+  @Override
   public int vertices() {
     return vertices;
   }
@@ -70,6 +83,18 @@ public final class AdjacencyMapGraph implements Graph {
 
     public int getEdge(int destination) {
       return edges.getOrDefault(destination, Graph.ZERO_WEIGHT);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Node node)) return false;
+      return name == node.name && edges.equals(node.edges);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(name, edges);
     }
   }
 }
