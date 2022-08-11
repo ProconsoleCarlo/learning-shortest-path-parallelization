@@ -8,6 +8,7 @@ import it.proconsole.learning.shortestpath.parallelization.model.SerialParallelR
 
 import java.time.Clock;
 import java.time.Duration;
+import java.util.Arrays;
 
 public class SerialParallelComparator {
   private final ShortestPath serial;
@@ -41,6 +42,7 @@ public class SerialParallelComparator {
   private AlgorithmResult computeWithDuration(ShortestPath algorithm, Graph graph, int sourceNode) {
     var start = instantProvider.now();
     var distances = algorithm.compute(graph, sourceNode);
+    //System.err.println(distances);
     var end = instantProvider.now();
     return new AlgorithmResult(algorithm.name(), Duration.between(start, end).toMillis(), distances);
   }
@@ -50,7 +52,7 @@ public class SerialParallelComparator {
   }
 
   private boolean checkCorrectness(AlgorithmResult serial, AlgorithmResult parallel) {
-    return serial.distances.equals(parallel.distances);
+    return Arrays.equals(serial.distances.getValues(), parallel.distances.getValues());
   }
 
   public record AlgorithmResult(

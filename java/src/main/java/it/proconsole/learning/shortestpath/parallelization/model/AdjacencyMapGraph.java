@@ -1,6 +1,9 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
+import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraPriorityQueueSerial;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,6 +35,14 @@ public final class AdjacencyMapGraph implements Graph {
             .orElse(Graph.ZERO_WEIGHT);
   }
 
+  public Map<Integer, Integer> neighbours(int x) {
+    return values.get(x).edges;
+  }
+
+  public List<DijkstraPriorityQueueSerial.Edge> neighboursList(int x) {
+    return values.get(x).edges.entrySet().stream().map(it -> new DijkstraPriorityQueueSerial.Edge(it.getKey(), it.getValue())).toList();
+  }
+
   @Override
   public boolean hasNegativeEdges() {
     return values.values().stream()
@@ -59,6 +70,25 @@ public final class AdjacencyMapGraph implements Graph {
   @Override
   public int vertices() {
     return vertices;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder text = new StringBuilder();
+    for (Map.Entry<Integer, Node> entry : values.entrySet()) {
+      Integer k = entry.getKey();
+      Node v = entry.getValue();
+      StringBuilder all = new StringBuilder();
+      var row = "nodeList.get(" + k + ")";
+      for (Map.Entry<Integer, Integer> e : v.edges.entrySet()) {
+        Integer dest = e.getKey();
+        Integer cost = e.getValue();
+        all.append("\n").append(row).append(".add(new Node(").append(dest).append(", ").append(cost).append("));");
+      }
+      text.append(all);
+
+    }
+    return text.toString();
   }
 
   static class Node {

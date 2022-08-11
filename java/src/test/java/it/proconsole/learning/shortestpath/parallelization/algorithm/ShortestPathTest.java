@@ -1,7 +1,8 @@
 package it.proconsole.learning.shortestpath.parallelization.algorithm;
 
+import it.proconsole.learning.shortestpath.parallelization.model.AdjacencyMapGraph;
 import it.proconsole.learning.shortestpath.parallelization.model.Distances;
-import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraph;
+import it.proconsole.learning.shortestpath.parallelization.model.Graph;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,8 +25,8 @@ abstract class ShortestPathTest {
     assertEquals(expected, actual);
   }
 
-  MatrixGraph givenAGraph() {
-    var graph = new MatrixGraph(4);
+  Graph givenAGraph() {
+    var graph = new AdjacencyMapGraph(4);
     graph.setSymmetricNode(0, 1, 2);
     graph.setSymmetricNode(1, 2, 3);
     graph.setSymmetricNode(2, 3, 5);
