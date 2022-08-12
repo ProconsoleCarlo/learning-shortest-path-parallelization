@@ -1,5 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
+import java.util.List;
+
 public interface Graph {
   int ZERO_WEIGHT = 0;
 
@@ -14,4 +16,6 @@ public interface Graph {
   boolean isNodeZero(int x, int y);
 
   int vertices();
+
+  List<Edge> neighboursOf(int x);
 }

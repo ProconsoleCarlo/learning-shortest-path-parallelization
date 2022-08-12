@@ -1,6 +1,8 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public final class MatrixGraph implements Graph {
   private final int vertices;
@@ -42,6 +44,11 @@ public final class MatrixGraph implements Graph {
   @Override
   public int vertices() {
     return vertices;
+  }
+
+  @Override
+  public List<Edge> neighboursOf(int x) {
+    return Collections.emptyList(); //TODO
   }
 
   @Override

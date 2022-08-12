@@ -1,63 +1,56 @@
 package it.proconsole.learning.shortestpath.parallelization.algorithm;
 
-import it.proconsole.learning.shortestpath.parallelization.model.AdjacencyMapGraph;
 import it.proconsole.learning.shortestpath.parallelization.model.Distances;
 import it.proconsole.learning.shortestpath.parallelization.model.DistancesWithFinalization;
+import it.proconsole.learning.shortestpath.parallelization.model.Edge;
 import it.proconsole.learning.shortestpath.parallelization.model.Graph;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.stream.IntStream;
 
-public class DijkstraPriorityQueueSerial implements DijkstraShortestPath {
+public class DijkstraPriorityQueueSerial implements ShortestPath {
+  private final PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(Edge::cost));
+
   @Override
   public Distances compute(Graph graph, int sourceNode) {
-    //problema con grafi disconnessi per cui PQ si svuota...
     throwsIfNegativeEdges(graph);
-    var visitedNodes = new HashSet<Integer>(graph.vertices());
-    var priorityQueue = new PriorityQueue<Edge>(graph.vertices(), Comparator.comparingInt(edge -> edge.cost));
 
-    var distances = new Distances(graph.vertices(), sourceNode);
-
+    var distances = new DistancesWithFinalization(graph.vertices(), sourceNode);
     priorityQueue.add(new Edge(sourceNode, 0));
-    while (visitedNodes.size() != graph.vertices()) {
-      var ux = priorityQueue.remove();
-      visitedNodes.add(ux.destination());
-      adjacentNodesGraph(graph, priorityQueue, distances, visitedNodes, ux.destination);
+    while (!priorityQueue.isEmpty()) {
+      var minNode = priorityQueue.remove().destination();
+      distances.setFinalized(minNode);
+      extracted(distances, graph, minNode);
     }
+    finalizeIsolatedNodes(distances);
     return distances;
   }
 
-  private void adjacentNodesGraph(Graph graph, PriorityQueue<Edge> priorityQueue, Distances distances, Set<Integer> visitedNodes, int ux) {
+  private void extracted(DistancesWithFinalization distances, Graph graph, int minNode) {
     int edgeDistance;
     int newDistance;
-
-    var neighbours = ((AdjacencyMapGraph) graph).neighboursList(ux);
-    for (Edge entry : neighbours) {
-      var neighbour = entry.destination();
-      var cost = entry.cost();
-      if (!visitedNodes.contains(neighbour)) {
-        edgeDistance = cost;
-        newDistance = distances.getDistance(ux) + edgeDistance;
-        if (newDistance < distances.getDistance(neighbour))
+    for (Edge edge : graph.neighboursOf(minNode)) {
+      var neighbour = edge.destination();
+      if (!distances.isFinalized(neighbour)) {
+        edgeDistance = edge.cost();
+        newDistance = distances.getDistance(minNode) + edgeDistance;
+        if (newDistance < distances.getDistance(neighbour)) {
           distances.setDistance(neighbour, newDistance);
-
+        }
         priorityQueue.add(new Edge(neighbour, distances.getDistance(neighbour)));
       }
     }
   }
 
+  private void finalizeIsolatedNodes(DistancesWithFinalization distances) {
+    IntStream.range(0, distances.vertices())
+            .filter(distances::isInfinite)
+            .forEach(distances::setFinalized);
+  }
+
   @Override
   public String name() {
-    return "Dijkstra PQ serial";
-  }
-
-  @Override
-  public void updateDistances(DistancesWithFinalization distances, Graph graph, int minVertex) {
-
-  }
-
-  public record Edge(int destination, int cost) {
+    return "Dijkstra with priority queue serial";
   }
 }

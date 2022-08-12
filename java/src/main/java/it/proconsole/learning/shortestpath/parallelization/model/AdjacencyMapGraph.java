@@ -1,7 +1,6 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
-import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraPriorityQueueSerial;
-
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,12 +34,11 @@ public final class AdjacencyMapGraph implements Graph {
             .orElse(Graph.ZERO_WEIGHT);
   }
 
-  public Map<Integer, Integer> neighbours(int x) {
-    return values.get(x).edges;
-  }
-
-  public List<DijkstraPriorityQueueSerial.Edge> neighboursList(int x) {
-    return values.get(x).edges.entrySet().stream().map(it -> new DijkstraPriorityQueueSerial.Edge(it.getKey(), it.getValue())).toList();
+  @Override
+  public List<Edge> neighboursOf(int x) {
+    return Optional.ofNullable(values.get(x))
+            .map(node -> node.edges.entrySet().stream().map(it -> new Edge(it.getKey(), it.getValue())).toList())
+            .orElse(Collections.emptyList());
   }
 
   @Override
@@ -108,6 +106,7 @@ public final class AdjacencyMapGraph implements Graph {
     }
 
     public void addEdge(int destination, int cost) {
+      //TODO save directly Edges
       edges.put(destination, cost);
     }
 

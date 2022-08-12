@@ -42,7 +42,6 @@ public class SerialParallelComparator {
   private AlgorithmResult computeWithDuration(ShortestPath algorithm, Graph graph, int sourceNode) {
     var start = instantProvider.now();
     var distances = algorithm.compute(graph, sourceNode);
-    //System.err.println(distances);
     var end = instantProvider.now();
     return new AlgorithmResult(algorithm.name(), Duration.between(start, end).toMillis(), distances);
   }

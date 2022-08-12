@@ -4,13 +4,18 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class Distances {
+  private final int vertices;
   private final int[] values;
 
   public Distances(int vertices, int sourceNode) {
+    this.vertices = vertices;
     this.values = IntStream.range(0, vertices).parallel().map(i -> Integer.MAX_VALUE).toArray();
     setDistance(sourceNode, Graph.ZERO_WEIGHT);
   }
 
+  public int vertices() {
+    return vertices;
+  }
 
   //TEMP to make comparision
   public int[] getValues() {
