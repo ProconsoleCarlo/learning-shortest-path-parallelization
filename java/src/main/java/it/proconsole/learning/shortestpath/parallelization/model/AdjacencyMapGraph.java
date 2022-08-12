@@ -1,5 +1,6 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -37,15 +38,15 @@ public final class AdjacencyMapGraph implements Graph {
   @Override
   public List<Edge> neighboursOf(int x) {
     return Optional.ofNullable(values.get(x))
-            .map(node -> node.edges.entrySet().stream().map(it -> new Edge(it.getKey(), it.getValue())).toList())
+            .map(node -> node.edges)
             .orElse(Collections.emptyList());
   }
 
   @Override
   public boolean hasNegativeEdges() {
     return values.values().stream()
-            .flatMap(node -> node.edges().values().stream())
-            .anyMatch(it -> it < Graph.ZERO_WEIGHT);
+            .flatMap(node -> node.edges().stream())
+            .anyMatch(it -> it.cost() < Graph.ZERO_WEIGHT);
   }
 
   @Override
@@ -78,11 +79,11 @@ public final class AdjacencyMapGraph implements Graph {
       Node v = entry.getValue();
       StringBuilder all = new StringBuilder();
       var row = "nodeList.get(" + k + ")";
-      for (Map.Entry<Integer, Integer> e : v.edges.entrySet()) {
+      /*for (Map.Entry<Integer, Integer> e : v.edges.entrySet()) {
         Integer dest = e.getKey();
         Integer cost = e.getValue();
         all.append("\n").append(row).append(".add(new Node(").append(dest).append(", ").append(cost).append("));");
-      }
+      }*/
       text.append(all);
 
     }
@@ -91,7 +92,7 @@ public final class AdjacencyMapGraph implements Graph {
 
   static class Node {
     private final int name;
-    private final Map<Integer, Integer> edges = new HashMap<>();
+    private final List<Edge> edges = new ArrayList<>();
 
     public Node(int name) {
       this.name = name;
@@ -101,17 +102,21 @@ public final class AdjacencyMapGraph implements Graph {
       return name;
     }
 
-    public Map<Integer, Integer> edges() {
+    public List<Edge> edges() {
       return edges;
     }
 
     public void addEdge(int destination, int cost) {
-      //TODO save directly Edges
-      edges.put(destination, cost);
+      if (getEdge(destination) != Graph.ZERO_WEIGHT) {
+        edges.add(new Edge(destination, cost));
+      }
     }
 
     public int getEdge(int destination) {
-      return edges.getOrDefault(destination, Graph.ZERO_WEIGHT);
+      return edges.stream()
+              .filter(it -> it.destination() == destination).findFirst()
+              .map(Edge::cost)
+              .orElse(Graph.ZERO_WEIGHT);
     }
 
     @Override

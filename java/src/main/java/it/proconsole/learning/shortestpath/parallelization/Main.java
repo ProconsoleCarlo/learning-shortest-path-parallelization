@@ -15,8 +15,8 @@ import java.util.Random;
 import static it.proconsole.learning.shortestpath.parallelization.util.EdgeWeightGenerator.Builder.aEdgeWeightGenerator;
 
 public class Main {
-  private static final int VERTICES = 100;
-  private static final float DENSITY = 0.40f;
+  private static final int VERTICES = 4000;
+  private static final float DENSITY = 0.20f;
   private static final int SOURCE_NODE = 0;
 
   public static void main(String[] args) {
