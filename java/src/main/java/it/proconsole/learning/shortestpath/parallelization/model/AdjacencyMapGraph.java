@@ -18,6 +18,11 @@ public final class AdjacencyMapGraph implements Graph {
   }
 
   @Override
+  public int vertices() {
+    return vertices;
+  }
+
+  @Override
   public void setNode(int x, int y, int value) {
     values.computeIfAbsent(x, Node::new).addEdge(y, value);
   }
@@ -66,40 +71,16 @@ public final class AdjacencyMapGraph implements Graph {
     return Objects.hash(vertices, values);
   }
 
-  @Override
-  public int vertices() {
-    return vertices;
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder text = new StringBuilder();
-    for (Map.Entry<Integer, Node> entry : values.entrySet()) {
-      Integer k = entry.getKey();
-      Node v = entry.getValue();
-      StringBuilder all = new StringBuilder();
-      var row = "nodeList.get(" + k + ")";
-      /*for (Map.Entry<Integer, Integer> e : v.edges.entrySet()) {
-        Integer dest = e.getKey();
-        Integer cost = e.getValue();
-        all.append("\n").append(row).append(".add(new Node(").append(dest).append(", ").append(cost).append("));");
-      }*/
-      text.append(all);
-
-    }
-    return text.toString();
-  }
-
   static class Node {
-    private final int name;
+    private final int id;
     private final List<Edge> edges = new ArrayList<>();
 
-    public Node(int name) {
-      this.name = name;
+    public Node(int id) {
+      this.id = id;
     }
 
-    public int name() {
-      return name;
+    public int id() {
+      return id;
     }
 
     public List<Edge> edges() {
@@ -123,12 +104,12 @@ public final class AdjacencyMapGraph implements Graph {
     public boolean equals(Object o) {
       if (this == o) return true;
       if (!(o instanceof Node node)) return false;
-      return name == node.name && edges.equals(node.edges);
+      return id == node.id && edges.equals(node.edges);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(name, edges);
+      return Objects.hash(id, edges);
     }
   }
 }
