@@ -1,14 +1,13 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
-import org.junit.jupiter.api.Test;
+class AdjacencyMapGraphFactoryTest extends GraphFactoryTest {
+  @Override
+  GraphFactory graphFactory() {
+    return new AdjacencyMapGraphFactory();
+  }
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-class AdjacencyMapGraphFactoryTest {
-  @Test
-  void create() {
-    var current = new AdjacencyMapGraphFactory().create(12);
-
-    assertEquals(new AdjacencyMapGraph(12), current);
+  @Override
+  Graph expected() {
+    return new AdjacencyMapGraph(VERTICES);
   }
 }
