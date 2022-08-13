@@ -25,6 +25,10 @@ abstract class GraphTest {
     graph().setNode(X, Y, A_WEIGHT);
 
     assertEquals(A_WEIGHT, graph().getNode(X, Y));
+
+    graph().setNode(X, Y, A_NEGATIVE_WEIGHT);
+
+    assertEquals(A_NEGATIVE_WEIGHT, graph().getNode(X, Y));
   }
 
   @Test

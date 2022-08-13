@@ -25,10 +25,12 @@ public final class AdjacencyMapGraph implements Graph {
 
   @Override
   public void setNode(int x, int y, int value) {
-    //bug overwrite non va in adjacency
     if (value == Graph.ZERO_WEIGHT) {
       removeEdge(x, y);
     } else {
+      if (getNode(x, y) != Graph.ZERO_WEIGHT) {
+        removeEdge(x, y);
+      }
       getEdgesOf(x).add(new Edge(y, value));
     }
   }
