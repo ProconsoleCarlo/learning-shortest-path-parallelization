@@ -67,8 +67,7 @@ public class AddictiveRemovalGraphGenerator implements GraphGenerator {
       var x = random.nextInt(vertices);
       var y = x + random.nextInt(vertices - x);
       if (x != y && graph.getNode(x, y) != ZERO_WEIGHT) {
-        //problema: 0 mette un edge in AdjacencyMap, dovrebbe togliere l'elemento dalla mappa invece
-        graph.setSymmetricNode(x, y, ZERO_WEIGHT);
+        graph.removeEdge(x, y);
         edgesToRemove--;
       }
     }

@@ -25,13 +25,19 @@ public final class AdjacencyMapGraph implements Graph {
 
   @Override
   public void setNode(int x, int y, int value) {
-    values.computeIfAbsent(x, k -> new ArrayList<>()).add(new Edge(y, value));
+    getNode(x).add(new Edge(y, value));
   }
 
   @Override
   public void setSymmetricNode(int x, int y, int value) {
     setNode(x, y, value);
     setNode(y, x, value);
+  }
+
+  @Override
+  public void removeEdge(int x, int y) {
+    getNode(x).removeIf(it -> it.destination() == y);
+    getNode(y).removeIf(it -> it.destination() == x);
   }
 
   @Override
@@ -58,6 +64,10 @@ public final class AdjacencyMapGraph implements Graph {
   @Override
   public boolean isNodeZero(int x, int y) {
     return getNode(x, y) == Graph.ZERO_WEIGHT;
+  }
+
+  private List<Edge> getNode(int id) {
+    return values.computeIfAbsent(id, k -> new ArrayList<>());
   }
 
   @Override

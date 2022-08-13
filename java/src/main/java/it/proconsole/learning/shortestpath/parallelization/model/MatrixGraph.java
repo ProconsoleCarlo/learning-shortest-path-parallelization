@@ -25,6 +25,11 @@ public final class MatrixGraph implements Graph {
   }
 
   @Override
+  public void removeEdge(int x, int y) {
+    setSymmetricNode(x, y, Graph.ZERO_WEIGHT);
+  }
+
+  @Override
   public int getNode(int x, int y) {
     return values[x][y];
   }

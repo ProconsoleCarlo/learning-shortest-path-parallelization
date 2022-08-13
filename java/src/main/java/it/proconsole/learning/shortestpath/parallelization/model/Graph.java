@@ -9,6 +9,8 @@ public interface Graph {
 
   void setSymmetricNode(int x, int y, int value);
 
+  void removeEdge(int x, int y);
+
   int getNode(int x, int y);
 
   boolean hasNegativeEdges();
