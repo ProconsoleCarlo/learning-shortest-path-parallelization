@@ -1,8 +1,8 @@
 package it.proconsole.learning.shortestpath.parallelization.model;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public final class MatrixGraph implements Graph {
   private final int vertices;
@@ -15,13 +15,13 @@ public final class MatrixGraph implements Graph {
 
   @Override
   public void setNode(int x, int y, int value) {
-    this.values[x][y] = value;
+    values[x][y] = value;
   }
 
   @Override
   public void setSymmetricNode(int x, int y, int value) {
-    this.values[x][y] = value;
-    this.values[y][x] = value;
+    values[x][y] = value;
+    values[y][x] = value;
   }
 
   @Override
@@ -53,7 +53,10 @@ public final class MatrixGraph implements Graph {
 
   @Override
   public List<Edge> neighboursOf(int x) {
-    return Collections.emptyList(); //TODO
+    return IntStream.range(0, values[x].length)
+            .filter(y -> values[x][y] != Graph.ZERO_WEIGHT)
+            .mapToObj(y -> new Edge(y, values[x][y]))
+            .toList();
   }
 
   @Override

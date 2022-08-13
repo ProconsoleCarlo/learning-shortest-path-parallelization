@@ -25,7 +25,12 @@ public final class AdjacencyMapGraph implements Graph {
 
   @Override
   public void setNode(int x, int y, int value) {
-    getNode(x).add(new Edge(y, value));
+    //bug overwrite non va in adjacency
+    if (value == Graph.ZERO_WEIGHT) {
+      removeEdge(x, y);
+    } else {
+      getEdgesOf(x).add(new Edge(y, value));
+    }
   }
 
   @Override
@@ -36,8 +41,8 @@ public final class AdjacencyMapGraph implements Graph {
 
   @Override
   public void removeEdge(int x, int y) {
-    getNode(x).removeIf(it -> it.destination() == y);
-    getNode(y).removeIf(it -> it.destination() == x);
+    getEdgesOf(x).removeIf(it -> it.destination() == y);
+    getEdgesOf(y).removeIf(it -> it.destination() == x);
   }
 
   @Override
@@ -66,7 +71,7 @@ public final class AdjacencyMapGraph implements Graph {
     return getNode(x, y) == Graph.ZERO_WEIGHT;
   }
 
-  private List<Edge> getNode(int id) {
+  private List<Edge> getEdgesOf(int id) {
     return values.computeIfAbsent(id, k -> new ArrayList<>());
   }
 
