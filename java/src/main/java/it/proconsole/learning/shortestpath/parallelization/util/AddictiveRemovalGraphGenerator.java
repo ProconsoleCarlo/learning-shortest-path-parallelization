@@ -46,9 +46,9 @@ public class AddictiveRemovalGraphGenerator implements GraphGenerator {
     while (nodes < edges) {
       var x = random.nextInt(vertices);
       var y = x + random.nextInt(vertices - x);
-      if (x != y && graph.getNode(x, y) == ZERO_WEIGHT) {
+      if (x != y && graph.getCost(x, y) == ZERO_WEIGHT) {
         var value = edgeWeightGenerator.getValue();
-        graph.setSymmetricNode(x, y, value);
+        graph.addBidirectionalEdge(x, y, value);
         nodes++;
       }
     }
@@ -59,14 +59,14 @@ public class AddictiveRemovalGraphGenerator implements GraphGenerator {
     var graph = graphFactory.create(vertices);
     IntStream.range(0, vertices)
             .forEach(i -> IntStream.range(0, i)
-                    .forEach(j -> graph.setSymmetricNode(i, j, edgeWeightGenerator.getValue()))
+                    .forEach(j -> graph.addBidirectionalEdge(i, j, edgeWeightGenerator.getValue()))
             );
 
     var edgesToRemove = getMaxEdges(vertices) - edges;
     while (edgesToRemove > 0) {
       var x = random.nextInt(vertices);
       var y = x + random.nextInt(vertices - x);
-      if (x != y && graph.getNode(x, y) != ZERO_WEIGHT) {
+      if (x != y && graph.getCost(x, y) != ZERO_WEIGHT) {
         graph.removeEdge(x, y);
         edgesToRemove--;
       }

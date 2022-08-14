@@ -14,49 +14,49 @@ public final class MatrixGraph implements Graph {
   }
 
   @Override
-  public void setNode(int x, int y, int value) {
-    values[x][y] = value;
+  public void addBidirectionalEdge(int from, int to, int cost) {
+    values[from][to] = cost;
+    values[to][from] = cost;
   }
 
   @Override
-  public void setSymmetricNode(int x, int y, int value) {
-    values[x][y] = value;
-    values[y][x] = value;
+  public void addEdge(int from, int to, int cost) {
+    values[from][to] = cost;
   }
 
   @Override
-  public void removeEdge(int x, int y) {
-    setSymmetricNode(x, y, Graph.ZERO_WEIGHT);
-  }
-
-  @Override
-  public int getNode(int x, int y) {
-    return values[x][y];
+  public int getCost(int from, int to) {
+    return values[from][to];
   }
 
   @Override
   public boolean hasNegativeEdges() {
     return Arrays.stream(values).parallel()
             .flatMapToInt(Arrays::stream)
-            .anyMatch(node -> node < Graph.ZERO_WEIGHT);
+            .anyMatch(cost -> cost < Graph.ZERO_WEIGHT);
   }
 
   @Override
-  public boolean isNodeZero(int x, int y) {
-    return values[x][y] == Graph.ZERO_WEIGHT;
+  public boolean haveConnection(int from, int to) {
+    return values[from][to] != Graph.ZERO_WEIGHT;
+  }
+
+  @Override
+  public List<Edge> neighboursOf(int node) {
+    return IntStream.range(0, values[node].length)
+            .filter(y -> values[node][y] != Graph.ZERO_WEIGHT)
+            .mapToObj(y -> new Edge(y, values[node][y]))
+            .toList();
+  }
+
+  @Override
+  public void removeEdge(int from, int to) {
+    addBidirectionalEdge(from, to, Graph.ZERO_WEIGHT);
   }
 
   @Override
   public int vertices() {
     return vertices;
-  }
-
-  @Override
-  public List<Edge> neighboursOf(int x) {
-    return IntStream.range(0, values[x].length)
-            .filter(y -> values[x][y] != Graph.ZERO_WEIGHT)
-            .mapToObj(y -> new Edge(y, values[x][y]))
-            .toList();
   }
 
   @Override

@@ -70,14 +70,14 @@ class AddictiveRemovalGraphGeneratorTest {
   private void assertMainDiagonalHasZeros(Graph graph, int expectedEdges) {
     var actualEdges = 0;
     for (var i = 0; i < graph.vertices(); i++) {
-      if (graph.getNode(i, i) != Graph.ZERO_WEIGHT) {
+      if (graph.getCost(i, i) != Graph.ZERO_WEIGHT) {
         fail("Main diagonal has some non zero values");
       }
       for (var j = 0; j < i; j++) {
-        if (graph.getNode(i, j) != graph.getNode(j, i)) {
+        if (graph.getCost(i, j) != graph.getCost(j, i)) {
           fail("Matrix is not symmetric");
         }
-        if (graph.getNode(i, j) != Graph.ZERO_WEIGHT) {
+        if (graph.getCost(i, j) != Graph.ZERO_WEIGHT) {
           actualEdges++;
         }
       }

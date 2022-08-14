@@ -15,8 +15,8 @@ import java.util.Random;
 import static it.proconsole.learning.shortestpath.parallelization.util.EdgeWeightGenerator.Builder.aEdgeWeightGenerator;
 
 public class Main {
-  private static final int VERTICES = 4000;
-  private static final float DENSITY = 0.20f;
+  private static final int VERTICES = 1000;
+  private static final float DENSITY = 0.55f;
   private static final int SOURCE_NODE = 0;
 
   public static void main(String[] args) {
@@ -31,34 +31,33 @@ public class Main {
 
 
     var manualGraph = new AdjacencyMapGraph(vertices);
-    manualGraph.setNode(0, 1, 3);
-    manualGraph.setNode(0, 7, 4);
-    manualGraph.setNode(1, 0, 3);
-    manualGraph.setNode(1, 2, 2);
-    manualGraph.setNode(1, 3, 5);
-    manualGraph.setNode(2, 1, 2);
-    manualGraph.setNode(2, 4, 4);
-    manualGraph.setNode(2, 5, 5);
-    manualGraph.setNode(3, 1, 5);
-    manualGraph.setNode(3, 6, 2);
-    manualGraph.setNode(3, 7, 3);
-    manualGraph.setNode(4, 2, 4);
-    manualGraph.setNode(4, 5, 5);
-    manualGraph.setNode(5, 2, 5);
-    manualGraph.setNode(5, 4, 5);
-    manualGraph.setNode(5, 7, 5);
-    manualGraph.setNode(6, 3, 2);
-    manualGraph.setNode(6, 7, 2);
-    manualGraph.setNode(7, 0, 4);
-    manualGraph.setNode(7, 3, 3);
-    manualGraph.setNode(7, 5, 5);
-    manualGraph.setNode(7, 6, 2);
+    manualGraph.addEdge(0, 1, 3);
+    manualGraph.addEdge(0, 7, 4);
+    manualGraph.addEdge(1, 0, 3);
+    manualGraph.addEdge(1, 2, 2);
+    manualGraph.addEdge(1, 3, 5);
+    manualGraph.addEdge(2, 1, 2);
+    manualGraph.addEdge(2, 4, 4);
+    manualGraph.addEdge(2, 5, 5);
+    manualGraph.addEdge(3, 1, 5);
+    manualGraph.addEdge(3, 6, 2);
+    manualGraph.addEdge(3, 7, 3);
+    manualGraph.addEdge(4, 2, 4);
+    manualGraph.addEdge(4, 5, 5);
+    manualGraph.addEdge(5, 2, 5);
+    manualGraph.addEdge(5, 4, 5);
+    manualGraph.addEdge(5, 7, 5);
+    manualGraph.addEdge(6, 3, 2);
+    manualGraph.addEdge(6, 7, 2);
+    manualGraph.addEdge(7, 0, 4);
+    manualGraph.addEdge(7, 3, 3);
+    manualGraph.addEdge(7, 5, 5);
+    manualGraph.addEdge(7, 6, 2);
 
     var graph = graphGenerator.generate(vertices, density);
     var graph2 = graphGenerator2.generate(vertices, density);
     var dijkstra = new SerialParallelComparator(new DijkstraSerial(), new DijkstraPriorityQueueSerial());
     // var bellmanFord = new SerialParallelComparator(new BellmanFordSerial(), new BellmanFordParallel());
-    System.err.println(manualGraph.toString());
     //var dijkstraResult = dijkstra.compareWith(graph, sourceNode);
     var dijkstraResult2 = dijkstra.compareWith(graph2, sourceNode);
     //var bellmanFordResult = bellmanFord.compareWith(graph, sourceNode);

@@ -19,62 +19,62 @@ public final class AdjacencyMapGraph implements Graph {
   }
 
   @Override
-  public int vertices() {
-    return vertices;
+  public void addBidirectionalEdge(int from, int to, int cost) {
+    addEdge(from, to, cost);
+    addEdge(to, from, cost);
   }
 
   @Override
-  public void setNode(int x, int y, int value) {
-    if (value == Graph.ZERO_WEIGHT) {
-      removeEdge(x, y);
+  public void addEdge(int from, int to, int cost) {
+    if (cost == Graph.ZERO_WEIGHT) {
+      removeEdge(from, to);
     } else {
-      if (getNode(x, y) != Graph.ZERO_WEIGHT) {
-        removeEdge(x, y);
+      if (getCost(from, to) != Graph.ZERO_WEIGHT) {
+        removeEdge(from, to);
       }
-      getEdgesOf(x).add(new Edge(y, value));
+      getEdgesOf(from).add(new Edge(to, cost));
     }
   }
 
   @Override
-  public void setSymmetricNode(int x, int y, int value) {
-    setNode(x, y, value);
-    setNode(y, x, value);
-  }
-
-  @Override
-  public void removeEdge(int x, int y) {
-    getEdgesOf(x).removeIf(it -> it.destination() == y);
-    getEdgesOf(y).removeIf(it -> it.destination() == x);
-  }
-
-  @Override
-  public int getNode(int x, int y) {
-    return Optional.ofNullable(values.get(x))
-            .flatMap(it -> it.stream().filter(edge -> edge.destination() == y).findFirst())
+  public int getCost(int from, int to) {
+    return Optional.ofNullable(values.get(from))
+            .flatMap(edges -> edges.stream().filter(edge -> edge.destination() == to).findFirst())
             .map(Edge::cost)
             .orElse(Graph.ZERO_WEIGHT);
-  }
-
-  @Override
-  public List<Edge> neighboursOf(int x) {
-    return Optional.ofNullable(values.get(x))
-            .orElse(Collections.emptyList());
   }
 
   @Override
   public boolean hasNegativeEdges() {
     return values.values().stream()
             .flatMap(Collection::stream)
-            .anyMatch(it -> it.cost() < Graph.ZERO_WEIGHT);
+            .anyMatch(edge -> edge.cost() < Graph.ZERO_WEIGHT);
   }
 
   @Override
-  public boolean isNodeZero(int x, int y) {
-    return getNode(x, y) == Graph.ZERO_WEIGHT;
+  public boolean haveConnection(int from, int to) {
+    return getCost(from, to) != Graph.ZERO_WEIGHT;
+  }
+
+  @Override
+  public List<Edge> neighboursOf(int node) {
+    return Optional.ofNullable(values.get(node))
+            .orElse(Collections.emptyList());
+  }
+
+  @Override
+  public void removeEdge(int from, int to) {
+    getEdgesOf(from).removeIf(edge -> edge.destination() == to);
+    getEdgesOf(to).removeIf(edge -> edge.destination() == from);
+  }
+
+  @Override
+  public int vertices() {
+    return vertices;
   }
 
   private List<Edge> getEdgesOf(int id) {
-    return values.computeIfAbsent(id, k -> new ArrayList<>());
+    return values.computeIfAbsent(id, ignored -> new ArrayList<>());
   }
 
   @Override

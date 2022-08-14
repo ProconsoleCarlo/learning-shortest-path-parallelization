@@ -27,11 +27,11 @@ public class DijkstraSerial implements DijkstraShortestPath {
   public void updateDistances(DistancesWithFinalization distances, Graph graph, int minVertex) {
     for (int vertex = 0; vertex < graph.vertices(); vertex++) {
       if (!distances.isFinalized(vertex)
-              && !graph.isNodeZero(minVertex, vertex)
+              && graph.haveConnection(minVertex, vertex)
               && !distances.isInfinite(minVertex)
-              && distances.getDistance(minVertex) + graph.getNode(minVertex, vertex) < distances.getDistance(vertex)
+              && distances.getDistance(minVertex) + graph.getCost(minVertex, vertex) < distances.getDistance(vertex)
       ) {
-        distances.setDistance(vertex, distances.getDistance(minVertex) + graph.getNode(minVertex, vertex));
+        distances.setDistance(vertex, distances.getDistance(minVertex) + graph.getCost(minVertex, vertex));
       }
     }
   }

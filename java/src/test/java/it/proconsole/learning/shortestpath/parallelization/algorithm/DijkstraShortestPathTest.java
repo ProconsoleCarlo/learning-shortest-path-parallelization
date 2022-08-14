@@ -21,7 +21,7 @@ abstract class DijkstraShortestPathTest extends ShortestPathTest {
   @Test
   void throwsWhenGraphHasNegativeEdges() {
     var graph = new MatrixGraph(2);
-    graph.setNode(0, 1, -1);
+    graph.addEdge(0, 1, -1);
     var shortestPath = shortestPath();
 
     assertThrows(NegativeEdgesException.class, () -> shortestPath.compute(graph, SOURCE_NODE));

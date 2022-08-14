@@ -21,73 +21,73 @@ abstract class GraphTest {
   abstract Graph graph();
 
   @Test
-  void setAndGetNode() {
-    graph().setNode(X, Y, A_WEIGHT);
+  void addBidirectionalEdge() {
+    graph().addBidirectionalEdge(X, Y, A_WEIGHT);
 
-    assertEquals(A_WEIGHT, graph().getNode(X, Y));
-
-    graph().setNode(X, Y, A_NEGATIVE_WEIGHT);
-
-    assertEquals(A_NEGATIVE_WEIGHT, graph().getNode(X, Y));
+    assertEquals(A_WEIGHT, graph().getCost(X, Y));
+    assertEquals(A_WEIGHT, graph().getCost(Y, X));
   }
 
   @Test
-  void setSymmetricNode() {
-    graph().setSymmetricNode(X, Y, A_WEIGHT);
+  void addEdgeAndGetCost() {
+    graph().addEdge(X, Y, A_WEIGHT);
 
-    assertEquals(A_WEIGHT, graph().getNode(X, Y));
-    assertEquals(A_WEIGHT, graph().getNode(Y, X));
-  }
+    assertEquals(A_WEIGHT, graph().getCost(X, Y));
 
-  @Test
-  void removeEdge() {
-    graph().setSymmetricNode(X, Y, A_WEIGHT);
+    graph().addEdge(X, Y, A_NEGATIVE_WEIGHT);
 
-    assertNotEquals(Graph.ZERO_WEIGHT, graph().getNode(X, Y));
-    assertNotEquals(Graph.ZERO_WEIGHT, graph().getNode(Y, X));
-
-    graph().removeEdge(X, Y);
-
-    assertEquals(Graph.ZERO_WEIGHT, graph().getNode(X, Y));
-    assertEquals(Graph.ZERO_WEIGHT, graph().getNode(Y, X));
+    assertEquals(A_NEGATIVE_WEIGHT, graph().getCost(X, Y));
   }
 
   @Test
   void hasNegativeEdges() {
-    graph().setSymmetricNode(X, Y, A_WEIGHT);
+    graph().addBidirectionalEdge(X, Y, A_WEIGHT);
 
     assertFalse(graph().hasNegativeEdges());
 
-    graph().setSymmetricNode(X, Y, A_NEGATIVE_WEIGHT);
+    graph().addBidirectionalEdge(X, Y, A_NEGATIVE_WEIGHT);
 
     assertTrue(graph().hasNegativeEdges());
   }
 
   @Test
-  void isNodeZero() {
-    graph().setNode(X, Y, A_WEIGHT);
+  void haveConnection() {
+    graph().addEdge(X, Y, A_WEIGHT);
 
-    assertFalse(graph().isNodeZero(X, Y));
+    assertTrue(graph().haveConnection(X, Y));
 
-    graph().setNode(X, Y, Graph.ZERO_WEIGHT);
+    graph().addEdge(X, Y, Graph.ZERO_WEIGHT);
 
-    assertTrue(graph().isNodeZero(X, Y));
-  }
-
-  @Test
-  void vertices() {
-    assertEquals(VERTICES, graph().vertices());
+    assertFalse(graph().haveConnection(X, Y));
   }
 
   @Test
   void neighboursOf() {
-    graph().setNode(X, Y, A_WEIGHT);
-    graph().setNode(X, Z, A_WEIGHT);
-    graph().setNode(Y, W, A_WEIGHT);
+    graph().addEdge(X, Y, A_WEIGHT);
+    graph().addEdge(X, Z, A_WEIGHT);
+    graph().addEdge(Y, W, A_WEIGHT);
 
     var current = graph().neighboursOf(X);
 
     var edges = List.of(new Edge(Y, A_WEIGHT), new Edge(Z, A_WEIGHT));
     assertEquals(edges, current);
+  }
+
+  @Test
+  void removeEdge() {
+    graph().addBidirectionalEdge(X, Y, A_WEIGHT);
+
+    assertNotEquals(Graph.ZERO_WEIGHT, graph().getCost(X, Y));
+    assertNotEquals(Graph.ZERO_WEIGHT, graph().getCost(Y, X));
+
+    graph().removeEdge(X, Y);
+
+    assertEquals(Graph.ZERO_WEIGHT, graph().getCost(X, Y));
+    assertEquals(Graph.ZERO_WEIGHT, graph().getCost(Y, X));
+  }
+
+  @Test
+  void vertices() {
+    assertEquals(VERTICES, graph().vertices());
   }
 }

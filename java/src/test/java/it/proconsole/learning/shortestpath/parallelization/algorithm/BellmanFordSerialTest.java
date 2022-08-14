@@ -24,9 +24,9 @@ class BellmanFordSerialTest extends ShortestPathTest {
   @Test
   void computeWithCycles() {
     var graph = new MatrixGraph(4);
-    graph.setSymmetricNode(0, 1, 2);
-    graph.setSymmetricNode(1, 2, -1);
-    graph.setSymmetricNode(2, 3, 5);
+    graph.addBidirectionalEdge(0, 1, 2);
+    graph.addBidirectionalEdge(1, 2, -1);
+    graph.addBidirectionalEdge(2, 3, 5);
 
     var actual = shortestPath.compute(graph, SOURCE_NODE);
 

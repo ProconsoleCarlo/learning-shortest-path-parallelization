@@ -23,10 +23,10 @@ interface BellmanFordShortestPath extends ShortestPath {
   }
 
   default boolean isDistanceNotFinalized(Graph graph, Distances distances, int src, int dest) {
-    return !graph.isNodeZero(src, dest) && isDistanceMoreThanCost(graph, distances, src, dest);
+    return graph.haveConnection(src, dest) && isDistanceMoreThanCost(graph, distances, src, dest);
   }
 
   private boolean isDistanceMoreThanCost(Graph graph, Distances distances, int src, int dest) {
-    return distances.getDistance(dest) > distances.getDistance(src) + graph.getNode(src, dest);
+    return distances.getDistance(dest) > distances.getDistance(src) + graph.getCost(src, dest);
   }
 }

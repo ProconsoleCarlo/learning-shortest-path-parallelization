@@ -27,9 +27,9 @@ abstract class ShortestPathTest {
 
   Graph givenAGraph() {
     var graph = new AdjacencyMapGraph(4);
-    graph.setSymmetricNode(0, 1, 2);
-    graph.setSymmetricNode(1, 2, 3);
-    graph.setSymmetricNode(2, 3, 5);
+    graph.addBidirectionalEdge(0, 1, 2);
+    graph.addBidirectionalEdge(1, 2, 3);
+    graph.addBidirectionalEdge(2, 3, 5);
     return graph;
   }
 }

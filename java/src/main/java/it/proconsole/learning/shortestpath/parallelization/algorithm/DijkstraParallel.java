@@ -30,9 +30,9 @@ public class DijkstraParallel implements DijkstraShortestPath {
     IntStream.range(0, graph.vertices())
             .parallel()
             .filter(vertex -> !distances.isFinalized(vertex)
-                    && !graph.isNodeZero(minVertex, vertex)
+                    && graph.haveConnection(minVertex, vertex)
                     && !distances.isInfinite(minVertex)
-                    && distances.getDistance(minVertex) + graph.getNode(minVertex, vertex) < distances.getDistance(vertex))
-            .forEach(vertex -> distances.setDistance(vertex, distances.getDistance(minVertex) + graph.getNode(minVertex, vertex)));
+                    && distances.getDistance(minVertex) + graph.getCost(minVertex, vertex) < distances.getDistance(vertex))
+            .forEach(vertex -> distances.setDistance(vertex, distances.getDistance(minVertex) + graph.getCost(minVertex, vertex)));
   }
 }

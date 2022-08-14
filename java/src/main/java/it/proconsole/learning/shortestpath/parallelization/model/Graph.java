@@ -5,19 +5,19 @@ import java.util.List;
 public interface Graph {
   int ZERO_WEIGHT = 0;
 
-  void setNode(int x, int y, int value);
+  void addBidirectionalEdge(int from, int to, int cost);
 
-  void setSymmetricNode(int x, int y, int value);
+  void addEdge(int from, int to, int cost);
 
-  void removeEdge(int x, int y);
-
-  int getNode(int x, int y);
+  int getCost(int from, int to);
 
   boolean hasNegativeEdges();
 
-  boolean isNodeZero(int x, int y);
+  boolean haveConnection(int from, int to);
+
+  List<Edge> neighboursOf(int node);
+
+  void removeEdge(int from, int to);
 
   int vertices();
-
-  List<Edge> neighboursOf(int x);
 }

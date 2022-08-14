@@ -28,7 +28,7 @@ public class BellmanFordSerial implements BellmanFordShortestPath {
       for (int src = 0; src < vertices; src++) {
         for (int dest = 0; dest < vertices; dest++) {
           if (!distances.isInfinite(src) && isDistanceNotFinalized(graph, distances, src, dest)) {
-            distances.setDistance(dest, distances.getDistance(src) + graph.getNode(src, dest));
+            distances.setDistance(dest, distances.getDistance(src) + graph.getCost(src, dest));
           }
         }
       }
