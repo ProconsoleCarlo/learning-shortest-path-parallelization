@@ -18,8 +18,8 @@ import java.util.Random;
 import static it.proconsole.learning.shortestpath.parallelization.util.EdgeWeightGenerator.Builder.aEdgeWeightGenerator;
 
 public class Main {
-  private static final int VERTICES = 1000;
-  private static final float DENSITY = 0.55f;
+  private static final int VERTICES = 100;
+  private static final float DENSITY = 0.25f;
   private static final int SOURCE_NODE = 0;
   private static final Map<String, GraphFactory> GRAPH_FACTORIES = Map.of(
           "MatrixGraph", new MatrixGraphFactory(),
