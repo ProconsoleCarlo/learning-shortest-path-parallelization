@@ -44,7 +44,7 @@ public class AlgorithmComparator {
             .map(AlgorithmResult::distances)
             .map(firstResult -> algorithmResults.stream()
                     .skip(1)
-                    .allMatch(it -> Arrays.equals(it.distances().getValues(), firstResult.getValues()))
+                    .allMatch(it -> Arrays.equals(it.distances().values(), firstResult.values()))
             ).orElse(false);
   }
 

@@ -17,8 +17,7 @@ public class Distances {
     return vertices;
   }
 
-  //TEMP to make comparision
-  public int[] getValues() {
+  public int[] values() {
     return values;
   }
 

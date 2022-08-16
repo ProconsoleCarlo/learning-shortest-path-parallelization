@@ -23,8 +23,7 @@ public class DijkstraSerial implements DijkstraShortestPath {
     return "Dijkstra serial";
   }
 
-  @Override
-  public void updateDistances(DistancesWithFinalization distances, Graph graph, int minVertex) {
+  private void updateDistances(DistancesWithFinalization distances, Graph graph, int minVertex) {
     for (int vertex = 0; vertex < graph.vertices(); vertex++) {
       if (!distances.isFinalized(vertex)
               && graph.haveConnection(minVertex, vertex)

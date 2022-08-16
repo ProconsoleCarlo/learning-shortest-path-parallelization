@@ -49,6 +49,6 @@ public class SerialParallelComparator {
   }
 
   private boolean checkCorrectness(AlgorithmResult serial, AlgorithmResult parallel) {
-    return Arrays.equals(serial.distances().getValues(), parallel.distances().getValues());
+    return Arrays.equals(serial.distances().values(), parallel.distances().values());
   }
 }
