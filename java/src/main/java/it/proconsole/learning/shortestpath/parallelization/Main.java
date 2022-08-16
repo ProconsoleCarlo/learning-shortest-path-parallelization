@@ -7,10 +7,10 @@ import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraSer
 import it.proconsole.learning.shortestpath.parallelization.model.AdjacencyMapGraphFactory;
 import it.proconsole.learning.shortestpath.parallelization.model.GraphFactory;
 import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraphFactory;
+import it.proconsole.learning.shortestpath.parallelization.result.comparator.SerialParallelComparator;
+import it.proconsole.learning.shortestpath.parallelization.result.printer.LoggerResultPrinter;
 import it.proconsole.learning.shortestpath.parallelization.util.AddictiveRemovalGraphGenerator;
-import it.proconsole.learning.shortestpath.parallelization.util.LoggerResultPrinter;
 import it.proconsole.learning.shortestpath.parallelization.util.NamedArgsExtractor;
-import it.proconsole.learning.shortestpath.parallelization.util.SerialParallelComparator;
 
 import java.util.Map;
 import java.util.Random;

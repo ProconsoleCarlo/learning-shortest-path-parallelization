@@ -1,9 +1,9 @@
-package it.proconsole.learning.shortestpath.parallelization.util;
+package it.proconsole.learning.shortestpath.parallelization.result.comparator;
 
 import it.proconsole.learning.shortestpath.parallelization.algorithm.ShortestPath;
 import it.proconsole.learning.shortestpath.parallelization.model.Distances;
 import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraph;
-import it.proconsole.learning.shortestpath.parallelization.model.SerialParallelResult;
+import it.proconsole.learning.shortestpath.parallelization.util.InstantProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,8 +60,8 @@ class SerialParallelComparatorTest {
     var actual = comparator.compareWith(graph, SOURCE_NODE);
 
     var expected = new SerialParallelResult(
-            new SerialParallelResult.Algorithm(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS),
-            new SerialParallelResult.Algorithm(PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS),
+            new Algorithm(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS),
+            new Algorithm(PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS),
             SPEED_UP,
             true
     );
@@ -89,8 +89,8 @@ class SerialParallelComparatorTest {
     var actual = comparator.compareWith(graph, SOURCE_NODE);
 
     var expected = new SerialParallelResult(
-            new SerialParallelResult.Algorithm(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS),
-            new SerialParallelResult.Algorithm(PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS),
+            new Algorithm(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS),
+            new Algorithm(PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS),
             SPEED_UP,
             false
     );

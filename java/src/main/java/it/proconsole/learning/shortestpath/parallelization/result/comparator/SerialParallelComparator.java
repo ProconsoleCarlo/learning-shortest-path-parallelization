@@ -1,10 +1,8 @@
-package it.proconsole.learning.shortestpath.parallelization.util;
+package it.proconsole.learning.shortestpath.parallelization.result.comparator;
 
 import it.proconsole.learning.shortestpath.parallelization.algorithm.ShortestPath;
-import it.proconsole.learning.shortestpath.parallelization.model.Distances;
 import it.proconsole.learning.shortestpath.parallelization.model.Graph;
-import it.proconsole.learning.shortestpath.parallelization.model.SerialParallelResult;
-import it.proconsole.learning.shortestpath.parallelization.model.SerialParallelResult.Algorithm;
+import it.proconsole.learning.shortestpath.parallelization.util.InstantProvider;
 
 import java.time.Clock;
 import java.time.Duration;
@@ -51,16 +49,6 @@ public class SerialParallelComparator {
   }
 
   private boolean checkCorrectness(AlgorithmResult serial, AlgorithmResult parallel) {
-    return Arrays.equals(serial.distances.getValues(), parallel.distances.getValues());
-  }
-
-  public record AlgorithmResult(
-          String name,
-          long millis,
-          Distances distances
-  ) {
-    public Algorithm toAlgorithm() {
-      return new Algorithm(name, millis);
-    }
+    return Arrays.equals(serial.distances().getValues(), parallel.distances().getValues());
   }
 }

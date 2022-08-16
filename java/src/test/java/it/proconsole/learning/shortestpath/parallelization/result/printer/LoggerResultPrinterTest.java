@@ -1,6 +1,7 @@
-package it.proconsole.learning.shortestpath.parallelization.util;
+package it.proconsole.learning.shortestpath.parallelization.result.printer;
 
-import it.proconsole.learning.shortestpath.parallelization.model.SerialParallelResult;
+import it.proconsole.learning.shortestpath.parallelization.result.comparator.Algorithm;
+import it.proconsole.learning.shortestpath.parallelization.result.comparator.SerialParallelResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,8 +31,8 @@ class LoggerResultPrinterTest {
   @MethodSource("speedUpCases")
   void whenSpeedUpIsLessThan1(float speedUp, String speedUpResult) {
     var result = new SerialParallelResult(
-            new SerialParallelResult.Algorithm(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS),
-            new SerialParallelResult.Algorithm(PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS),
+            new Algorithm(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS),
+            new Algorithm(PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS),
             speedUp,
             true
     );
@@ -55,8 +56,8 @@ class LoggerResultPrinterTest {
   void whenParallelResultIsNotCorrect() {
     var speedUp = 1.5F;
     var result = new SerialParallelResult(
-            new SerialParallelResult.Algorithm(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS),
-            new SerialParallelResult.Algorithm(PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS),
+            new Algorithm(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS),
+            new Algorithm(PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS),
             speedUp,
             false
     );
