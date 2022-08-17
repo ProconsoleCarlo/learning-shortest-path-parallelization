@@ -1,7 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.result.printer;
 
-import it.proconsole.learning.shortestpath.parallelization.result.comparator.Algorithm;
-import it.proconsole.learning.shortestpath.parallelization.result.comparator.SerialParallelResult;
+import it.proconsole.learning.shortestpath.parallelization.result.Algorithm;
+import it.proconsole.learning.shortestpath.parallelization.result.SerialParallelResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

@@ -3,6 +3,8 @@ package it.proconsole.learning.shortestpath.parallelization.result.comparator;
 import it.proconsole.learning.shortestpath.parallelization.algorithm.ShortestPath;
 import it.proconsole.learning.shortestpath.parallelization.graph.Distances;
 import it.proconsole.learning.shortestpath.parallelization.graph.MatrixGraph;
+import it.proconsole.learning.shortestpath.parallelization.result.Algorithm;
+import it.proconsole.learning.shortestpath.parallelization.result.SerialParallelResult;
 import it.proconsole.learning.shortestpath.parallelization.util.InstantProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

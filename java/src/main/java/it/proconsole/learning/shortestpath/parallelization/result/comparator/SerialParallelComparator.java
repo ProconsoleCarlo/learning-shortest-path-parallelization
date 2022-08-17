@@ -2,6 +2,7 @@ package it.proconsole.learning.shortestpath.parallelization.result.comparator;
 
 import it.proconsole.learning.shortestpath.parallelization.algorithm.ShortestPath;
 import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
+import it.proconsole.learning.shortestpath.parallelization.result.SerialParallelResult;
 import it.proconsole.learning.shortestpath.parallelization.util.InstantProvider;
 
 import java.time.Clock;

@@ -1,7 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.result.printer;
 
-import it.proconsole.learning.shortestpath.parallelization.result.comparator.Algorithm;
-import it.proconsole.learning.shortestpath.parallelization.result.comparator.SerialParallelResult;
+import it.proconsole.learning.shortestpath.parallelization.result.Algorithm;
+import it.proconsole.learning.shortestpath.parallelization.result.SerialParallelResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

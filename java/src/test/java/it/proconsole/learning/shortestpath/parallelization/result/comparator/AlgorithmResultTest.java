@@ -1,6 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.result.comparator;
 
 import it.proconsole.learning.shortestpath.parallelization.graph.Distances;
+import it.proconsole.learning.shortestpath.parallelization.result.Algorithm;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

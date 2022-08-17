@@ -1,4 +1,4 @@
-package it.proconsole.learning.shortestpath.parallelization.result.comparator;
+package it.proconsole.learning.shortestpath.parallelization.result;
 
 public record SerialParallelResult(
         Algorithm serial,
