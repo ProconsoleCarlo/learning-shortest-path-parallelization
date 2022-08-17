@@ -1,4 +1,4 @@
-package it.proconsole.learning.shortestpath.parallelization.model;
+package it.proconsole.learning.shortestpath.parallelization.graph;
 
 import java.util.Arrays;
 

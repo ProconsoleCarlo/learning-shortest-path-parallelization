@@ -1,7 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.algorithm;
 
-import it.proconsole.learning.shortestpath.parallelization.model.Distances;
-import it.proconsole.learning.shortestpath.parallelization.model.Graph;
+import it.proconsole.learning.shortestpath.parallelization.graph.Distances;
+import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
 
 public class BellmanFordSerial implements BellmanFordShortestPath {
   @Override

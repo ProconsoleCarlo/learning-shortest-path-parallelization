@@ -1,4 +1,7 @@
-package it.proconsole.learning.shortestpath.parallelization.model;
+package it.proconsole.learning.shortestpath.parallelization.graph.factory;
+
+import it.proconsole.learning.shortestpath.parallelization.graph.AdjacencyMapGraph;
+import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
 
 class AdjacencyMapGraphFactoryTest extends GraphFactoryTest {
   @Override

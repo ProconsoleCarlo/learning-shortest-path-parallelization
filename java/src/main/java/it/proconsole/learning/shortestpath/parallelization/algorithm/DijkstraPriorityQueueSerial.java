@@ -1,9 +1,9 @@
 package it.proconsole.learning.shortestpath.parallelization.algorithm;
 
-import it.proconsole.learning.shortestpath.parallelization.model.Distances;
-import it.proconsole.learning.shortestpath.parallelization.model.DistancesWithFinalization;
-import it.proconsole.learning.shortestpath.parallelization.model.Edge;
-import it.proconsole.learning.shortestpath.parallelization.model.Graph;
+import it.proconsole.learning.shortestpath.parallelization.graph.Distances;
+import it.proconsole.learning.shortestpath.parallelization.graph.DistancesWithFinalization;
+import it.proconsole.learning.shortestpath.parallelization.graph.Edge;
+import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

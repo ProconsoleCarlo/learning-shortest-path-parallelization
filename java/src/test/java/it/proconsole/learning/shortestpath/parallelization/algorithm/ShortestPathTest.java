@@ -1,8 +1,8 @@
 package it.proconsole.learning.shortestpath.parallelization.algorithm;
 
-import it.proconsole.learning.shortestpath.parallelization.model.AdjacencyMapGraph;
-import it.proconsole.learning.shortestpath.parallelization.model.Distances;
-import it.proconsole.learning.shortestpath.parallelization.model.Graph;
+import it.proconsole.learning.shortestpath.parallelization.graph.AdjacencyMapGraph;
+import it.proconsole.learning.shortestpath.parallelization.graph.Distances;
+import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

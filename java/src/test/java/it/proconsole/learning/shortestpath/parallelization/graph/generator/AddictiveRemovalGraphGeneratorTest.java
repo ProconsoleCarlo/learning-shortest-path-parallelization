@@ -1,9 +1,9 @@
-package it.proconsole.learning.shortestpath.parallelization.util;
+package it.proconsole.learning.shortestpath.parallelization.graph.generator;
 
-import it.proconsole.learning.shortestpath.parallelization.model.AdjacencyMapGraph;
-import it.proconsole.learning.shortestpath.parallelization.model.Graph;
-import it.proconsole.learning.shortestpath.parallelization.model.GraphFactory;
-import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraph;
+import it.proconsole.learning.shortestpath.parallelization.graph.AdjacencyMapGraph;
+import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
+import it.proconsole.learning.shortestpath.parallelization.graph.MatrixGraph;
+import it.proconsole.learning.shortestpath.parallelization.graph.factory.GraphFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

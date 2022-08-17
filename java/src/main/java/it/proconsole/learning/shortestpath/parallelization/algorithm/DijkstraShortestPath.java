@@ -1,6 +1,6 @@
 package it.proconsole.learning.shortestpath.parallelization.algorithm;
 
-import it.proconsole.learning.shortestpath.parallelization.model.DistancesWithFinalization;
+import it.proconsole.learning.shortestpath.parallelization.graph.DistancesWithFinalization;
 
 interface DijkstraShortestPath extends ShortestPath {
   default int getMinDistance(DistancesWithFinalization distances, int vertices) {

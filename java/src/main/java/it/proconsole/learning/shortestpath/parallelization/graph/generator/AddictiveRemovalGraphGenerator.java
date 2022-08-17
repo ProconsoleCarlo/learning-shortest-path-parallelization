@@ -1,13 +1,13 @@
-package it.proconsole.learning.shortestpath.parallelization.util;
+package it.proconsole.learning.shortestpath.parallelization.graph.generator;
 
-import it.proconsole.learning.shortestpath.parallelization.model.Graph;
-import it.proconsole.learning.shortestpath.parallelization.model.GraphFactory;
+import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
+import it.proconsole.learning.shortestpath.parallelization.graph.factory.GraphFactory;
 
 import java.util.Random;
 import java.util.random.RandomGenerator;
 import java.util.stream.IntStream;
 
-import static it.proconsole.learning.shortestpath.parallelization.model.Graph.ZERO_WEIGHT;
+import static it.proconsole.learning.shortestpath.parallelization.graph.Graph.ZERO_WEIGHT;
 
 public class AddictiveRemovalGraphGenerator implements GraphGenerator {
   private final RandomGenerator random = new Random();

@@ -1,5 +1,6 @@
-package it.proconsole.learning.shortestpath.parallelization.model;
+package it.proconsole.learning.shortestpath.parallelization.graph.factory;
 
+import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,7 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.algorithm;
 
 import it.proconsole.learning.shortestpath.parallelization.exception.NegativeEdgesException;
-import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraph;
+import it.proconsole.learning.shortestpath.parallelization.graph.MatrixGraph;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

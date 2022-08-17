@@ -4,18 +4,18 @@ import it.proconsole.learning.shortestpath.parallelization.algorithm.BellmanFord
 import it.proconsole.learning.shortestpath.parallelization.algorithm.BellmanFordSerial;
 import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraPriorityQueueSerial;
 import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraSerial;
-import it.proconsole.learning.shortestpath.parallelization.model.AdjacencyMapGraphFactory;
-import it.proconsole.learning.shortestpath.parallelization.model.GraphFactory;
-import it.proconsole.learning.shortestpath.parallelization.model.MatrixGraphFactory;
+import it.proconsole.learning.shortestpath.parallelization.graph.factory.AdjacencyMapGraphFactory;
+import it.proconsole.learning.shortestpath.parallelization.graph.factory.GraphFactory;
+import it.proconsole.learning.shortestpath.parallelization.graph.factory.MatrixGraphFactory;
+import it.proconsole.learning.shortestpath.parallelization.graph.generator.AddictiveRemovalGraphGenerator;
 import it.proconsole.learning.shortestpath.parallelization.result.comparator.SerialParallelComparator;
 import it.proconsole.learning.shortestpath.parallelization.result.printer.LoggerResultPrinter;
-import it.proconsole.learning.shortestpath.parallelization.util.AddictiveRemovalGraphGenerator;
 import it.proconsole.learning.shortestpath.parallelization.util.NamedArgsExtractor;
 
 import java.util.Map;
 import java.util.Random;
 
-import static it.proconsole.learning.shortestpath.parallelization.util.EdgeWeightGenerator.Builder.aEdgeWeightGenerator;
+import static it.proconsole.learning.shortestpath.parallelization.graph.generator.EdgeWeightGenerator.Builder.aEdgeWeightGenerator;
 
 public class Main {
   private static final int VERTICES = 100;

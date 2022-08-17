@@ -1,6 +1,6 @@
 package it.proconsole.learning.shortestpath.parallelization.result.comparator;
 
-import it.proconsole.learning.shortestpath.parallelization.model.Distances;
+import it.proconsole.learning.shortestpath.parallelization.graph.Distances;
 
 public record AlgorithmResult(
         String name,

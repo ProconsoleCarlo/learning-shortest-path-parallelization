@@ -1,4 +1,4 @@
-package it.proconsole.learning.shortestpath.parallelization.util;
+package it.proconsole.learning.shortestpath.parallelization.graph.generator;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,8 +7,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.random.RandomGenerator;
 
-import static it.proconsole.learning.shortestpath.parallelization.model.Graph.ZERO_WEIGHT;
-import static it.proconsole.learning.shortestpath.parallelization.util.EdgeWeightGenerator.Builder.aEdgeWeightGenerator;
+import static it.proconsole.learning.shortestpath.parallelization.graph.Graph.ZERO_WEIGHT;
+import static it.proconsole.learning.shortestpath.parallelization.graph.generator.EdgeWeightGenerator.Builder.aEdgeWeightGenerator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
