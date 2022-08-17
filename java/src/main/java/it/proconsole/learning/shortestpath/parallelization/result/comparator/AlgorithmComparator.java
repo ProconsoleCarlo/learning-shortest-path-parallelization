@@ -16,13 +16,13 @@ public class AlgorithmComparator {
   private final InstantProvider instantProvider;
 
   public AlgorithmComparator(InstantProvider instantProvider, ShortestPath... algorithms) {
-    this.algorithms = List.of(algorithms);
     this.instantProvider = instantProvider;
+    this.algorithms = List.of(algorithms);
   }
 
   public AlgorithmComparator(ShortestPath... algorithms) {
-    this.algorithms = List.of(algorithms);
     this.instantProvider = new InstantProvider(Clock.systemUTC());
+    this.algorithms = List.of(algorithms);
   }
 
   public ComparatorResult compareWith(Graph graph, int sourceNode) {

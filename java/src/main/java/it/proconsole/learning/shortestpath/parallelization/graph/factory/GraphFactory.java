@@ -5,5 +5,3 @@ import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
 public interface GraphFactory {
   Graph create(int vertices);
 }
-
-

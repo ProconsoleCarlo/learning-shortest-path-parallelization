@@ -44,11 +44,4 @@ public class Distances {
   public int hashCode() {
     return Arrays.hashCode(values);
   }
-
-  @Override
-  public String toString() {
-    return "Distances{" +
-            "values=" + Arrays.toString(values) +
-            '}';
-  }
 }
