@@ -24,7 +24,10 @@ import static org.mockito.Mockito.when;
 class AlgorithmComparatorTest {
   private static final int VERTICES = 5;
   private static final int SOURCE_NODE = 0;
-  private static final Distances DISTANCES = new Distances(VERTICES, SOURCE_NODE);
+  private static final int[] CORRECT_DISTANCES_ARRAY = {1, 2, 3, 1, 6};
+  private static final int[] INCORRECT_DISTANCES_ARRAY = {1, 2, 3, 1, 9};
+  private static final Distances DISTANCES = new Distances(CORRECT_DISTANCES_ARRAY);
+  private static final Distances INCORRECT_DISTANCES = new Distances(INCORRECT_DISTANCES_ARRAY);
   private static final String FIRST_SHORTEST_PATH_NAME = "First algorithm";
   private static final String SECOND_SHORTEST_PATH_NAME = "Second algorithm";
   private static final String THIRD_SHORTEST_PATH_NAME = "Third algorithm";
@@ -42,11 +45,9 @@ class AlgorithmComparatorTest {
   private AlgorithmComparator comparator;
 
   private static List<Arguments> distances() {
-    var wrongDistances = new Distances(VERTICES, SOURCE_NODE);
-    wrongDistances.setDistance(1, 1);
     return List.of(
             Arguments.of(DISTANCES, true),
-            Arguments.of(wrongDistances, false)
+            Arguments.of(INCORRECT_DISTANCES, false)
     );
   }
 

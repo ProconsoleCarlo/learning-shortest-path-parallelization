@@ -4,6 +4,8 @@ import it.proconsole.learning.shortestpath.parallelization.graph.Distances;
 import it.proconsole.learning.shortestpath.parallelization.graph.MatrixGraph;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BellmanFordSerialTest extends ShortestPathTest {
@@ -30,10 +32,7 @@ class BellmanFordSerialTest extends ShortestPathTest {
 
     var actual = shortestPath.compute(graph, SOURCE_NODE);
 
-    var expected = new Distances(4, SOURCE_NODE);
-    expected.setDistance(1, -4);
-    expected.setDistance(2, -3);
-    expected.setDistance(3, 2);
+    var expected = new Distances(IntStream.of(0, -4, -3, 2).toArray());
     assertEquals(expected, actual);
   }
 

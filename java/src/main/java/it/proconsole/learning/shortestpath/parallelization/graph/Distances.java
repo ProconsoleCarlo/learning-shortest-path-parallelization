@@ -7,6 +7,11 @@ public class Distances {
   private final int vertices;
   private final int[] values;
 
+  public Distances(int[] values) {
+    this.vertices = values.length;
+    this.values = values;
+  }
+
   public Distances(int vertices, int sourceNode) {
     this.vertices = vertices;
     this.values = IntStream.range(0, vertices).parallel().map(i -> Integer.MAX_VALUE).toArray();

@@ -5,6 +5,8 @@ import it.proconsole.learning.shortestpath.parallelization.graph.Distances;
 import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 abstract class ShortestPathTest {
@@ -18,14 +20,7 @@ abstract class ShortestPathTest {
 
     var actual = shortestPath().compute(graph, sourceNode());
 
-    var expected = new Distances(8, sourceNode());
-    expected.setDistance(1, 3);
-    expected.setDistance(2, 5);
-    expected.setDistance(3, 7);
-    expected.setDistance(4, 9);
-    expected.setDistance(5, 9);
-    expected.setDistance(6, 6);
-    expected.setDistance(7, 4);
+    var expected = new Distances(IntStream.of(0, 3, 5, 7, 9, 9, 6, 4).toArray());
     assertEquals(expected, actual);
   }
 
