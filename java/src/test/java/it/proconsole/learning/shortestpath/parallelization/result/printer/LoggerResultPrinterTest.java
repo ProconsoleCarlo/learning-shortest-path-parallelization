@@ -1,6 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.result.printer;
 
 import it.proconsole.learning.shortestpath.parallelization.result.Algorithm;
+import it.proconsole.learning.shortestpath.parallelization.result.ComparatorResult;
 import it.proconsole.learning.shortestpath.parallelization.result.SerialParallelResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,10 +13,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LoggerResultPrinterTest {
-  private static final String SERIAL_SHORTEST_PATH_NAME = "Serial";
-  private static final String PARALLEL_SHORTEST_PATH_NAME = "Parallel";
-  private static final int SERIAL_MILLIS = 10;
-  private static final int PARALLEL_MILLIS = 5;
+  private static final String SLOWER_SHORTEST_PATH_NAME = "Serial";
+  private static final String FASTER_SHORTEST_PATH_NAME = "Parallel";
+  private static final int SLOWER_MILLIS = 10;
+  private static final int FASTER_MILLIS = 5;
 
   private final LoggerResultPrinter printer = new LoggerResultPrinter();
 
@@ -27,12 +28,19 @@ class LoggerResultPrinterTest {
     );
   }
 
+  private static List<Arguments> comparatorResults() {
+    return List.of(
+            Arguments.of(true, "Algorithms execution is CORRECT (same results)"),
+            Arguments.of(false, "Algorithms execution is WRONG (different results)")
+    );
+  }
+
   @ParameterizedTest
   @MethodSource("speedUpCases")
   void whenSpeedUpIsLessThan1(float speedUp, String speedUpResult) {
     var result = new SerialParallelResult(
-            new Algorithm(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS),
-            new Algorithm(PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS),
+            new Algorithm(SLOWER_SHORTEST_PATH_NAME, SLOWER_MILLIS),
+            new Algorithm(FASTER_SHORTEST_PATH_NAME, FASTER_MILLIS),
             speedUp,
             true
     );
@@ -44,8 +52,8 @@ class LoggerResultPrinterTest {
             %s took %d millis
             Parallel execution is CORRECT (same result as serial)
             %s"""
-            .formatted(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS,
-                    PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS,
+            .formatted(SLOWER_SHORTEST_PATH_NAME, SLOWER_MILLIS,
+                    FASTER_SHORTEST_PATH_NAME, FASTER_MILLIS,
                     speedUpResult
             );
 
@@ -56,8 +64,8 @@ class LoggerResultPrinterTest {
   void whenParallelResultIsNotCorrect() {
     var speedUp = 1.5F;
     var result = new SerialParallelResult(
-            new Algorithm(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS),
-            new Algorithm(PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS),
+            new Algorithm(SLOWER_SHORTEST_PATH_NAME, SLOWER_MILLIS),
+            new Algorithm(FASTER_SHORTEST_PATH_NAME, FASTER_MILLIS),
             speedUp,
             false
     );
@@ -69,11 +77,37 @@ class LoggerResultPrinterTest {
             %s took %d millis
             Parallel execution is WRONG (different result from serial)
             Parallel execution is %s FASTER that serial"""
-            .formatted(SERIAL_SHORTEST_PATH_NAME, SERIAL_MILLIS,
-                    PARALLEL_SHORTEST_PATH_NAME, PARALLEL_MILLIS,
+            .formatted(SLOWER_SHORTEST_PATH_NAME, SLOWER_MILLIS,
+                    FASTER_SHORTEST_PATH_NAME, FASTER_MILLIS,
                     speedUp
             );
 
+    assertEquals(expected, actual);
+  }
+
+  @ParameterizedTest
+  @MethodSource("comparatorResults")
+  void whenResultIsNotCorrect(boolean correct, String correctnessMessage) {
+    var result = new ComparatorResult(
+            List.of(
+                    new Algorithm(SLOWER_SHORTEST_PATH_NAME, SLOWER_MILLIS),
+                    new Algorithm(FASTER_SHORTEST_PATH_NAME, FASTER_MILLIS)
+            ),
+            correct
+    );
+
+    var actual = printer.print(result);
+
+    var expected = """
+            %s took %d millis
+            %s took %d millis
+            %s
+            """
+            .formatted(
+                    FASTER_SHORTEST_PATH_NAME, FASTER_MILLIS,
+                    SLOWER_SHORTEST_PATH_NAME, SLOWER_MILLIS,
+                    correctnessMessage
+            );
     assertEquals(expected, actual);
   }
 }

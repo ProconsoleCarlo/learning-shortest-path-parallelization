@@ -1,12 +1,27 @@
 package it.proconsole.learning.shortestpath.parallelization.result.printer;
 
 import it.proconsole.learning.shortestpath.parallelization.result.Algorithm;
+import it.proconsole.learning.shortestpath.parallelization.result.ComparatorResult;
 import it.proconsole.learning.shortestpath.parallelization.result.SerialParallelResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Comparator;
+import java.util.stream.Collectors;
+
 public class LoggerResultPrinter {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+  public String print(ComparatorResult result) {
+    var algorithmResults = result.algorithms().stream()
+            .sorted(Comparator.comparingLong(Algorithm::millis))
+            .map(this::printTiming)
+            .collect(Collectors.joining("\n"));
+    return """
+            %s
+            %s
+            """.formatted(algorithmResults, printCorrectness(result));
+  }
 
   public String print(SerialParallelResult result) {
     var serialOutput = printTiming(result.serial());
@@ -24,6 +39,12 @@ public class LoggerResultPrinter {
 
   private String printTiming(Algorithm algorithm) {
     return "%s took %d millis".formatted(algorithm.name(), algorithm.millis());
+  }
+
+  private String printCorrectness(ComparatorResult result) {
+    return result.correct()
+            ? "Algorithms execution is CORRECT (same results)"
+            : "Algorithms execution is WRONG (different results)";
   }
 
   private String printCorrectness(SerialParallelResult result) {
