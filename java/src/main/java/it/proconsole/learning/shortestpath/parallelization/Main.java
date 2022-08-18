@@ -2,13 +2,14 @@ package it.proconsole.learning.shortestpath.parallelization;
 
 import it.proconsole.learning.shortestpath.parallelization.algorithm.BellmanFordParallel;
 import it.proconsole.learning.shortestpath.parallelization.algorithm.BellmanFordSerial;
+import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraParallel;
 import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraPriorityQueueSerial;
 import it.proconsole.learning.shortestpath.parallelization.algorithm.DijkstraSerial;
 import it.proconsole.learning.shortestpath.parallelization.graph.factory.AdjacencyMapGraphFactory;
 import it.proconsole.learning.shortestpath.parallelization.graph.factory.GraphFactory;
 import it.proconsole.learning.shortestpath.parallelization.graph.factory.MatrixGraphFactory;
 import it.proconsole.learning.shortestpath.parallelization.graph.generator.AddictiveRemovalGraphGenerator;
-import it.proconsole.learning.shortestpath.parallelization.result.comparator.SerialParallelComparator;
+import it.proconsole.learning.shortestpath.parallelization.result.comparator.AlgorithmComparator;
 import it.proconsole.learning.shortestpath.parallelization.result.printer.LoggerResultPrinter;
 import it.proconsole.learning.shortestpath.parallelization.util.NamedArgsExtractor;
 
@@ -38,8 +39,8 @@ public class Main {
     var resultPrinter = new LoggerResultPrinter();
 
     var graph = graphGenerator.generate(vertices, density);
-    var dijkstra = new SerialParallelComparator(new DijkstraSerial(), new DijkstraPriorityQueueSerial());
-    var bellmanFord = new SerialParallelComparator(new BellmanFordSerial(), new BellmanFordParallel());
+    var dijkstra = new AlgorithmComparator(new DijkstraSerial(), new DijkstraPriorityQueueSerial(), new DijkstraParallel());
+    var bellmanFord = new AlgorithmComparator(new BellmanFordSerial(), new BellmanFordParallel());
     var dijkstraResult = dijkstra.compareWith(graph, sourceNode);
     var bellmanFordResult = bellmanFord.compareWith(graph, sourceNode);
 
