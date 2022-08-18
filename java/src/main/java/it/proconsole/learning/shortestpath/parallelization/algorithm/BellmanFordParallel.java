@@ -1,7 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.algorithm;
 
-import it.proconsole.learning.shortestpath.parallelization.model.Distances;
-import it.proconsole.learning.shortestpath.parallelization.model.Graph;
+import it.proconsole.learning.shortestpath.parallelization.graph.Distances;
+import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
 
 import java.util.stream.IntStream;
 
@@ -29,7 +29,7 @@ public class BellmanFordParallel implements BellmanFordShortestPath {
                     .forEach(src -> IntStream.range(0, vertices)
                             .filter(dest -> !distances.isInfinite(src)
                                     && isDistanceNotFinalized(graph, distances, src, dest)
-                            ).forEach(dest -> distances.setDistance(dest, distances.getDistance(src) + graph.getNode(src, dest)))
+                            ).forEach(dest -> distances.setDistance(dest, distances.getDistance(src) + graph.getCost(src, dest)))
                     )
             );
   }

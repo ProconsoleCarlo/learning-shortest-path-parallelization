@@ -1,7 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.algorithm;
 
-import it.proconsole.learning.shortestpath.parallelization.model.Distances;
-import it.proconsole.learning.shortestpath.parallelization.model.Graph;
+import it.proconsole.learning.shortestpath.parallelization.graph.Distances;
+import it.proconsole.learning.shortestpath.parallelization.graph.Graph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +23,10 @@ interface BellmanFordShortestPath extends ShortestPath {
   }
 
   default boolean isDistanceNotFinalized(Graph graph, Distances distances, int src, int dest) {
-    return !graph.isNodeZero(src, dest) && isDistanceMoreThanCost(graph, distances, src, dest);
+    return graph.haveConnection(src, dest) && isDistanceMoreThanCost(graph, distances, src, dest);
   }
 
   private boolean isDistanceMoreThanCost(Graph graph, Distances distances, int src, int dest) {
-    return distances.getDistance(dest) > distances.getDistance(src) + graph.getNode(src, dest);
+    return distances.getDistance(dest) > distances.getDistance(src) + graph.getCost(src, dest);
   }
 }
