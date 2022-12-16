@@ -20,8 +20,8 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <sonar.organization>ProconsoleCarlo</sonar.organization>
-    <sonar.projectKey>${sonar.organization}_learning-shortest-path-parallelization</sonar.projectKey>
+    <sonar.organization>proconsolecarlo</sonar.organization>
+    <sonar.projectKey>ProconsoleCarlo_learning-shortest-path-parallelization</sonar.projectKey>
   </properties>
 
   <dependencies>
