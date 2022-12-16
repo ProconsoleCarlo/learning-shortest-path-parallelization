@@ -20,8 +20,8 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <sonar.organization>proconsolecarlo</sonar.organization>
-    <sonar.projectKey>ProconsoleCarlo_learning-shortest-path-parallelization</sonar.projectKey>
+    <sonar.organization>ProconsoleCarlo</sonar.organization>
+    <sonar.projectKey>${sonar.organization}_learning-shortest-path-parallelization</sonar.projectKey>
   </properties>
 
   <dependencies>
@@ -52,8 +52,6 @@
         <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-          <!-- see versions at https://search.maven.org/search?q=g:org.sonarsource.scanner.maven%20AND%20a:sonar-maven-plugin -->
-          <version>3.9.1.2184</version>
         </plugin>
       </plugins>
     </pluginManagement>
