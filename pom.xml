@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>pom</packaging>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.0.0</version>
+    <relativePath/>
+  </parent>
+  <groupId>it.proconsole</groupId>
+  <artifactId>learning-shortest-path-parallelization</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>Learning shortest path parallelization</name>
+
+  <properties>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.organization>proconsolecarlo</sonar.organization>
+  </properties>
+
+  <modules>
+    <module>java</module>
+  </modules>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
