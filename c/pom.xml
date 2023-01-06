@@ -29,11 +29,9 @@
               <directory>src/main/c</directory>
               <includes>
                 <include>**/*.c</include>
-                <include>**/*.h</include>
               </includes>
               <excludes>
                 <exclude>**/Test*.c</exclude>
-                <exclude>**/Test*.h</exclude>
               </excludes>
             </source>
           </sources>
