@@ -16,12 +16,15 @@
   <name>Learning shortest path parallelization</name>
 
   <properties>
+    <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
+
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.organization>proconsolecarlo</sonar.organization>
   </properties>
 
   <modules>
     <module>java</module>
+    <module>c</module>
   </modules>
 
   <build>
@@ -30,6 +33,11 @@
         <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>${exec-maven-plugin.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>

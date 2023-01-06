@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>it.proconsole</groupId>
+    <artifactId>learning-shortest-path-parallelization</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <packaging>exe</packaging>
+
+  <artifactId>c-parallelization</artifactId>
+
+  <properties>
+    <native-maven-plugin.version>1.0-alpha-11</native-maven-plugin.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <version>${native-maven-plugin.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <sources>
+            <source>
+              <directory>src/main/c</directory>
+              <includes>
+                <include>**/*.c</include>
+              </includes>
+              <excludes>
+                <exclude>**/Test*.c</exclude>
+              </excludes>
+            </source>
+          </sources>
+          <compilerProvider>generic-classic</compilerProvider>
+          <compilerExecutable>gcc</compilerExecutable>
+          <compilerStartOptions>
+            <compilerStartOption>-fopenmp</compilerStartOption>
+            <compilerStartOption>-Wall</compilerStartOption>
+            <compilerStartOption>-Wextra</compilerStartOption>
+            <compilerStartOption>-O3</compilerStartOption>
+          </compilerStartOptions>
+          <compilerOutputDirectory>${project.build.directory}/compiledC</compilerOutputDirectory>
+          <linkerStartOptions>
+            <linkerStartOption>-fopenmp</linkerStartOption>
+          </linkerStartOptions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <executable>${project.build.directory}/c-parallelization.exe</executable>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
