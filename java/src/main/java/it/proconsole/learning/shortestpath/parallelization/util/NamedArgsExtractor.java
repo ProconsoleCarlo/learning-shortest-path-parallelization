@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class NamedArgsExtractor {
-  private static final Predicate<String> ARG_PREDICATE = Pattern.compile("\\w+=\\w+").asPredicate();
+  private static final Predicate<String> ARG_PREDICATE = Pattern.compile("(\\w+)=(\\w+)").asPredicate();
 
   private final Map<String, String> namedParameters;
 

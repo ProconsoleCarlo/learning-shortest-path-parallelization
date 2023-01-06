@@ -21,7 +21,7 @@ public final class AdjacencyMapGraph implements Graph {
   @Override
   public void addBidirectionalEdge(int from, int to, int cost) {
     addEdge(from, to, cost);
-    addEdge(to, from, cost);
+    addEdge(to, from, cost); //NOSONAR parameters must have this order
   }
 
   @Override
