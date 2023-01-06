@@ -41,7 +41,6 @@
           <compilerStartOptions>
             <compilerStartOption>-fopenmp</compilerStartOption>
             <compilerStartOption>-Wall</compilerStartOption>
-            <compilerStartOption>-Wextra</compilerStartOption>
             <compilerStartOption>-O3</compilerStartOption>
           </compilerStartOptions>
           <compilerOutputDirectory>${project.build.directory}/compiledC</compilerOutputDirectory>
