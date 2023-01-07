@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int minDistance, minVertex;
+static int minDistance, minVertex;
 int* minDistances;
 int* minVertices;
 

@@ -13,24 +13,49 @@ used test hardware and the results we obtained.
 It is written in C using [OpenMP](https://www.openmp.org/)
 
 ## Install
+
+### With Maven
+
+```sh
+mvn clean install
+```
+
+### Without Maven
+
 - On Windows Subsystem for Linux or Linux:
     ```sh
+    cd ./src/main/c
     ./makefile.sh
+    cd ../../..
     ```
 - On Windows:
     ```sh
-    ./makefile.bat
+    cd ./src/main/c
+    .\makefile.bat
+    cd ../../..
     ```
 
 ## Execution
-After install run the following command:
+
+### With Maven
+
+```sh
+mvn compile exec:exec
+```
+
+### Without Maven
+
+**After install** run the following command:
+
 - on Windows Subsystem for Linux or Linux:
     ```sh
-    ./ShortestPath
+    ./src/main/c/ShortestPath
     ```
 - on Windows:
     ```sh
-    ./ShortestPath.exe
+    cd ./src/main/c
+    .\ShortestPath.bat
+    cd ../../..
     ```
 
 ## Authors

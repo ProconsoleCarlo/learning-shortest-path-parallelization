@@ -11,12 +11,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../Algorithms/BellmanFordParallelV1.h"
-#include "../Algorithms/BellmanFordSerial.h"
-#include "../Algorithms/DijkstraParallelV1.h"
-#include "../Algorithms/DijkstraSerial.h"
-#include "../Utils/ArraysUtilities.h"
-#include "../Utils/GraphGenerator.h"
+#include "../algorithms/BellmanFordParallelV1.h"
+#include "../algorithms/BellmanFordSerial.h"
+#include "../algorithms/DijkstraParallelV1.h"
+#include "../algorithms/DijkstraSerial.h"
+#include "../utils/ArraysUtilities.h"
+#include "../utils/GraphGenerator.h"
 
 int main() {
 	//Parameters

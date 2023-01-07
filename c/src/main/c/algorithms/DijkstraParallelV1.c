@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int minDistance, minVertex;
+static int minDistance, minVertex;
 
 void getMinDistancePV1(int* distances, int vertices, bool* shortestPathFinalized) {
 	minDistance = INT_MAX;
