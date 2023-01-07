@@ -34,7 +34,6 @@
               </includes>
               <excludes>
                 <exclude>**/Test*.c</exclude>
-                <exclude>algorithms/DijkstraParallelV2.c</exclude>
               </excludes>
             </source>
           </sources>
