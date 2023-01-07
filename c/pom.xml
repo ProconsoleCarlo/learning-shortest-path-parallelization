@@ -15,7 +15,7 @@
   <properties>
     <native-maven-plugin.version>1.0-alpha-11</native-maven-plugin.version>
 
-    <sonar.sources>src/main/c</sonar.sources>
+    <sonar.skip>true</sonar.skip>
   </properties>
 
   <build>
