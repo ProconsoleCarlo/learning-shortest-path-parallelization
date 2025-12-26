@@ -16,8 +16,10 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
     // Test
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+    testImplementation(platform("org.junit:junit-bom:$junitVersion"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.mockito:mockito-junit-jupiter:$mockitoVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // Annotations
     compileOnly("org.jspecify:jspecify:$jSpecifyVersion")
@@ -26,8 +28,3 @@ dependencies {
 tasks.jar {
     archiveBaseName = "shortestpath-common"
 }
-
-tasks.test {
-    useJUnitPlatform()
-}
-
