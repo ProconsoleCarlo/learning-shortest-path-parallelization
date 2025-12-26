@@ -1,11 +1,11 @@
 package it.proconsole.learning.shortestpath.parallelization.graph.generator;
 
-import org.springframework.lang.Nullable;
+
+import static it.proconsole.learning.shortestpath.parallelization.graph.Graph.ZERO_WEIGHT;
 
 import java.util.Optional;
 import java.util.random.RandomGenerator;
-
-import static it.proconsole.learning.shortestpath.parallelization.graph.Graph.ZERO_WEIGHT;
+import org.springframework.lang.Nullable;
 
 public class EdgeWeightGenerator {
   private final RandomGenerator randomGenerator;
