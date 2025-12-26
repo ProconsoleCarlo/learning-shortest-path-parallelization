@@ -30,24 +30,22 @@ public final class GraphBuilder {
    * Adds a directed edge from 'from' to 'to' with the specified weight. Ignores edges with weight
    * NO_EDGE (0).
    */
-  public GraphBuilder addEdge(int from, int to, int weight) {
+  public void addEdge(int from, int to, int weight) {
     validateVertex(from);
     validateVertex(to);
 
     if (weight == Graph.NO_EDGE) {
-      return this; // Ignore zero-weight edges
+      return; // Ignore zero-weight edges
     }
 
     adjacencyList.get(from).add(new Edge(to, weight));
     edgeCount++;
-    return this;
   }
 
   /** Adds a bidirectional edge between 'from' and 'to' with the specified weight. */
-  public GraphBuilder addBidirectionalEdge(int from, int to, int weight) {
+  public void addBidirectionalEdge(int from, int to, int weight) {
     addEdge(from, to, weight);
     addEdge(to, from, weight);
-    return this;
   }
 
   /** Builds a CompactAdjacencyListGraph (CSR format). Optimal for sparse graphs. */
