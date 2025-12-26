@@ -353,12 +353,12 @@ endif()
 - [x] Creare `build.gradle.kts` root con configurazione comune
 - [x] Validare structure con `./gradlew projects`
 
-### Fase 2: Setup `:jvm:common`
-- [ ] Creare directory `jvm/common/src/main/java`, `src/test/java`
-- [ ] Creare `jvm/common/build.gradle.kts` con dipendenze base
-- [ ] Aggiungere Guava, SLF4J, Logback, JUnit, JUnit 5
-- [ ] Creare classe di test dummy per validare build
-- [ ] Compilare con `./gradlew :jvm:common:build`
+### Fase 2: Setup `:jvm:common` ✅ COMPLETATA
+- [x] Creare directory `jvm/common/src/main/java`, `src/test/java`
+- [x] Creare `jvm/common/build.gradle.kts` con dipendenze base
+- [x] Aggiungere SLF4J, Logback, JUnit 5, mockito, jspecify
+- [x] Creare classe di test dummy per validare build
+- [x] Compilare con `./gradlew :jvm:common:build`
 
 ### Fase 3: Migrazione `:jvm:java`
 - [ ] Creare directory `jvm/java/src/main/java`, `src/test/java`
