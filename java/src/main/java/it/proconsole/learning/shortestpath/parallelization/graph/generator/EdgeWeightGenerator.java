@@ -1,6 +1,6 @@
 package it.proconsole.learning.shortestpath.parallelization.graph.generator;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.random.RandomGenerator;
@@ -10,8 +10,7 @@ import static it.proconsole.learning.shortestpath.parallelization.graph.Graph.ZE
 public class EdgeWeightGenerator {
   private final RandomGenerator randomGenerator;
   private final int maxWeight;
-  @Nullable
-  private final Integer maxNegativeWeight;
+  private final @Nullable Integer maxNegativeWeight;
 
   private EdgeWeightGenerator(RandomGenerator randomGenerator, Integer maxWeight, @Nullable Integer maxNegativeWeight) {
     this.randomGenerator = randomGenerator;
@@ -23,7 +22,7 @@ public class EdgeWeightGenerator {
     var weight = randomBetween(ZERO_WEIGHT, maxWeight);
     if (weight == ZERO_WEIGHT) {
       return Optional.ofNullable(maxNegativeWeight)
-              .map(it -> randomBetween(maxNegativeWeight, ZERO_WEIGHT))
+              .map(it -> randomBetween(it, ZERO_WEIGHT))
               .orElse(maxWeight);
     } else {
       return weight;

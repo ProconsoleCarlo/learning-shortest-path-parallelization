@@ -1,6 +1,7 @@
 package it.proconsole.learning.shortestpath.parallelization.util;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -16,12 +17,12 @@ public class NamedArgsExtractor {
     this.namedParameters = Arrays.stream(args)
             .filter(ARG_PREDICATE)
             .map(arg -> arg.split("="))
-            .collect(Collectors.toMap(x -> x[0].toLowerCase(), x -> x[1]));
+            .collect(Collectors.toMap(x -> x[0].toLowerCase(Locale.getDefault()), x -> x[1]));
   }
 
   public Optional<Double> getDouble(String argName) {
     try {
-      return Optional.ofNullable(namedParameters.get(argName.toLowerCase()))
+      return Optional.ofNullable(namedParameters.get(argName.toLowerCase(Locale.getDefault())))
               .map(Double::parseDouble);
     } catch (NumberFormatException e) {
       return Optional.empty();
@@ -30,7 +31,7 @@ public class NamedArgsExtractor {
 
   public Optional<Float> getFloat(String argName) {
     try {
-      return Optional.ofNullable(namedParameters.get(argName.toLowerCase()))
+      return Optional.ofNullable(namedParameters.get(argName.toLowerCase(Locale.getDefault())))
               .map(Float::parseFloat);
     } catch (NumberFormatException e) {
       return Optional.empty();
@@ -39,7 +40,7 @@ public class NamedArgsExtractor {
 
   public Optional<Integer> getInteger(String argName) {
     try {
-      return Optional.ofNullable(namedParameters.get(argName.toLowerCase()))
+      return Optional.ofNullable(namedParameters.get(argName.toLowerCase(Locale.getDefault())))
               .map(Integer::parseInt);
     } catch (NumberFormatException e) {
       return Optional.empty();
@@ -48,7 +49,7 @@ public class NamedArgsExtractor {
 
   public Optional<Long> getLong(String argName) {
     try {
-      return Optional.ofNullable(namedParameters.get(argName.toLowerCase()))
+      return Optional.ofNullable(namedParameters.get(argName.toLowerCase(Locale.getDefault())))
               .map(Long::parseLong);
     } catch (NumberFormatException e) {
       return Optional.empty();
@@ -56,6 +57,6 @@ public class NamedArgsExtractor {
   }
 
   public Optional<String> getString(String argName) {
-    return Optional.ofNullable(namedParameters.get(argName.toLowerCase()));
+    return Optional.ofNullable(namedParameters.get(argName.toLowerCase(Locale.getDefault())));
   }
 }
